@@ -259,7 +259,7 @@ app.get('*', (req, res) => {
 // Start server
 app.listen(PORT, () => {
     if (NODE_ENV === 'development') {
-        console.log(`🚀 Quai Miner Dashboard running on http://localhost:${PORT}`);
+        console.log(`🚀 QuaiMiner Core Dashboard running on http://localhost:${PORT}`);
         console.log(`📊 Open your browser and navigate to the URL above`);
         console.log(`🔗 Node RPC: ${NODE_RPC_URL}`);
     } else {

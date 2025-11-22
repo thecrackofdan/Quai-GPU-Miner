@@ -13,7 +13,7 @@ Thank you for your interest in contributing to QuaiMiner Core! This document pro
 
 ### Reporting Bugs
 
-1. Check if the bug has already been reported in [Issues](https://github.com/thecrackofdan/AMD-Set-up/issues)
+1. Check if the bug has already been reported in [Issues](https://github.com/thecrackofdan/quaiminer-core/issues)
 2. If not, create a new issue using the [Bug Report template](.github/ISSUE_TEMPLATE/bug_report.md)
 3. Include as much detail as possible:
    - Steps to reproduce
@@ -59,20 +59,12 @@ Thank you for your interest in contributing to QuaiMiner Core! This document pro
 
 1. Clone your fork:
    ```bash
-   git clone https://github.com/your-username/AMD-Set-up.git
-   cd AMD-Set-up
+   git clone https://github.com/your-username/quaiminer-core.git
+   cd quaiminer-core
    ```
 
-2. Install dependencies:
-   ```bash
-   cd miner-dashboard
-   npm install
-   ```
-
-3. Run the dashboard:
-   ```bash
-   npm start
-   ```
+2. For dashboard development, see the `miner-dashboard/` directory in this repository
+3. For setup scripts and research documentation, work directly in this repository
 
 ## Coding Standards
 
@@ -102,23 +94,22 @@ Update: README with new installation steps
 
 ```
 .
-├── miner-dashboard/     # Main dashboard application
-│   ├── server.js        # Express server
-│   ├── public/          # Frontend files
-│   └── docs/            # Documentation
 ├── index.html           # Landing page
+├── miner-dashboard/     # Dashboard application
 ├── *.sh                 # Setup and utility scripts
 └── *.md                 # Documentation files
 ```
+
+**Note:** The full-featured Node.js dashboard is included in the `miner-dashboard/` directory of this repository
 
 ## Testing
 
 Before submitting a PR:
 
 1. Test your changes locally
-2. Ensure the dashboard starts without errors
-3. Test on different browsers if UI changes
-4. Verify API endpoints work correctly
+2. For setup scripts: Test on a clean Ubuntu 20.04 system if possible
+3. For documentation: Verify all links work and formatting is correct
+4. For dashboard changes: Work in the `miner-dashboard/` directory of this repository
 
 ## Documentation
 

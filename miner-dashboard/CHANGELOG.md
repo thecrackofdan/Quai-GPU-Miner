@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.0] - 2024-12-XX
+## [1.0.0] - 2024-11-22
+
+### GitHub Release
+- **Project Rebranded**: QuaiMiner Core (formerly QuaiMiner Hub)
+- **Repository**: Updated to quaiminer-core
+- **Website**: Complete landing page (index.html) ready
+- **Documentation**: All references updated and consistent
 
 ### Fixed
 - **Critical**: Fixed fetch timeout issue - replaced invalid `timeout` option with proper `AbortController` implementation for timeout handling

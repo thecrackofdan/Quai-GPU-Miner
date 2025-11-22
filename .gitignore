@@ -1,6 +1,8 @@
 # Dependencies
 node_modules/
-package-lock.json
+# Note: package-lock.json is typically committed for consistency
+# Uncomment the line below if you don't want to commit it
+# package-lock.json
 
 # Temporary files
 outputs/
@@ -22,12 +24,17 @@ Thumbs.db
 desktop.ini
 
 # Editor files
-.vscode/
+# Keep workspace settings, but exclude other IDE files
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
 .idea/
 *.swp
 *.swo
 *~
 *.sublime-*
+# Keep workspace file
+!*.code-workspace
 
 # Environment variables
 .env

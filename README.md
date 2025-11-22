@@ -4,7 +4,7 @@
 
 QuaiMiner Core is a comprehensive suite of tools, scripts, and resources for successful Quai Network mining. It includes a real-time mining dashboard, automated AMD GPU setup scripts, mining software research, and diagnostic tools—everything you need to mine Quai efficiently.
 
-🌐 **Website:** [View Landing Page](index.html) | 🔗 **GitHub:** https://github.com/thecrackofdan/AMD-Set-up
+🌐 **Website:** [View Landing Page](index.html) | 🔗 **GitHub:** https://github.com/thecrackofdan/quaiminer-core
 
 ## 🚀 Quick Start
 
@@ -17,10 +17,11 @@ QuaiMiner Core is a comprehensive suite of tools, scripts, and resources for suc
 
 ### 🌐 Website & Dashboard
 - **`index.html`** - Landing page and main website for QuaiMiner Core
-- **`miner-dashboard/`** - Real-time mining dashboard with Node.js backend
+- **`miner-dashboard/`** - Full-featured real-time mining dashboard with Node.js backend
 
 ### 🔬 Core Research Documents
 - **`quai_mining_software_research.md`** - Comprehensive research and comparison of all Quai mining software options
+- **`QUAI_MINING_COMMANDS.md`** - Command reference for Quai GPU Miner (official)
 - **`mining_software_comparison.sh`** - Interactive tool to get personalized miner recommendations
 
 ### ⚙️ Prerequisites (AMD OpenCL Setup)
@@ -38,31 +39,22 @@ QuaiMiner Core is a comprehensive suite of tools, scripts, and resources for suc
 
 ### Key Findings
 
-**Best Options for Solo Mining:**
+**Recommended for Solo Mining:**
 
-1. **Quai GPU Miner (Built from Source)**
-   - ✅ 0% fees (100% of rewards)
+**Quai GPU Miner (Official)**
+   - ✅ 0% fees (100% of rewards when built from source)
    - ✅ Quai-specific optimizations
    - ✅ Merged mining support
+   - ✅ Official Quai Network miner
    - ⚠️ Requires building from source
 
-2. **Team Red Miner**
-   - ✅ Easy setup (pre-built binaries)
-   - ✅ Excellent AMD optimization
-   - ⚠️ 0.5-1% developer fee
+For detailed comparison with other miners, see [Quai Mining Software Research](quai_mining_software_research.md).
 
-3. **SRBMiner-Multi**
-   - ✅ Multi-algorithm support
-   - ✅ Good AMD performance
-   - ⚠️ 0.5-1% developer fee
-
-### Performance Comparison (AMD RX 590)
+### Performance (AMD RX 590)
 
 | Miner | Hashrate | Fees | Setup Difficulty |
 |-------|----------|------|-----------------|
 | Quai GPU Miner | 10-12 MH/s | 0% | Medium |
-| Team Red Miner | 10-12 MH/s | 0.5-1% | Easy |
-| SRBMiner-Multi | 9-11 MH/s | 0.5-1% | Easy |
 
 ## 🚀 Prerequisites Setup
 
@@ -131,9 +123,9 @@ If you encounter issues:
 
 Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
-- 🐛 [Report Bugs](https://github.com/thecrackofdan/AMD-Set-up/issues/new?template=bug_report.md)
-- 💡 [Suggest Features](https://github.com/thecrackofdan/AMD-Set-up/issues/new?template=feature_request.md)
-- 📝 [View Issues](https://github.com/thecrackofdan/AMD-Set-up/issues)
+- 🐛 [Report Bugs](https://github.com/thecrackofdan/quaiminer-core/issues/new?template=bug_report.md)
+- 💡 [Suggest Features](https://github.com/thecrackofdan/quaiminer-core/issues/new?template=feature_request.md)
+- 📝 [View Issues](https://github.com/thecrackofdan/quaiminer-core/issues)
 
 ## 📄 License
 

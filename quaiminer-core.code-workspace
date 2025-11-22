@@ -1,0 +1,30 @@
+{
+	"folders": [
+		{
+			"name": "QuaiMiner Core (Main)",
+			"path": "."
+		},
+		{
+			"name": "Mining Dashboard",
+			"path": "./miner-dashboard"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/node_modules": true,
+			"**/.git": true
+		},
+		"search.exclude": {
+			"**/node_modules": true,
+			"**/package-lock.json": true
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"dbaeumer.vscode-eslint",
+			"esbenp.prettier-vscode",
+			"ms-vscode.vscode-json"
+		]
+	}
+}
+

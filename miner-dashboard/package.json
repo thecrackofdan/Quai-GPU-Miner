@@ -5,9 +5,10 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node server.js",
+    "dev": "NODE_ENV=development node server.js",
     "dev:unix": "NODE_ENV=development node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node -c server.js && echo '✅ Syntax check passed'",
+    "verify": "node -c server.js && npm audit --audit-level=moderate && echo '✅ Verification complete'"
   },
   "keywords": [
     "quaiminer-core",
@@ -26,7 +27,7 @@
   "author": "thecrackofdan",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "cors": "^2.8.5"
   },
   "devDependencies": {},
@@ -45,10 +46,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thecrackofdan/AMD-Set-up.git"
+    "url": "https://github.com/thecrackofdan/quaiminer-core.git",
+    "directory": "miner-dashboard"
   },
   "bugs": {
-    "url": "https://github.com/thecrackofdan/AMD-Set-up/issues"
+    "url": "https://github.com/thecrackofdan/quaiminer-core/issues"
   },
-  "homepage": "https://github.com/thecrackofdan/AMD-Set-up#readme"
+  "homepage": "https://github.com/thecrackofdan/quaiminer-core#readme"
 }

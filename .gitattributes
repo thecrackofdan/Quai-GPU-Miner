@@ -1,0 +1,35 @@
+# Git attributes for QuaiMiner Core
+
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Shell scripts should use LF
+*.sh text eol=lf
+
+# Windows scripts
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Markdown files
+*.md text
+
+# JSON files
+*.json text
+
+# JavaScript files
+*.js text
+
+# CSS files
+*.css text
+
+# HTML files
+*.html text
+
+# Exclude binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+
