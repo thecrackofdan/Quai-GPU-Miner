@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="QuaiMiner CORE - Complete toolkit for Quai Network mining with AMD GPUs. Dashboard, setup scripts, and mining software research.">
-    <title>QuaiMiner CORE - Quai Network Mining Toolkit</title>
+    <meta name="description" content="QuaiMiner CORE - Complete toolkit for solo mining Quai Network with AMD GPUs and your own node. Dashboard, setup scripts, and mining software research.">
+    <title>QuaiMiner CORE - Solo Mining with Your Own Node</title>
     <style>
         * {
             margin: 0;
@@ -13,24 +13,26 @@
         }
 
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #ec4899;
-            --dark: #1e1b4b;
-            --dark-light: #312e81;
-            --light: #f8fafc;
-            --text: #1e293b;
-            --text-light: #64748b;
-            --success: #10b981;
-            --warning: #f59e0b;
+            /* Quai Network Brand Colors - Red & Black */
+            --primary: #FF0000;           /* Quai Red */
+            --primary-dark: #CC0000;      /* Deep Red */
+            --secondary: #FF3333;         /* Bright Red */
+            --accent: #FF1A1A;           /* Accent Red */
+            --dark: #0A0A0A;             /* Near Black */
+            --dark-light: #1A0000;       /* Dark with red tint */
+            --light: #F8F8F8;            /* Light background */
+            --text: #FFFFFF;             /* White text for dark sections */
+            --text-dark: #1e293b;        /* Dark text for light sections */
+            --text-light: #CCCCCC;       /* Light gray text */
+            --success: #00FF00;          /* Green for success */
+            --warning: #FFAA00;          /* Orange warning */
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
             line-height: 1.6;
             color: var(--text);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #000000 0%, #0A0000 50%, #1A0000 100%);
             min-height: 100vh;
         }
 
@@ -38,6 +40,15 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
+        }
+        
+        /* Text colors for different sections */
+        .hero, .footer {
+            color: #FFFFFF;
+        }
+        
+        .features, .tools {
+            color: var(--text-dark);
         }
 
         header {
@@ -120,13 +131,16 @@
         }
 
         .btn-primary {
-            background: white;
-            color: var(--primary);
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
         }
 
         .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
             transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.4);
         }
 
         .btn-secondary {
@@ -140,7 +154,7 @@
         }
 
         .features {
-            background: white;
+            background: #FFFFFF;
             padding: 4rem 0;
         }
 
@@ -178,7 +192,7 @@
             text-align: center;
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            color: var(--dark);
+            color: var(--primary);
         }
 
         .section-subtitle {
@@ -214,10 +228,11 @@
         }
 
         .footer {
-            background: var(--dark);
+            background: #000000;
             color: white;
             padding: 3rem 0;
             text-align: center;
+            border-top: 3px solid var(--primary);
         }
 
         .footer-links {
@@ -283,7 +298,7 @@
     <section class="hero">
         <div class="container">
             <h1>QuaiMiner CORE</h1>
-            <p>Complete toolkit for Quai Network mining with AMD GPUs</p>
+            <p>Solo mining toolkit for Quai Network with AMD GPUs and your own node</p>
             <div class="cta-buttons">
                 <a href="#dashboard" class="btn btn-primary">Launch Dashboard</a>
                 <a href="https://github.com/thecrackofdan/quaiminer-core" class="btn btn-secondary" target="_blank">View on GitHub</a>
@@ -293,8 +308,8 @@
 
     <section class="features" id="features">
         <div class="container">
-            <h2 class="section-title">Everything You Need to Mine Quai</h2>
-            <p class="section-subtitle">Professional tools and resources for successful Quai Network mining</p>
+            <h2 class="section-title">Everything You Need for Solo Mining</h2>
+            <p class="section-subtitle">Professional tools and resources for solo mining Quai Network with your own node</p>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
@@ -323,8 +338,8 @@
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">🔐</div>
-                    <h3>Solo Mining Support</h3>
-                    <p>Full support for solo mining with quai-gpu-miner. Keep 100% of your rewards with zero pool fees.</p>
+                    <h3>Solo Mining with Your Own Node</h3>
+                    <p>Designed specifically for solo mining with your own Quai node. Full support for quai-gpu-miner. Keep 100% of your rewards with zero pool fees.</p>
                 </div>
             </div>
         </div>

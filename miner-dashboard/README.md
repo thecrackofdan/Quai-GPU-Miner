@@ -1,16 +1,20 @@
 # QuaiMiner CORE - Mining Dashboard
 
-**Part of QuaiMiner CORE - Production-ready real-time dashboard for monitoring Quai Network mining operations**
+**Part of QuaiMiner CORE - Production-ready real-time dashboard for solo mining Quai Network with your own node**
 
 🌐 **QuaiMiner CORE:** [Main Repository](https://github.com/thecrackofdan/quaiminer-core) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
 
 ## Features
 
+**Designed for Solo Mining with Your Own Quai Node**
+
 - **Real-time Mining Statistics**: Hash rate, shares, temperature monitoring
 - **GPU Performance Tracking**: Individual GPU metrics and health monitoring
-- **Network Metrics**: Block height, difficulty, network hash rate
-- **Solo Mining Support**: Full integration with quai-gpu-miner
-- **Coinbase Transaction Tracking**: Fetch and display mining rewards
+- **Node Integration**: Built to work with your own Quai Network node (RPC connection)
+- **Solo Mining Focus**: Optimized for solo mining operations—no pool support
+- **Network Metrics**: Block height, difficulty, network hash rate from your node
+- **Solo Mining Support**: Full integration with quai-gpu-miner for solo mining
+- **Coinbase Transaction Tracking**: Fetch and display mining rewards from your node
 - **Multi-currency Display**: QUAI, USD, EUR, GBP, BTC, ETH
 - **Pelagus Wallet Integration**: Connect and monitor wallet activity
 - **Responsive Design**: Works on desktop and mobile devices

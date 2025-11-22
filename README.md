@@ -1,8 +1,8 @@
 # ⚡ QuaiMiner CORE
 
-**Complete toolkit for Quai Network mining with AMD GPUs**
+**Complete toolkit for solo mining Quai Network with AMD GPUs and your own node**
 
-QuaiMiner CORE is a comprehensive suite of tools, scripts, and resources for successful Quai Network mining. It includes a real-time mining dashboard, automated AMD GPU setup scripts, mining software research, and diagnostic tools—everything you need to mine Quai efficiently.
+QuaiMiner CORE is a comprehensive suite of tools, scripts, and resources designed specifically for solo mining Quai Network. Built for miners running their own Quai node, it includes a real-time mining dashboard, automated AMD GPU setup scripts, mining software research, and diagnostic tools—everything you need to mine Quai solo and keep 100% of your rewards.
 
 🌐 **Website:** [View Landing Page](index.html) | 🔗 **GitHub:** https://github.com/thecrackofdan/quaiminer-core
 
@@ -16,8 +16,8 @@ QuaiMiner CORE is a comprehensive suite of tools, scripts, and resources for suc
 ## 📋 Contents
 
 ### 🌐 Website & Dashboard
-- **`index.html`** - Landing page and main website for QuaiMiner CORE
-- **`miner-dashboard/`** - Full-featured real-time mining dashboard with Node.js backend
+- **`index.html`** - Landing page and main website for QuaiMiner CORE (solo mining focus)
+- **`miner-dashboard/`** - Full-featured real-time mining dashboard for solo mining with your own Quai node
 
 ### 🔬 Core Research Documents
 - **`quai_mining_software_research.md`** - Comprehensive research and comparison of all Quai mining software options
@@ -39,13 +39,14 @@ QuaiMiner CORE is a comprehensive suite of tools, scripts, and resources for suc
 
 ### Key Findings
 
-**Recommended for Solo Mining:**
+**Recommended for Solo Mining with Your Own Node:**
 
 **Quai GPU Miner (Official)**
    - ✅ 0% fees (100% of rewards when built from source)
    - ✅ Quai-specific optimizations
    - ✅ Merged mining support
    - ✅ Official Quai Network miner
+   - ✅ Designed for solo mining with your own node
    - ⚠️ Requires building from source
 
 For detailed comparison with other miners, see [Quai Mining Software Research](quai_mining_software_research.md).
