@@ -1013,6 +1013,30 @@ class MiningDashboard {
             this.addLog('Fetching QuaiScan address information...', 'info');
             this.fetchQuaiScanAddressInfo(address);
         }
+        
+        // Update QuaiScan links immediately when wallet connects
+        this.updateQuaiScanLinks(address);
+    }
+    
+    // Update QuaiScan links to use wallet address
+    updateQuaiScanLinks(address) {
+        if (!address) return;
+        
+        const quaiscanLink = document.getElementById('quaiscanLink');
+        const quaiscanMetricsLink = document.getElementById('quaiscanMetricsLink');
+        const baseUrl = CONFIG.network.networkType === 'testnet' 
+            ? 'https://cyprus1.colosseum.quaiscan.io' 
+            : 'https://quaiscan.io';
+        
+        if (quaiscanLink) {
+            quaiscanLink.href = `${baseUrl}/address/${address}`;
+            quaiscanLink.textContent = `View ${address.substring(0, 8)}... on QuaiScan →`;
+        }
+        
+        if (quaiscanMetricsLink) {
+            quaiscanMetricsLink.href = `${baseUrl}/address/${address}`;
+            quaiscanMetricsLink.textContent = `View ${address.substring(0, 8)}... on QuaiScan →`;
+        }
     }
 
     // Initialize transaction history tabs
@@ -1814,6 +1838,16 @@ class MiningDashboard {
         const totalAddressesEl = document.getElementById('quaiscanTotalAddresses');
         const networkHashRateEl = document.getElementById('quaiscanNetworkHashRate');
         const latestBlockEl = document.getElementById('quaiscanLatestBlock');
+        
+        // Update QuaiScan metrics link to use wallet address if available
+        const quaiscanMetricsLink = document.getElementById('quaiscanMetricsLink');
+        if (quaiscanMetricsLink && this.connectedWallet) {
+            const baseUrl = CONFIG.network.networkType === 'testnet' 
+                ? 'https://cyprus1.colosseum.quaiscan.io' 
+                : 'https://quaiscan.io';
+            quaiscanMetricsLink.href = `${baseUrl}/address/${this.connectedWallet}`;
+            quaiscanMetricsLink.textContent = `View ${this.connectedWallet.substring(0, 8)}... on QuaiScan →`;
+        }
 
         if (totalTransactionsEl) {
             totalTransactionsEl.textContent = this.quaiscanMetricsData.totalTransactions > 0 
@@ -1939,15 +1973,8 @@ class MiningDashboard {
                 };
             }
 
-            // Update QuaiScan link to point to this address
-            const quaiscanLink = document.getElementById('quaiscanLink');
-            if (quaiscanLink) {
-                const baseUrl = CONFIG.network.networkType === 'testnet' 
-                    ? 'https://cyprus1.colosseum.quaiscan.io' 
-                    : 'https://quaiscan.io';
-                quaiscanLink.href = `${baseUrl}/address/${address}`;
-                quaiscanLink.textContent = `View ${address.substring(0, 8)}... on QuaiScan →`;
-            }
+            // Update QuaiScan links to point to this address
+            this.updateQuaiScanLinks(address);
 
             // QuaiScan now only handles transaction data
             // Transaction history section is shown when wallet is connected
