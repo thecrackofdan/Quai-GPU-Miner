@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quai Network Mining Pools - QuaiMiner CORE OS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .pool-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s;
+        }
+        .pool-card:hover {
+            border-color: var(--quai-primary);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.2);
+        }
+        .pool-card.recommended {
+            border-color: var(--success-color);
+            border-width: 2px;
+        }
+        .pool-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+        }
+        .pool-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--quai-primary);
+        }
+        .pool-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-recommended {
+            background: var(--success-color);
+            color: #000;
+        }
+        .badge-official {
+            background: var(--quai-primary);
+            color: #fff;
+        }
+        .badge-fee {
+            background: var(--warning-color);
+            color: #000;
+        }
+        .pool-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        .pool-detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .pool-detail-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .pool-detail-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .pool-features {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        .pool-features h4 {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .pool-features ul {
+            list-style: none;
+            padding: 0;
+        }
+        .pool-features li {
+            padding: 4px 0;
+            color: var(--text-primary);
+            font-size: 0.85rem;
+        }
+        .pool-features li:before {
+            content: "✅ ";
+            margin-right: 8px;
+        }
+        .pool-actions {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--bg-card);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .comparison-table th {
+            background: var(--bg-dark);
+            color: var(--quai-primary);
+            font-weight: 600;
+        }
+        .comparison-table tr:hover {
+            background: var(--bg-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div>
+                    <h1>⚡ QuaiMiner CORE OS</h1>
+                    <div class="network-info">
+                        <span class="network-badge">Mining Pools Guide</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <a href="/" class="export-btn" style="text-decoration: none;">
+                        <span>←</span> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+            <h2 class="section-title-red">Quai Network Mining Pools</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Choose a mining pool or mine solo with your own node. Pool mining offers steady payouts, 
+                while solo mining gives you 100% of rewards when you find a block.
+            </p>
+
+            <!-- Pool Comparison Table -->
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Pool</th>
+                        <th>Fee</th>
+                        <th>Payout</th>
+                        <th>Min Payout</th>
+                        <th>Uptime</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Solo (Your Node)</strong></td>
+                        <td><span style="color: var(--success-color);">0%</span></td>
+                        <td>When block found</td>
+                        <td>Block reward</td>
+                        <td>99.9%</td>
+                        <td>Large miners (>200 MH/s)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quai Network Official</strong></td>
+                        <td>0.5%</td>
+                        <td>Daily</td>
+                        <td>0.1 QUAI</td>
+                        <td>99.9%</td>
+                        <td>All miners</td>
+                    </tr>
+                    <tr>
+                        <td><strong>QuaiMiner Pool</strong></td>
+                        <td>1.0%</td>
+                        <td>Daily</td>
+                        <td>0.05 QUAI</td>
+                        <td>99.5%</td>
+                        <td>Small miners (<50 MH/s)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>QuaiHash Pool</strong></td>
+                        <td>1.5%</td>
+                        <td>Weekly</td>
+                        <td>0.2 QUAI</td>
+                        <td>99.0%</td>
+                        <td>Alternative option</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Pool Cards -->
+            <div id="poolsList">
+                <!-- Pool cards will be dynamically generated -->
+            </div>
+
+            <!-- Solo Mining Card -->
+            <div class="pool-card recommended">
+                <div class="pool-header">
+                    <div>
+                        <div class="pool-name">Solo Mining (Your Own Node)</div>
+                        <div style="margin-top: 0.5rem;">
+                            <span class="pool-badge badge-recommended">Recommended for Large Miners</span>
+                            <span class="pool-badge badge-fee" style="margin-left: 8px;">0% Fee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-details">
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Fee</span>
+                        <span class="pool-detail-value" style="color: var(--success-color);">0% (100% rewards)</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Mining</span>
+                        <span class="pool-detail-value">Quai Network (All Chains)</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Payout</span>
+                        <span class="pool-detail-value">When block found</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Min Payout</span>
+                        <span class="pool-detail-value">Block reward</span>
+                    </div>
+                </div>
+                <div class="pool-features">
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>100% of rewards (no fees)</li>
+                        <li>No fees</li>
+                        <li>Supports network decentralization</li>
+                        <li>Full control</li>
+                        <li>Merged mining support</li>
+                    </ul>
+                </div>
+                <p style="margin-top: 1rem; padding: 1rem; background: var(--bg-dark); border-radius: 6px; color: var(--text-secondary);">
+                    <strong>Requirements:</strong> Quai node running, stratum proxy enabled. 
+                    Best for miners with >200 MH/s hash rate for consistent block finding.
+                </p>
+                <div class="pool-actions">
+                    <button class="btn-primary" onclick="selectPool('solo')">Select Solo Mining</button>
+                    <a href="/docs/POOLS_GUIDE.md" target="_blank" class="btn-secondary" style="text-decoration: none;">Learn More</a>
+                </div>
+            </div>
+
+            <!-- Official Pool Card -->
+            <div class="pool-card">
+                <div class="pool-header">
+                    <div>
+                        <div class="pool-name">Quai Network Official Pool</div>
+                        <div style="margin-top: 0.5rem;">
+                            <span class="pool-badge badge-official">Official</span>
+                            <span class="pool-badge badge-fee" style="margin-left: 8px;">0.5% Fee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-details">
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Fee</span>
+                        <span class="pool-detail-value">0.5%</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Mining</span>
+                        <span class="pool-detail-value">Quai Network (Prime + All Zones)</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Payout</span>
+                        <span class="pool-detail-value">Daily</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Min Payout</span>
+                        <span class="pool-detail-value">0.1 QUAI</span>
+                    </div>
+                </div>
+                <div class="pool-features">
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Lowest fee (0.5%)</li>
+                        <li>Official support</li>
+                        <li>High uptime (99.9%)</li>
+                        <li>Fast payouts</li>
+                        <li>Multi-chain support</li>
+                    </ul>
+                </div>
+                <div class="pool-actions">
+                    <button class="btn-primary" onclick="selectPool('official')">Select This Pool</button>
+                    <a href="https://pool.quai.network" target="_blank" class="btn-secondary" style="text-decoration: none;">Pool Website</a>
+                </div>
+            </div>
+
+            <!-- QuaiMiner Pool Card -->
+            <div class="pool-card">
+                <div class="pool-header">
+                    <div>
+                        <div class="pool-name">QuaiMiner Pool</div>
+                        <div style="margin-top: 0.5rem;">
+                            <span class="pool-badge badge-fee">1.0% Fee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-details">
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Fee</span>
+                        <span class="pool-detail-value">1.0%</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Mining</span>
+                        <span class="pool-detail-value">Quai Network (Prime + All Zones)</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Payout</span>
+                        <span class="pool-detail-value">Daily</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Min Payout</span>
+                        <span class="pool-detail-value">0.05 QUAI</span>
+                    </div>
+                </div>
+                <div class="pool-features">
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Community support</li>
+                        <li>Detailed statistics</li>
+                        <li>Active development</li>
+                        <li>Multi-chain support</li>
+                        <li>Low minimum payout</li>
+                    </ul>
+                </div>
+                <div class="pool-actions">
+                    <button class="btn-primary" onclick="selectPool('quaiminer')">Select This Pool</button>
+                    <a href="https://pool.quaiminer.io" target="_blank" class="btn-secondary" style="text-decoration: none;">Pool Website</a>
+                </div>
+            </div>
+
+            <!-- QuaiHash Pool Card -->
+            <div class="pool-card">
+                <div class="pool-header">
+                    <div>
+                        <div class="pool-name">QuaiHash Pool</div>
+                        <div style="margin-top: 0.5rem;">
+                            <span class="pool-badge badge-fee">1.5% Fee</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="pool-details">
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Fee</span>
+                        <span class="pool-detail-value">1.5%</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Mining</span>
+                        <span class="pool-detail-value">Quai Network (Prime + All Zones)</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Payout</span>
+                        <span class="pool-detail-value">Weekly</span>
+                    </div>
+                    <div class="pool-detail-item">
+                        <span class="pool-detail-label">Min Payout</span>
+                        <span class="pool-detail-value">0.2 QUAI</span>
+                    </div>
+                </div>
+                <div class="pool-features">
+                    <h4>Features:</h4>
+                    <ul>
+                        <li>Established pool</li>
+                        <li>Good uptime</li>
+                        <li>Regular payouts</li>
+                    </ul>
+                </div>
+                <div class="pool-actions">
+                    <button class="btn-primary" onclick="selectPool('quaihash')">Select This Pool</button>
+                    <a href="https://pool.quaihash.com" target="_blank" class="btn-secondary" style="text-decoration: none;">Pool Website</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        function selectPool(poolId) {
+            // Redirect to dashboard with pool selection
+            window.location.href = `/?pool=${poolId}`;
+        }
+    </script>
+</body>
+</html>
+

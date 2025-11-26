@@ -44,15 +44,25 @@ function verifyToken(token) {
 async function createDefaultUser() {
     const existingUser = users.findByUsername('admin');
     if (!existingUser) {
-        const password = process.env.ADMIN_PASSWORD || 'admin';
-        const passwordHash = await hashPassword(password);
+        // SECURITY: Generate random password if not set, don't use 'admin'
+        const defaultPassword = process.env.ADMIN_PASSWORD || crypto.randomBytes(16).toString('hex');
+        const passwordHash = await hashPassword(defaultPassword);
         const apiKey = generateApiKey();
         users.create('admin', passwordHash, apiKey);
-        console.log('⚠️  Default admin user created:');
-        console.log('   Username: admin');
-        console.log('   Password: admin (or set ADMIN_PASSWORD env var)');
-        console.log('   API Key:', apiKey);
-        console.log('   ⚠️  CHANGE THESE CREDENTIALS IN PRODUCTION!');
+        
+        // SECURITY: Only log credentials in development, warn in production
+        if (process.env.NODE_ENV === 'development') {
+            console.log('⚠️  Default admin user created:');
+            console.log('   Username: admin');
+            console.log('   Password:', process.env.ADMIN_PASSWORD ? '(from env)' : defaultPassword);
+            console.log('   API Key:', apiKey);
+        } else {
+            console.log('⚠️  SECURITY WARNING: Default admin user created');
+            console.log('   Username: admin');
+            console.log('   Password: Set ADMIN_PASSWORD environment variable or check database');
+            console.log('   ⚠️  CHANGE DEFAULT CREDENTIALS IMMEDIATELY IN PRODUCTION!');
+            console.log('   Run: quaiminer-setup --change-admin-password');
+        }
     }
 }
 
@@ -98,12 +108,16 @@ function authenticate(req, res, next) {
 
 // Optional authentication (doesn't fail if not authenticated)
 function optionalAuth(req, res, next) {
-    const apiKey = req.headers['x-api-key'] || req.query.apiKey;
+    // SECURITY: Only check API key in header
+    const apiKey = req.headers['x-api-key'];
     if (apiKey) {
-        const user = users.findByApiKey(apiKey);
-        if (user) {
-            req.user = user;
-            users.updateLastLogin(user.id);
+        // SECURITY: Validate API key format
+        if (typeof apiKey === 'string' && apiKey.length >= 32 && apiKey.length <= 128) {
+            const user = users.findByApiKey(apiKey);
+            if (user) {
+                req.user = user;
+                users.updateLastLogin(user.id);
+            }
         }
     }
 

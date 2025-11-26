@@ -1,0 +1,135 @@
+/* Rewards Display Styles */
+
+.rewards-section {
+    margin: 2rem 0;
+    padding: 2rem;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+}
+
+.rewards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.reward-card {
+    background: var(--bg-dark);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.reward-card:hover {
+    border-color: var(--quai-primary);
+    box-shadow: var(--glow-red);
+    transform: translateY(-2px);
+}
+
+.reward-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+}
+
+.reward-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--quai-primary);
+    font-family: 'JetBrains Mono', monospace;
+    word-break: break-all;
+}
+
+/* Stability Indicator */
+.stability-indicator {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 0.85rem;
+}
+
+.stability-label {
+    color: var(--text-secondary);
+}
+
+.stability-score {
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    min-width: 45px;
+}
+
+.stability-bar {
+    width: 60px;
+    height: 6px;
+    background: var(--bg-dark);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.stability-fill {
+    height: 100%;
+    background: var(--success);
+    transition: width 0.3s ease, background 0.3s ease;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: 12px;
+}
+
+.quick-action-btn {
+    padding: 8px 16px;
+    background: var(--bg-card);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+    border-color: var(--quai-primary);
+    background: var(--bg-card-hover);
+    transform: translateY(-1px);
+}
+
+.quick-action-btn:active {
+    transform: translateY(0);
+}
+
+.quick-action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .rewards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .rewards-grid {
+        grid-template-columns: 1fr;
+    }
+}
+

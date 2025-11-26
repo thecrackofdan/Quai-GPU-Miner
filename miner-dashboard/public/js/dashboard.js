@@ -120,7 +120,22 @@ class MiningDashboard {
             shareHistory: []
         };
 
+        // Check for remote rig URL parameter
+        this.remoteRigUrl = this.getRemoteRigUrl();
         this.init();
+    }
+
+    /**
+     * Get remote rig URL from query parameter or localStorage
+     */
+    getRemoteRigUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const rigParam = urlParams.get('rig');
+        if (rigParam) {
+            localStorage.setItem('remoteRigUrl', rigParam);
+            return rigParam;
+        }
+        return localStorage.getItem('remoteRigUrl') || null;
     }
 
     init() {
@@ -182,6 +197,47 @@ class MiningDashboard {
         // Start API connection if enabled
         if (CONFIG.api && CONFIG.api.enabled) {
             this.startAPIConnection();
+        }
+
+        // If remote rig URL is set, use it for API calls
+        if (this.remoteRigUrl) {
+            this.setupRemoteConnection();
+        }
+    }
+
+    /**
+     * Setup remote connection to another rig
+     */
+    setupRemoteConnection() {
+        if (!this.remoteRigUrl) return;
+
+        // Store original fetch
+        this.originalFetch = window.fetch;
+        
+        // Override fetch to use remote URL for API calls
+        const self = this;
+        window.fetch = async function(url, options = {}) {
+            // If it's a relative API URL, prepend remote rig URL
+            if (typeof url === 'string' && (url.startsWith('/api/') || url.startsWith('api/'))) {
+                const remoteUrl = self.remoteRigUrl.replace(/\/$/, '') + (url.startsWith('/') ? url : '/' + url);
+                return self.originalFetch(remoteUrl, options);
+            }
+            // Otherwise use original fetch
+            return self.originalFetch(url, options);
+        };
+
+        // Update status to show remote connection
+        this.addLog(`Connected to remote rig: ${this.remoteRigUrl}`, 'info');
+        
+        // Show remote indicator
+        const statusText = document.getElementById('statusText');
+        if (statusText) {
+            try {
+                const rigHost = new URL(this.remoteRigUrl).hostname;
+                statusText.textContent = `Remote: ${rigHost}`;
+            } catch (e) {
+                statusText.textContent = 'Remote Connection';
+            }
         }
 
         // Check Quai node status if solo mining
@@ -3757,6 +3813,160 @@ class MiningDashboard {
         if (testMinerConfigBtn) {
             testMinerConfigBtn.onclick = () => this.testMinerConfig();
         }
+
+        // Initialize pool manager
+        if (typeof PoolManager !== 'undefined') {
+            this.poolManager = new PoolManager(this);
+        }
+
+        // Setup pool selection in miner config modal
+        const miningModeSelect = document.getElementById('miningModeSelect');
+        const poolSelectionItem = document.getElementById('poolSelectionItem');
+        const poolSelect = document.getElementById('poolSelect');
+        
+        if (miningModeSelect && poolSelectionItem) {
+            miningModeSelect.onchange = (e) => {
+                if (e.target.value === 'pool') {
+                    poolSelectionItem.style.display = 'block';
+                    this.loadPoolList();
+                } else {
+                    poolSelectionItem.style.display = 'none';
+                }
+            };
+        }
+
+        if (poolSelect && this.poolManager) {
+            poolSelect.onchange = (e) => {
+                const poolId = e.target.value;
+                if (poolId && poolId !== 'custom') {
+                    const pool = this.poolManager.pools.find(p => p.id === poolId);
+                    if (pool) {
+                        this.displayPoolInfo(pool);
+                        const stratumInput = document.getElementById('stratumAddress');
+                        if (stratumInput) {
+                            stratumInput.value = pool.url;
+                        }
+                    }
+                } else {
+                    document.getElementById('poolInfo').style.display = 'none';
+                }
+            };
+        }
+
+        // GPU Tuning button
+        const gpuTuneBtn = document.getElementById('gpuTuneBtn');
+        if (gpuTuneBtn) {
+            gpuTuneBtn.onclick = () => {
+                window.location.href = '/gpu-tuner.html';
+            };
+        }
+
+        // Merged Mining Wizard button
+        const mergedMiningWizardBtn = document.getElementById('openMergedMiningWizardBtn');
+        if (mergedMiningWizardBtn) {
+            mergedMiningWizardBtn.onclick = () => {
+                if (window.mergedMiningWizard) {
+                    window.mergedMiningWizard.show();
+                } else {
+                    console.error('Merged mining wizard not initialized');
+                    if (typeof Toast !== 'undefined') {
+                        Toast.error('Merged mining wizard not available');
+                    }
+                }
+            };
+        }
+
+        // Initialize Profit Optimizer
+        if (typeof ProfitOptimizer !== 'undefined') {
+            this.profitOptimizer = new ProfitOptimizer(this);
+        }
+
+        // Initialize Multi-Rig Manager
+        if (typeof MultiRigManager !== 'undefined') {
+            this.multiRigManager = new MultiRigManager(this);
+            window.multiRigManager = this.multiRigManager;
+        }
+
+        // Initialize Alert Manager
+        if (typeof AlertManager !== 'undefined') {
+            this.alertManager = new AlertManager(this);
+        }
+
+        // Initialize Flight Sheets
+        if (typeof FlightSheets !== 'undefined') {
+            this.flightSheets = new FlightSheets(this);
+        }
+
+        // Initialize Alerts UI
+        if (typeof AlertsUI !== 'undefined') {
+            this.alertsUI = new AlertsUI(this);
+        }
+
+        // Initialize Flight Sheets UI
+        if (typeof FlightSheetsUI !== 'undefined') {
+            this.flightSheetsUI = new FlightSheetsUI(this);
+            window.flightSheetsUI = this.flightSheetsUI;
+        }
+
+        // Initialize Staking Manager
+        if (typeof StakingManager !== 'undefined') {
+            this.stakingManager = new StakingManager(this);
+            window.stakingManager = this.stakingManager;
+        }
+
+        // Initialize Staking UI
+        if (typeof StakingUI !== 'undefined') {
+            this.stakingUI = new StakingUI(this);
+            window.stakingUI = this.stakingUI;
+        }
+
+        // Initialize Difficulty Adjustor
+        if (typeof DifficultyAdjustor !== 'undefined') {
+            this.difficultyAdjustor = new DifficultyAdjustor(this);
+            window.difficultyAdjustor = this.difficultyAdjustor;
+        }
+
+        // Initialize Enhanced Onboarding
+        if (typeof EnhancedOnboarding !== 'undefined') {
+            this.enhancedOnboarding = new EnhancedOnboarding(this);
+            window.enhancedOnboarding = this.enhancedOnboarding;
+        }
+
+        // Initialize Auto-Setup
+        if (typeof AutoSetup !== 'undefined') {
+            this.autoSetup = new AutoSetup(this);
+        }
+
+        // Initialize One-Click Mining
+        if (typeof OneClickMining !== 'undefined') {
+            this.oneClickMining = new OneClickMining(this);
+        }
+
+        // Initialize Quai Network Features
+        if (typeof QuaiFeatures !== 'undefined') {
+            this.quaiFeatures = new QuaiFeatures(this);
+            
+            // Add click handler for Quai info button
+            const quaiInfoBtn = document.getElementById('quaiInfoBtn');
+            if (quaiInfoBtn) {
+                quaiInfoBtn.addEventListener('click', () => {
+                    this.quaiFeatures.showQuaiEducation();
+                });
+            }
+        }
+
+        // Setup Profit Optimizer Toggle
+        const profitOptimizerToggle = document.getElementById('profitOptimizerToggle');
+        if (profitOptimizerToggle && this.profitOptimizer) {
+            profitOptimizerToggle.checked = this.profitOptimizer.isEnabled;
+            profitOptimizerToggle.onchange = (e) => {
+                if (e.target.checked) {
+                    this.profitOptimizer.start();
+                } else {
+                    this.profitOptimizer.stop();
+                }
+            };
+        }
         
         // Remote control buttons
         const startMinerBtn = document.getElementById('startMinerBtn');
@@ -3777,6 +3987,37 @@ class MiningDashboard {
             }
         }, 10000);
         this.updateMinerStatus();
+
+        // Setup staking button
+        const openStakingBtn = document.getElementById('openStakingBtn');
+        if (openStakingBtn && this.stakingUI) {
+            openStakingBtn.onclick = () => {
+                this.stakingUI.show();
+            };
+        }
+
+        // Setup difficulty adjustor toggle
+        const difficultyAdjustorToggle = document.getElementById('difficultyAdjustorToggle');
+        if (difficultyAdjustorToggle && this.difficultyAdjustor) {
+            difficultyAdjustorToggle.checked = this.difficultyAdjustor.isEnabled;
+            difficultyAdjustorToggle.onchange = (e) => {
+                if (e.target.checked) {
+                    this.difficultyAdjustor.start();
+                } else {
+                    this.difficultyAdjustor.stop();
+                }
+            };
+        }
+
+        // Connect staking manager to profit optimizer
+        if (this.stakingManager && this.profitOptimizer) {
+            // Update profit optimizer when staking data changes
+            this.stakingManager.loadStakingData().then(() => {
+                if (this.profitOptimizer && this.stakingManager.stakingRewards) {
+                    this.profitOptimizer.updateStakingData(this.stakingManager.stakingRewards);
+                }
+            });
+        }
     }
     
     /**
@@ -3851,6 +4092,58 @@ class MiningDashboard {
         }
     }
     
+    /**
+     * Load pool list for selection
+     */
+    async loadPoolList() {
+        try {
+            const response = await fetch('/api/pools');
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.pools) {
+                    const poolSelect = document.getElementById('poolSelect');
+                    if (poolSelect) {
+                        // Clear existing options except first
+                        poolSelect.innerHTML = '<option value="">Choose a pool...</option>';
+                        data.pools.forEach(pool => {
+                            const option = document.createElement('option');
+                            option.value = pool.id;
+                            option.textContent = `${pool.name} (${pool.feePercent} fee)`;
+                            poolSelect.appendChild(option);
+                        });
+                        const customOption = document.createElement('option');
+                        customOption.value = 'custom';
+                        customOption.textContent = 'Custom Pool';
+                        poolSelect.appendChild(customOption);
+                    }
+                }
+            }
+        } catch (error) {
+            console.error('Error loading pools:', error);
+        }
+    }
+
+    /**
+     * Display pool information
+     */
+    displayPoolInfo(pool) {
+        const poolInfo = document.getElementById('poolInfo');
+        if (!poolInfo) return;
+
+        document.getElementById('poolFee').textContent = pool.feePercent;
+        document.getElementById('poolPayout').textContent = pool.payout;
+        document.getElementById('poolMinPayout').textContent = pool.minPayout;
+        document.getElementById('poolUptime').textContent = pool.uptime;
+        document.getElementById('poolDescription').textContent = pool.description;
+        
+        const guideLink = document.getElementById('poolGuideLink');
+        if (guideLink) {
+            guideLink.href = '/docs/POOLS_GUIDE.md';
+        }
+
+        poolInfo.style.display = 'block';
+    }
+
     /**
      * Save miner configuration
      */

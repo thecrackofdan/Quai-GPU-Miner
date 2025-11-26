@@ -1,0 +1,16 @@
+[Unit]
+Description=QuaiMiner Auto-Reboot Watchdog
+After=network.target quaiminer.service
+
+[Service]
+Type=simple
+User=root
+ExecStart=/opt/quaiminer/auto-reboot-watchdog.sh
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

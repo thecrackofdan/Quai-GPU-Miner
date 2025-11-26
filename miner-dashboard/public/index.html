@@ -13,8 +13,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/merged-mining-wizard.css">
     <link rel="stylesheet" href="css/wizard-styles.css">
     <link rel="stylesheet" href="css/toast.css">
+    <link rel="stylesheet" href="css/quai-features.css">
+    <link rel="stylesheet" href="css/rewards.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
@@ -37,10 +40,13 @@
                         <span class="network-badge" id="networkType" style="display: none;"></span>
                         <span class="network-badge" id="miningMode">Solo Mining</span>
                         <span class="network-badge" id="mergedMiningStatus" style="display: none;">Merged Mining</span>
+                        <a href="/pools.html" class="network-badge" style="text-decoration: none; cursor: pointer; margin-left: 8px;" title="View available mining pools">📊 Pools</a>
                     </div>
                 </div>
                 <div class="header-right">
                     <div class="header-controls">
+                        <a href="/remote.html" class="btn-secondary" style="text-decoration: none; padding: 8px 12px; margin-right: 8px;" title="Remote Access & Download">🏠 Home</a>
+                        <a href="/mobile.html" class="btn-secondary" style="text-decoration: none; padding: 8px 12px; margin-right: 8px;" title="Mobile Dashboard">📱 Mobile</a>
                         <div class="interval-selector">
                             <label for="updateIntervalSelect" style="font-size: 0.85rem; color: var(--text-secondary); margin-right: 8px;">Update:</label>
                             <select id="updateIntervalSelect" class="interval-select">
@@ -155,12 +161,77 @@
             </div>
         </section>
 
+        <!-- Profit Optimizer Widget -->
+        <section class="profit-optimizer-section" style="margin-bottom: 2rem;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: var(--quai-primary);">
+                        💰 Auto Profit Optimizer
+                        <span class="info-icon" data-tooltip="Automatically switches between Quai Network chains (Prime, Regions, Zones) based on profitability AND staking rewards. Leverages Quai's unique multi-chain architecture and SOAP staking for maximum rewards.">ℹ️</span>
+                    </h3>
+                    <div>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="profitOptimizerToggle" style="width: 20px; height: 20px; accent-color: var(--quai-primary);">
+                            <span>Enable Auto-Switching</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="profitabilityWidget">
+                    <p style="color: var(--text-secondary);">Enable auto-switching to see chain profitability comparison (mining + staking)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Staking Widget -->
+        <section class="staking-section" style="margin-bottom: 2rem;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: var(--quai-primary);">
+                        💰 SOAP Staking
+                        <span class="info-icon" data-tooltip="Stake your QUAI/QI tokens to earn additional rewards. Staking rewards are automatically included in profit optimizer calculations for optimal chain selection.">ℹ️</span>
+                    </h3>
+                    <button class="btn-secondary" id="openStakingBtn" style="padding: 8px 16px;">
+                        Manage Staking
+                    </button>
+                </div>
+                <div id="stakingWidget">
+                    <p style="color: var(--text-secondary);">Loading staking information...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Difficulty Adjustor Widget -->
+        <section class="difficulty-adjustor-section" style="margin-bottom: 2rem;">
+            <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h3 style="margin: 0; color: var(--quai-primary);">
+                        ⚡ Difficulty Adjustor
+                        <span class="info-icon" data-tooltip="Automatically mines the chain with the lowest difficulty for maximum block discovery. Especially useful when blockchain scales and difficulty varies across chains.">ℹ️</span>
+                    </h3>
+                    <div>
+                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                            <input type="checkbox" id="difficultyAdjustorToggle" style="width: 20px; height: 20px; accent-color: var(--quai-primary);">
+                            <span>Enable Auto-Adjustment</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="difficultyAdjustorWidget">
+                    <p style="color: var(--text-secondary);">Enable auto-adjustment to see chain difficulty comparison</p>
+                </div>
+            </div>
+        </section>
+
         <!-- GPU Information Section - TOP PRIORITY -->
         <section class="gpu-section-top">
-            <h2 class="section-title-red">
-                🎯 GPU Performance
-                <span class="info-icon" data-tooltip="Detailed performance metrics for each GPU in your mining rig. Includes hash rate, temperature, fan speed, power consumption, and memory temperature for each graphics card.">ℹ️</span>
-            </h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 class="section-title-red" style="margin: 0;">
+                    🎯 GPU Performance
+                    <span class="info-icon" data-tooltip="Detailed performance metrics for each GPU in your mining rig. Includes hash rate, temperature, fan speed, power consumption, and memory temperature for each graphics card.">ℹ️</span>
+                </h2>
+                <button class="export-btn" id="gpuTuneBtn" title="Fine-tune GPU settings" style="margin-left: auto;">
+                    <span>⚙️</span> Fine-Tune GPUs
+                </button>
+            </div>
             <div class="gpu-grid" id="gpuGrid">
                 <!-- GPU cards will be dynamically generated -->
             </div>
@@ -481,9 +552,116 @@
         </div>
     </div>
 
+    <!-- Alerts Configuration Modal -->
+    <div id="alertsModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2>🔔 Alert Configuration</h2>
+                <button class="modal-close" id="closeAlertsBtn" aria-label="Close alerts modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="alertsError" class="error-message" style="display: none; margin-bottom: 1rem;"></div>
+                <div id="alertsSuccess" class="success-message" style="display: none; margin-bottom: 1rem;"></div>
+
+                <!-- Alert Channels -->
+                <h3 style="margin-bottom: 1rem; color: var(--quai-primary);">Alert Channels</h3>
+                
+                <!-- Email Alerts -->
+                <div class="setting-item" style="background: var(--bg-card); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <strong>Email Alerts</strong>
+                            <p class="setting-hint" style="margin: 4px 0 0 0;">Receive alerts via email</p>
+                        </div>
+                        <input type="checkbox" id="emailAlertsEnabled" style="width: 20px; height: 20px; accent-color: var(--quai-primary);">
+                    </label>
+                    <div id="emailConfig" style="margin-top: 1rem; display: none;">
+                        <input type="text" id="emailSmtpHost" placeholder="smtp.gmail.com" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <input type="number" id="emailSmtpPort" placeholder="587" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <input type="text" id="emailUsername" placeholder="your-email@gmail.com" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <input type="password" id="emailPassword" placeholder="App Password" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <input type="text" id="emailRecipients" placeholder="alert@example.com,admin@example.com" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                    </div>
+                </div>
+
+                <!-- Telegram Alerts -->
+                <div class="setting-item" style="background: var(--bg-card); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <strong>Telegram Alerts</strong>
+                            <p class="setting-hint" style="margin: 4px 0 0 0;">Receive alerts via Telegram bot</p>
+                        </div>
+                        <input type="checkbox" id="telegramAlertsEnabled" style="width: 20px; height: 20px; accent-color: var(--quai-primary);">
+                    </label>
+                    <div id="telegramConfig" style="margin-top: 1rem; display: none;">
+                        <input type="text" id="telegramBotToken" placeholder="Bot Token from @BotFather" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <input type="text" id="telegramChatId" placeholder="Chat ID (get from @userinfobot)" style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <p class="setting-hint" style="font-size: 0.8rem; margin-top: 4px;">Create a bot with @BotFather, then get your chat ID from @userinfobot</p>
+                    </div>
+                </div>
+
+                <!-- Discord Alerts -->
+                <div class="setting-item" style="background: var(--bg-card); padding: 1rem; border-radius: 8px; margin-bottom: 1rem;">
+                    <label style="display: flex; align-items: center; justify-content: space-between;">
+                        <div>
+                            <strong>Discord Alerts</strong>
+                            <p class="setting-hint" style="margin: 4px 0 0 0;">Receive alerts via Discord webhook</p>
+                        </div>
+                        <input type="checkbox" id="discordAlertsEnabled" style="width: 20px; height: 20px; accent-color: var(--quai-primary);">
+                    </label>
+                    <div id="discordConfig" style="margin-top: 1rem; display: none;">
+                        <input type="text" id="discordWebhookUrl" placeholder="https://discord.com/api/webhooks/..." style="width: 100%; padding: 8px; margin: 4px 0; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-dark); color: var(--text-primary);">
+                        <p class="setting-hint" style="font-size: 0.8rem; margin-top: 4px;">Create a webhook in your Discord server settings</p>
+                    </div>
+                </div>
+
+                <!-- Alert Rules -->
+                <h3 style="margin: 2rem 0 1rem 0; color: var(--quai-primary);">Alert Rules</h3>
+                <div id="alertRulesList">
+                    <!-- Alert rules will be dynamically generated -->
+                </div>
+
+                <div style="margin-top: 1.5rem; display: flex; gap: 10px;">
+                    <button class="btn-primary" id="saveAlertsBtn" style="flex: 1;">Save Alert Configuration</button>
+                    <button class="btn-secondary" id="testAlertsBtn">Test Alerts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flight Sheets Modal -->
+    <div id="flightSheetsModal" class="modal" style="display: none;">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2>📋 Flight Sheets (Mining Profiles)</h2>
+                <button class="modal-close" id="closeFlightSheetsBtn" aria-label="Close flight sheets modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="flightSheetsError" class="error-message" style="display: none; margin-bottom: 1rem;"></div>
+                <div id="flightSheetsSuccess" class="success-message" style="display: none; margin-bottom: 1rem;"></div>
+
+                <!-- Active Flight Sheet -->
+                <div style="background: var(--bg-dark); padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; border-left: 3px solid var(--quai-primary);">
+                    <strong style="color: var(--quai-primary);">Active Profile:</strong>
+                    <span id="activeFlightSheetName" style="margin-left: 8px;">None</span>
+                </div>
+
+                <!-- Flight Sheets List -->
+                <div id="flightSheetsList" style="margin-bottom: 1.5rem;">
+                    <!-- Flight sheets will be dynamically generated -->
+                </div>
+
+                <!-- Add New Flight Sheet -->
+                <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                    <button class="btn-secondary" id="addFlightSheetBtn" style="width: 100%;">+ Create New Flight Sheet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Miner Configuration Modal -->
     <div id="minerConfigModal" class="modal" style="display: none;">
-        <div class="modal-content" style="max-width: 600px;">
+        <div class="modal-content" style="max-width: 700px;">
             <div class="modal-header">
                 <h2>Miner Configuration</h2>
                 <button class="modal-close" id="closeMinerConfigBtn" aria-label="Close miner configuration modal">&times;</button>
@@ -492,13 +670,52 @@
                 <div id="minerConfigError" class="error-message" style="display: none; margin-bottom: 1rem;"></div>
                 <div id="minerConfigSuccess" class="success-message" style="display: none; margin-bottom: 1rem;"></div>
                 
+                <!-- Mining Mode Selection -->
                 <div class="setting-item">
                     <label>
-                        Stratum Proxy Address:
-                        <input type="text" id="stratumAddress" placeholder="stratum://localhost:3333" 
+                        Mining Mode:
+                        <select id="miningModeSelect" class="currency-select" style="width: 100%; margin-top: 4px;">
+                            <option value="solo">Solo Mining (Your Node)</option>
+                            <option value="pool">Pool Mining</option>
+                        </select>
+                    </label>
+                    <p class="setting-hint">Choose between solo mining (your node) or pool mining</p>
+                </div>
+
+                <!-- Pool Selection (shown when pool mode selected) -->
+                <div class="setting-item" id="poolSelectionItem" style="display: none;">
+                    <label>
+                        Select Pool:
+                        <select id="poolSelect" class="currency-select" style="width: 100%; margin-top: 4px;">
+                            <option value="">Choose a pool...</option>
+                            <option value="official">Quai Network Official (0.5% fee)</option>
+                            <option value="quaiminer">QuaiMiner Pool (1.0% fee)</option>
+                            <option value="quaihash">QuaiHash Pool (1.5% fee)</option>
+                            <option value="custom">Custom Pool</option>
+                        </select>
+                    </label>
+                    <p class="setting-hint">Select a mining pool or choose custom to enter your own</p>
+                    
+                    <!-- Pool Information Display -->
+                    <div id="poolInfo" style="margin-top: 12px; padding: 12px; background: var(--bg-dark); border-radius: 6px; border: 1px solid var(--border-color); display: none;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.85rem;">
+                            <div><strong>Fee:</strong> <span id="poolFee">-</span></div>
+                            <div><strong>Payout:</strong> <span id="poolPayout">-</span></div>
+                            <div><strong>Min Payout:</strong> <span id="poolMinPayout">-</span></div>
+                            <div><strong>Uptime:</strong> <span id="poolUptime">-</span></div>
+                        </div>
+                        <p id="poolDescription" style="margin-top: 8px; font-size: 0.8rem; color: var(--text-secondary);"></p>
+                        <a id="poolGuideLink" href="#" target="_blank" style="color: var(--quai-primary); font-size: 0.8rem; margin-top: 4px; display: block;">View Pool Guide →</a>
+                    </div>
+                </div>
+                
+                <div class="setting-item">
+                    <label>
+                        Stratum Address / Pool URL:
+                        <input type="text" id="stratumAddress" placeholder="stratum://localhost:3333 or stratum+tcp://pool.example.com:3333" 
                                style="width: 100%; padding: 8px; margin-top: 4px; border: 1px solid var(--border-color); border-radius: 4px; background: var(--bg-card); color: var(--text-primary);" />
                     </label>
-                    <p class="setting-hint">Your Quai node's stratum proxy address (for solo mining)</p>
+                    <p class="setting-hint">Your Quai node's stratum proxy (solo) or pool URL (pool mining)</p>
                 </div>
                 
                 <div class="setting-item">
@@ -565,6 +782,10 @@
                     <button class="btn-warning" id="restartMinerBtn">🔄 Restart</button>
                     <button class="btn-secondary" id="viewLogsBtn">📋 View Logs</button>
                     <button class="btn-secondary" id="openConfigBtn">⚙️ Configure</button>
+                    <button class="btn-secondary" id="openMergedMiningWizardBtn" title="Setup merged mining configuration">🔗 Merged Mining</button>
+                    <button class="btn-secondary" id="openAlertsBtn" title="Configure alerts">🔔 Alerts</button>
+                    <button class="btn-secondary" id="openFlightSheetsBtn" title="Mining profiles">📋 Profiles</button>
+                    <!-- One-Click Mining button will be added by one-click-mining.js -->
                 </div>
             </div>
             
@@ -622,7 +843,32 @@
     <script src="js/leaderboard.js"></script>
     <script src="js/achievements.js"></script>
     <script src="js/setup-wizard.js"></script>
+    <script src="js/enhanced-onboarding.js"></script>
     <script src="js/ml-features.js"></script>
+    <script src="js/pool-manager.js"></script>
+    <script src="js/gpu-tuner.js"></script>
+    <script src="js/pool-integration.js"></script>
+    <script src="js/merged-mining-wizard.js"></script>
+    <script src="js/profit-optimizer.js"></script>
+    <script src="js/multi-rig-manager.js"></script>
+    <script src="js/safe-evaluator.js"></script>
+    <script src="js/alert-manager.js"></script>
+    <script src="js/flight-sheets.js"></script>
+    <script src="js/alerts-ui.js"></script>
+    <script src="js/flight-sheets-ui.js"></script>
+    <script src="js/staking-manager.js"></script>
+    <script src="js/staking-ui.js"></script>
+    <script src="js/difficulty-adjustor.js"></script>
+    <script src="js/auto-setup.js"></script>
+    <script src="js/smart-defaults.js"></script>
+    <script src="js/one-click-mining.js"></script>
+    <script src="js/quai-features.js"></script>
+    <script src="js/enhanced-animations.js"></script>
+    <script src="js/error-handler.js"></script>
+    <script src="js/rewards-tracker.js"></script>
+    <script src="js/gpu-optimizer.js"></script>
+    <script src="js/stability-monitor.js"></script>
+    <script src="js/ui-improvements.js"></script>
     
     <!-- PWA Service Worker Registration -->
     <script>

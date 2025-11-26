@@ -1,0 +1,21 @@
+[Unit]
+Description=QuaiMiner CORE OS Dashboard
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=quaiminer
+WorkingDirectory=/opt/quaiminer-dashboard
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=NODE_RPC_URL=http://localhost:8545
+ExecStart=/usr/bin/node /opt/quaiminer-dashboard/server.js
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

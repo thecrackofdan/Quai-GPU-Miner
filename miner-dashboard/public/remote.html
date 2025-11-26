@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuaiMiner CORE OS - Remote Access & Download</title>
+    <meta name="description" content="QuaiMiner CORE OS - Complete mining operating system. Download, install, and access remotely.">
+    <meta name="theme-color" content="#FF0000">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/remote.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="remote-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1>⚡ QuaiMiner CORE OS</h1>
+                    <p class="tagline">Complete Mining Operating System for Quai Network</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="connectBtn">🔗 Connect to Rig</button>
+                    <a href="/index.html" class="btn-primary">📊 Full Dashboard</a>
+                    <a href="/mobile.html" class="btn-secondary">📱 Mobile View</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Connection Modal -->
+    <div class="modal" id="connectionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Connect to Mining Rig</h2>
+                <button class="modal-close" onclick="document.getElementById('connectionModal').style.display='none'">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <label>Rig IP Address or URL</label>
+                    <input type="text" id="rigUrlInput" placeholder="http://192.168.1.100:3000" value="">
+                    <small>Enter the IP address or domain of your mining rig</small>
+                </div>
+                <div class="input-group">
+                    <label>Rig Name (Optional)</label>
+                    <input type="text" id="rigNameInput" placeholder="My Mining Rig">
+                </div>
+                <div class="modal-actions">
+                    <button class="btn-primary" id="connectRigBtn">Connect</button>
+                    <button class="btn-secondary" onclick="document.getElementById('connectionModal').style.display='none'">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="remote-main">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container">
+                <div class="hero-content">
+                    <h2>Mine Quai Network Like a Pro</h2>
+                    <p class="hero-subtitle">Complete Linux OS for solo mining. USB bootable. Automated setup. Remote access.</p>
+                    <div class="hero-features">
+                        <div class="feature-badge">🚀 5-Minute Setup</div>
+                        <div class="feature-badge">💰 100% Rewards</div>
+                        <div class="feature-badge">🛡️ Full Control</div>
+                        <div class="feature-badge">🌐 Remote Access</div>
+                    </div>
+                <div class="hero-actions">
+                    <a href="#download" class="btn-primary large">📥 Download CORE OS</a>
+                    <a href="/dashboard" class="btn-secondary large">📊 Open Dashboard</a>
+                    <a href="#features" class="btn-secondary large">Learn More</a>
+                </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Access Section -->
+        <section class="quick-access-section">
+            <div class="container">
+                <h2 class="section-title">Quick Access</h2>
+                <div class="access-cards">
+                    <div class="access-card">
+                        <div class="access-icon">📊</div>
+                        <h3>Full Dashboard</h3>
+                        <p>Complete mining dashboard with charts, GPU monitoring, and advanced features</p>
+                        <a href="/index.html" class="access-link">Open Dashboard →</a>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">📱</div>
+                        <h3>Mobile Dashboard</h3>
+                        <p>Mobile-optimized interface for remote monitoring on your phone</p>
+                        <a href="/mobile.html" class="access-link">Open Mobile →</a>
+                    </div>
+                    <div class="access-card">
+                        <div class="access-icon">🔗</div>
+                        <h3>Connect to Rig</h3>
+                        <p>Connect to your mining rig remotely using IP address or domain</p>
+                        <button class="access-link-btn" onclick="document.getElementById('connectionModal').style.display='block'">Connect →</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Download Section -->
+        <section class="download-section" id="download">
+            <div class="container">
+                <h2 class="section-title">Download QuaiMiner CORE OS</h2>
+                <p class="section-subtitle">Choose your installation method</p>
+
+                <!-- Download Options -->
+                <div class="download-options">
+                    <div class="download-card">
+                        <div class="download-header">
+                            <h3>📥 USB Bootable Image</h3>
+                            <span class="badge recommended">Recommended</span>
+                        </div>
+                        <p>Complete OS image ready to flash to USB drive. Boot directly from USB.</p>
+                        <div class="download-info">
+                            <div class="info-item">
+                                <strong>Size:</strong> ~2GB
+                            </div>
+                            <div class="info-item">
+                                <strong>Format:</strong> ISO
+                            </div>
+                            <div class="info-item">
+                                <strong>Platform:</strong> Linux x64
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <button class="btn-primary" onclick="showDownloadInstructions('usb')">Download & Instructions</button>
+                        </div>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="download-header">
+                            <h3>🔧 Automated Installer</h3>
+                            <span class="badge">Easy Setup</span>
+                        </div>
+                        <p>Automated installation script for existing Linux systems. Detects hardware and configures automatically.</p>
+                        <div class="download-info">
+                            <div class="info-item">
+                                <strong>Size:</strong> ~50MB
+                            </div>
+                            <div class="info-item">
+                                <strong>Format:</strong> Shell Script
+                            </div>
+                            <div class="info-item">
+                                <strong>Platform:</strong> Linux (Ubuntu/Debian)
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <a href="https://github.com/thecrackofdan/quaiminer-core" target="_blank" class="btn-secondary" style="text-decoration: none; display: inline-block; margin-right: 8px;">📦 GitHub</a>
+                            <button class="btn-primary" onclick="showDownloadInstructions('installer')">📖 Instructions</button>
+                        </div>
+                    </div>
+
+                    <div class="download-card">
+                        <div class="download-header">
+                            <h3>🐳 Docker Container</h3>
+                            <span class="badge">Advanced</span>
+                        </div>
+                        <p>Docker container for containerized deployment. Works on any Docker-compatible system.</p>
+                        <div class="download-info">
+                            <div class="info-item">
+                                <strong>Size:</strong> ~500MB
+                            </div>
+                            <div class="info-item">
+                                <strong>Format:</strong> Docker Image
+                            </div>
+                            <div class="info-item">
+                                <strong>Platform:</strong> Any (Docker)
+                            </div>
+                        </div>
+                        <div class="download-actions">
+                            <a href="https://github.com/thecrackofdan/quaiminer-core" target="_blank" class="btn-secondary" style="text-decoration: none; display: inline-block; margin-right: 8px;">📦 GitHub</a>
+                            <button class="btn-primary" onclick="showDownloadInstructions('docker')">📖 Instructions</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Installation Instructions Modal -->
+        <div class="modal" id="instructionsModal">
+            <div class="modal-content large">
+                <div class="modal-header">
+                    <h2 id="instructionsTitle">Installation Instructions</h2>
+                    <button class="modal-close" onclick="document.getElementById('instructionsModal').style.display='none'">&times;</button>
+                </div>
+                <div class="modal-body" id="instructionsContent">
+                    <!-- Instructions will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">Why QuaiMiner CORE OS?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>Automated Setup</h3>
+                        <p>One-click installation. Hardware auto-detection. Optimal settings applied automatically.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💰</div>
+                        <h3>100% Solo Mining</h3>
+                        <p>Mine directly to your own Quai node. Keep 100% of block rewards. No pool fees.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🌐</div>
+                        <h3>Remote Access</h3>
+                        <p>Monitor and control your rigs from anywhere. Web dashboard. Mobile app. Full remote control.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔗</div>
+                        <h3>Merged Mining</h3>
+                        <p>Mine multiple Quai chains simultaneously. Prime, Regions, and Zones. Maximum rewards.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3>Privacy First</h3>
+                        <p>No tracking. No data collection. Local storage only. Your mining, your data.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Real-Time Monitoring</h3>
+                        <p>Live statistics. GPU monitoring. Temperature tracking. Power consumption. Historical charts.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- System Requirements -->
+        <section class="requirements-section">
+            <div class="container">
+                <h2 class="section-title">System Requirements</h2>
+                <div class="requirements-grid">
+                    <div class="requirement-card">
+                        <h3>Hardware</h3>
+                        <ul>
+                            <li>AMD or NVIDIA GPU</li>
+                            <li>4GB RAM minimum</li>
+                            <li>10GB free disk space</li>
+                            <li>USB 2.0+ port (for bootable)</li>
+                            <li>Network connection</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-card">
+                        <h3>Software</h3>
+                        <ul>
+                            <li>Linux kernel 5.4+</li>
+                            <li>AMD: ROCm 5.0+ or Mesa</li>
+                            <li>NVIDIA: Driver 470+</li>
+                            <li>Quai Network node (for solo mining)</li>
+                        </ul>
+                    </div>
+                    <div class="requirement-card">
+                        <h3>Network</h3>
+                        <ul>
+                            <li>Internet connection</li>
+                            <li>Port 3000 (dashboard)</li>
+                            <li>Port 8545 (Quai node RPC)</li>
+                            <li>Port 3333 (stratum proxy)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Guide -->
+        <section class="quickstart-section">
+            <div class="container">
+                <h2 class="section-title">Quick Start Guide</h2>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Download</h3>
+                        <p>Download the USB bootable image or automated installer</p>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Install</h3>
+                        <p>Flash to USB or run installer. Follow on-screen instructions</p>
+                    </div>
+                    <div class="step-number">3</div>
+                    <h3>Configure</h3>
+                    <p>Enter your Quai node RPC URL and wallet address</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3>Start Mining</h3>
+                    <p>Click "Start Mining" and monitor from dashboard</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Remote Access Info -->
+        <section class="remote-info-section">
+            <div class="container">
+                <h2 class="section-title">Remote Access</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🌐 Local Network</h3>
+                        <p>Access your rig from any device on the same network:</p>
+                        <code>http://RIG-IP-ADDRESS:3000</code>
+                        <p class="info-note">Find your rig's IP in the dashboard or use: <code>ip addr</code></p>
+                    </div>
+                    <div class="info-card">
+                        <h3>🔒 Secure Remote Access</h3>
+                        <p>For remote access outside your network:</p>
+                        <ul>
+                            <li>Use VPN (recommended)</li>
+                            <li>Set up port forwarding</li>
+                            <li>Use SSH tunnel</li>
+                            <li>Configure firewall rules</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>📱 Mobile Access</h3>
+                        <p>Access from your phone or tablet:</p>
+                        <ul>
+                            <li>Open mobile dashboard</li>
+                            <li>Configure rig IP address</li>
+                            <li>Install as PWA app</li>
+                            <li>Monitor on the go</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Section -->
+        <section class="support-section">
+            <div class="container">
+                <h2 class="section-title">Need Help?</h2>
+                <div class="support-cards">
+                    <div class="support-card">
+                        <h3>📚 Documentation</h3>
+                        <p>Complete guides and tutorials</p>
+                        <a href="https://github.com/thecrackofdan/quaiminer-core" class="support-link">View Docs →</a>
+                    </div>
+                    <div class="support-card">
+                        <h3>💬 Community</h3>
+                        <p>Get help from the community</p>
+                        <a href="https://discord.gg/quai" class="support-link">Join Discord →</a>
+                    </div>
+                    <div class="support-card">
+                        <h3>🐛 Issues</h3>
+                        <p>Report bugs or request features</p>
+                        <a href="https://github.com/thecrackofdan/quaiminer-core/issues" class="support-link">GitHub Issues →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="remote-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>QuaiMiner CORE OS</h4>
+                    <p>Open source mining OS for Quai Network</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="/dashboard">Dashboard</a></li>
+                        <li><a href="/mobile.html">Mobile</a></li>
+                        <li><a href="/remote.html">Home</a></li>
+                        <li><a href="#download">Download</a></li>
+                        <li><a href="https://github.com/thecrackofdan/quaiminer-core" target="_blank">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Quai Network</h4>
+                    <ul>
+                        <li><a href="https://qu.ai">Website</a></li>
+                        <li><a href="https://docs.qu.ai">Documentation</a></li>
+                        <li><a href="https://discord.gg/quai">Discord</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 QuaiMiner CORE OS. Open Source. Privacy First.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/remote.js"></script>
+</body>
+</html>
+

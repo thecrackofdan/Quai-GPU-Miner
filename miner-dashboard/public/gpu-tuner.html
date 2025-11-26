@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Fine-Tuning - QuaiMiner CORE OS</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .tuner-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .tuner-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .gpu-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--quai-primary);
+        }
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        .setting-control {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .setting-control label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .setting-control input[type="range"] {
+            width: 100%;
+            accent-color: var(--quai-primary);
+        }
+        .setting-control input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            color: var(--text-primary);
+        }
+        .setting-value {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .value-display {
+            font-weight: 600;
+            color: var(--quai-primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .optimal-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--success-color);
+            color: #000;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            margin-left: 8px;
+        }
+        .impact-preview {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            border-left: 3px solid var(--quai-primary);
+        }
+        .impact-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 4px 0;
+            font-size: 0.85rem;
+        }
+        .impact-positive {
+            color: var(--success-color);
+        }
+        .impact-negative {
+            color: var(--danger-color);
+        }
+        .preset-buttons {
+            display: flex;
+            gap: 8px;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div>
+                    <h1>⚡ QuaiMiner CORE OS</h1>
+                    <div class="network-info">
+                        <span class="network-badge">GPU Fine-Tuning</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <a href="/" class="export-btn" style="text-decoration: none;">
+                        <span>←</span> Back to Dashboard
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <section style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+            <h2 class="section-title-red">GPU Fine-Tuning</h2>
+            <p style="margin-bottom: 2rem; color: var(--text-secondary);">
+                Fine-tune your GPU settings for optimal performance. The OS has auto-detected optimal settings, 
+                but you can override them here for advanced tuning.
+            </p>
+
+            <div id="gpuTuners">
+                <!-- GPU tuning cards will be dynamically generated -->
+                <div class="tuner-card">
+                    <div class="tuner-header">
+                        <div>
+                            <div class="gpu-name">GPU 0: Loading...</div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+                                Auto-detected optimal settings applied
+                            </div>
+                        </div>
+                        <button class="btn-secondary" onclick="resetToOptimal(0)">Reset to Optimal</button>
+                    </div>
+                    <p style="color: var(--text-muted);">Loading GPU information...</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/gpu-tuner.js"></script>
+    <script>
+        // Initialize GPU tuner
+        let gpuTuner;
+        
+        async function initTuner() {
+            // Load GPU information
+            try {
+                const response = await fetch('/api/gpu/list');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.gpus) {
+                        renderGPUTuners(data.gpus);
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading GPUs:', error);
+            }
+        }
+
+        function renderGPUTuners(gpus) {
+            const container = document.getElementById('gpuTuners');
+            container.innerHTML = '';
+
+            gpus.forEach((gpu, index) => {
+                const card = createGPUTunerCard(gpu, index);
+                container.appendChild(card);
+            });
+        }
+
+        function createGPUTunerCard(gpu, index) {
+            const card = document.createElement('div');
+            card.className = 'tuner-card';
+            card.innerHTML = `
+                <div class="tuner-header">
+                    <div>
+                        <div class="gpu-name">GPU ${index}: ${gpu.name || gpu.model || 'Unknown'}</div>
+                        <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+                            ${gpu.vendor || ''} ${gpu.model || ''} | Current: ${gpu.hashRate || 0} MH/s
+                        </div>
+                    </div>
+                    <button class="btn-secondary" onclick="resetToOptimal(${index})">Reset to Optimal</button>
+                </div>
+                <div class="settings-grid">
+                    ${createSettingControl('Core Clock', 'coreClock', gpu.coreClock || 0, 'MHz', gpu.optimalCoreClock)}
+                    ${createSettingControl('Memory Clock', 'memoryClock', gpu.memoryClock || 0, 'MHz', gpu.optimalMemoryClock)}
+                    ${createSettingControl('Power Limit', 'powerLimit', gpu.powerLimit || 0, '%', gpu.optimalPowerLimit)}
+                    ${createSettingControl('Fan Speed', 'fanSpeed', gpu.fanSpeed || 50, '%', gpu.optimalFanSpeed)}
+                    ${createSettingControl('Voltage', 'voltage', gpu.voltage || 0, 'mV', gpu.optimalVoltage)}
+                    ${createSettingControl('Intensity', 'intensity', gpu.intensity || 0, '', gpu.optimalIntensity)}
+                </div>
+                <div class="impact-preview" id="impact-${index}">
+                    <div style="font-weight: 600; margin-bottom: 8px;">Estimated Impact:</div>
+                    <div class="impact-item">
+                        <span>Hash Rate:</span>
+                        <span class="value-display">+0.0 MH/s</span>
+                    </div>
+                    <div class="impact-item">
+                        <span>Power Usage:</span>
+                        <span class="value-display">+0 W</span>
+                    </div>
+                    <div class="impact-item">
+                        <span>Efficiency:</span>
+                        <span class="value-display">0.0 MH/s per Watt</span>
+                    </div>
+                </div>
+                <div class="preset-buttons">
+                    <button class="btn-primary" onclick="applySettings(${index})">Apply Settings</button>
+                    <button class="btn-secondary" onclick="testSettings(${index})">Test (60s)</button>
+                    <button class="btn-secondary" onclick="savePreset(${index})">Save as Preset</button>
+                </div>
+            `;
+            return card;
+        }
+
+        function createSettingControl(label, id, value, unit, optimal) {
+            const isOptimal = Math.abs(value - optimal) < 1;
+            return `
+                <div class="setting-control">
+                    <label>
+                        ${label}
+                        ${isOptimal ? '<span class="optimal-badge">Optimal</span>' : ''}
+                    </label>
+                    <div class="setting-value">
+                        <input type="range" 
+                               id="${id}-${id}" 
+                               min="${getMin(id)}" 
+                               max="${getMax(id)}" 
+                               step="${getStep(id)}" 
+                               value="${value}"
+                               oninput="updateValue('${id}', ${id}, '${unit}')">
+                        <input type="number" 
+                               id="${id}-num-${id}" 
+                               value="${value}" 
+                               min="${getMin(id)}" 
+                               max="${getMax(id)}" 
+                               step="${getStep(id)}"
+                               onchange="updateSlider('${id}', this.value)"
+                               style="width: 100px;">
+                        <span class="value-display">${value} ${unit}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getMin(setting) {
+            const mins = {
+                coreClock: -500,
+                memoryClock: -1000,
+                powerLimit: -50,
+                fanSpeed: 0,
+                voltage: -200,
+                intensity: 0
+            };
+            return mins[setting] || 0;
+        }
+
+        function getMax(setting) {
+            const maxs = {
+                coreClock: 500,
+                memoryClock: 2000,
+                powerLimit: 50,
+                fanSpeed: 100,
+                voltage: 200,
+                intensity: 30
+            };
+            return maxs[setting] || 100;
+        }
+
+        function getStep(setting) {
+            const steps = {
+                coreClock: 5,
+                memoryClock: 10,
+                powerLimit: 1,
+                fanSpeed: 1,
+                voltage: 5,
+                intensity: 1
+            };
+            return steps[setting] || 1;
+        }
+
+        function updateValue(setting, gpuIndex, unit) {
+            const slider = document.getElementById(`${setting}-${setting}`);
+            const number = document.getElementById(`${setting}-num-${setting}`);
+            const display = slider.nextElementSibling;
+            
+            number.value = slider.value;
+            display.textContent = `${slider.value} ${unit}`;
+            
+            updateImpactPreview(gpuIndex);
+        }
+
+        function updateSlider(setting, value) {
+            const slider = document.getElementById(`${setting}-${setting}`);
+            slider.value = value;
+            updateValue(setting, 0, getUnit(setting));
+        }
+
+        function getUnit(setting) {
+            const units = {
+                coreClock: 'MHz',
+                memoryClock: 'MHz',
+                powerLimit: '%',
+                fanSpeed: '%',
+                voltage: 'mV',
+                intensity: ''
+            };
+            return units[setting] || '';
+        }
+
+        function updateImpactPreview(gpuIndex) {
+            // Calculate and display impact
+            // This would use the GPUTuner class
+        }
+
+        async function applySettings(gpuIndex) {
+            // Get all settings from the card
+            const settings = {
+                coreClock: parseFloat(document.getElementById(`coreClock-num-coreClock`).value),
+                memoryClock: parseFloat(document.getElementById(`memoryClock-num-memoryClock`).value),
+                powerLimit: parseFloat(document.getElementById(`powerLimit-num-powerLimit`).value),
+                fanSpeed: parseFloat(document.getElementById(`fanSpeed-num-fanSpeed`).value),
+                voltage: parseFloat(document.getElementById(`voltage-num-voltage`).value),
+                intensity: parseFloat(document.getElementById(`intensity-num-intensity`).value)
+            };
+
+            try {
+                const response = await fetch(`/api/gpu/${gpuIndex}/settings`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(settings)
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success) {
+                        if (typeof Toast !== 'undefined') {
+                            Toast.success('GPU settings applied successfully!');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error applying settings:', error);
+                if (typeof Toast !== 'undefined') {
+                    Toast.error('Failed to apply settings');
+                }
+            }
+        }
+
+        async function resetToOptimal(gpuIndex) {
+            try {
+                const response = await fetch(`/api/gpu/${gpuIndex}/reset`, {
+                    method: 'POST'
+                });
+
+                if (response.ok) {
+                    if (typeof Toast !== 'undefined') {
+                        Toast.success('Reset to optimal settings');
+                    }
+                    initTuner(); // Reload
+                }
+            } catch (error) {
+                console.error('Error resetting:', error);
+            }
+        }
+
+        function testSettings(gpuIndex) {
+            // Apply settings temporarily
+            applySettings(gpuIndex);
+            if (typeof Toast !== 'undefined') {
+                Toast.info('Testing settings for 60 seconds...');
+            }
+        }
+
+        function savePreset(gpuIndex) {
+            const name = prompt('Enter preset name:');
+            if (name) {
+                // Save preset
+                if (typeof Toast !== 'undefined') {
+                    Toast.success('Preset saved!');
+                }
+            }
+        }
+
+        // Initialize on load
+        window.addEventListener('load', initTuner);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,15 @@
+[Unit]
+Description=QuaiMiner CORE OS First Boot Setup
+After=network-online.target
+Before=quaiminer-dashboard.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/quaiminer-setup
+RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

@@ -1,0 +1,19 @@
+[Unit]
+Description=Quai GPU Miner Service
+After=network.target quaiminer-dashboard.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=quaiminer
+WorkingDirectory=/opt/quaiminer
+EnvironmentFile=/etc/quaiminer/environment
+ExecStart=/opt/quaiminer/quai-gpu-miner
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
+

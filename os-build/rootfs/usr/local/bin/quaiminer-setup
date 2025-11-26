@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# QuaiMiner CORE OS - First Boot Setup Script
+# Runs automatically on first boot to configure the system
+
+SETUP_FLAG="/etc/quaiminer/.setup-complete"
+
+if [ -f "$SETUP_FLAG" ]; then
+    echo "Setup already completed."
+    exit 0
+fi
+
+echo "⚡ QuaiMiner CORE OS - First Boot Setup"
+echo "======================================="
+echo ""
+
+# Create quaiminer user if it doesn't exist
+if ! id "quaiminer" &>/dev/null; then
+    echo "👤 Creating quaiminer user..."
+    useradd -r -m -s /bin/bash -G sudo,adm quaiminer
+    echo "quaiminer:quaiminer" | chpasswd
+    echo "✅ User created"
+fi
+
+# Create directories
+echo "📁 Creating directories..."
+mkdir -p /opt/quaiminer
+mkdir -p /opt/quaiminer-dashboard
+mkdir -p /etc/quaiminer
+mkdir -p /var/log/quaiminer
+chown -R quaiminer:quaiminer /opt/quaiminer
+chown -R quaiminer:quaiminer /opt/quaiminer-dashboard
+chown -R quaiminer:quaiminer /var/log/quaiminer
+
+# Detect GPU and install drivers
+echo ""
+echo "🎮 Detecting GPU..."
+if lspci | grep -i "nvidia" > /dev/null; then
+    echo "✅ NVIDIA GPU detected"
+    GPU_TYPE="nvidia"
+elif lspci | grep -i "radeon\|amd" > /dev/null; then
+    echo "✅ AMD GPU detected"
+    GPU_TYPE="amd"
+    # Install AMD drivers
+    apt-get update
+    apt-get install -y \
+        ocl-icd-opencl-dev \
+        clinfo \
+        amdgpu-dkms
+else
+    echo "⚠️  No GPU detected"
+    GPU_TYPE="unknown"
+fi
+
+# Get network IP
+IP_ADDRESS=$(hostname -I | awk '{print $1}')
+
+# Display dashboard access info
+echo ""
+echo "✅ Setup complete!"
+echo ""
+echo "🌐 Dashboard Access:"
+echo "   http://${IP_ADDRESS}:3000"
+echo "   http://localhost:3000"
+echo ""
+echo "📝 Default credentials:"
+echo "   Username: admin"
+echo "   Password: admin"
+echo ""
+
+# Mark setup as complete
+touch "$SETUP_FLAG"
+
+# Enable and start services
+systemctl enable quaiminer-dashboard.service
+systemctl start quaiminer-dashboard.service
+
+echo "🚀 Dashboard service started!"
+echo ""
+

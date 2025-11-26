@@ -1,0 +1,114 @@
+/* Merged Mining Wizard Styles */
+
+.wizard-step {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.wizard-progress {
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    height: 4px;
+    background: var(--bg-dark);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar > div {
+    height: 100%;
+    background: var(--quai-primary);
+    transition: width 0.3s ease;
+}
+
+.wizard-step h3 {
+    color: var(--quai-primary);
+    margin-bottom: 1rem;
+}
+
+.wizard-step h4 {
+    color: var(--text-primary);
+    margin: 1.5rem 0 0.5rem 0;
+}
+
+.wizard-step input[type="checkbox"] {
+    accent-color: var(--quai-primary);
+    cursor: pointer;
+}
+
+.wizard-step input[type="text"] {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.wizard-step label {
+    cursor: pointer;
+}
+
+.wizard-step code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-dark);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+/* Chain selection cards */
+.wizard-step .chain-card {
+    background: var(--bg-card);
+    padding: 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s;
+}
+
+.wizard-step .chain-card:hover {
+    border-color: var(--quai-primary);
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.1);
+}
+
+.wizard-step .chain-card input[type="checkbox"]:checked + div {
+    color: var(--quai-primary);
+}
+
+/* Wallet input styling */
+.wizard-step input[type="text"][id^="wallet-"] {
+    transition: border-color 0.2s;
+}
+
+.wizard-step input[type="text"][id^="wallet-"]:focus {
+    border-color: var(--quai-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.1);
+}
+
+/* Review section */
+#configReview {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#configReview code {
+    word-break: break-all;
+    display: block;
+    margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .wizard-step .chain-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+

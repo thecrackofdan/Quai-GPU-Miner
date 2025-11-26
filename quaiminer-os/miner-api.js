@@ -165,6 +165,12 @@ async function updateConfig(updates) {
             config.depool.port = updates.depoolPort;
         }
         
+        // Merged mining configuration
+        if (updates.mining && updates.mining.mergedMining) {
+            if (!config.mining) config.mining = {};
+            config.mining.mergedMining = updates.mining.mergedMining;
+        }
+        
         // For solo mining, verify node is synced if required
         if (config.node.requireSynced && config.node.rpcUrl) {
             const isSynced = await checkNodeSynced(config.node.rpcUrl);
