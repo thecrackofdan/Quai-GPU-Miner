@@ -14,16 +14,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/wizard-styles.css">
+    <link rel="stylesheet" href="css/toast.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
+    <!-- Skip to main content (accessibility) -->
+    <a href="#main-content" class="skip-to-main">Skip to main content</a>
     <!-- Loading indicator (removed when dashboard loads) -->
     <div id="loadingIndicator" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; font-family: Arial;">
         <h1 style="color: #FF0000; margin-bottom: 20px;">⚡ QuaiMiner CORE OS</h1>
         <p>Loading dashboard...</p>
         <p id="loadingStatus" style="color: #888; margin-top: 10px; font-size: 0.9rem;">Initializing...</p>
     </div>
-    <div class="dashboard-container">
+    <div class="dashboard-container" id="main-content">
         <!-- Header -->
         <header class="dashboard-header">
             <div class="header-content">
@@ -50,15 +53,15 @@
                                 <option value="60000">1 min</option>
                             </select>
                         </div>
-                        <button class="export-btn" id="exportDataBtn" title="Export mining data">
+                        <button class="export-btn" id="exportDataBtn" title="Export mining data" aria-label="Export mining data">
                             <span>📥</span> Export
                         </button>
-                        <button class="settings-btn" id="settingsBtn" title="Settings">
+                        <button class="settings-btn" id="settingsBtn" title="Settings" aria-label="Open settings">
                             <span>⚙️</span>
                         </button>
                     </div>
-                    <div class="status-indicator">
-                        <span class="status-dot" id="statusDot"></span>
+                    <div class="status-indicator" role="status" aria-live="polite" aria-atomic="true">
+                        <span class="status-dot" id="statusDot" aria-hidden="true"></span>
                         <span id="statusText">Connecting...</span>
                     </div>
                     <!-- Pelagus Wallet Connection -->
@@ -430,7 +433,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h2>Dashboard Settings</h2>
-                <button class="modal-close" id="closeSettingsBtn">&times;</button>
+                        <button class="modal-close" id="closeSettingsBtn" aria-label="Close settings modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div class="setting-item">
@@ -483,7 +486,7 @@
         <div class="modal-content" style="max-width: 600px;">
             <div class="modal-header">
                 <h2>Miner Configuration</h2>
-                <button class="modal-close" id="closeMinerConfigBtn">&times;</button>
+                <button class="modal-close" id="closeMinerConfigBtn" aria-label="Close miner configuration modal">&times;</button>
             </div>
             <div class="modal-body">
                 <div id="minerConfigError" class="error-message" style="display: none; margin-bottom: 1rem;"></div>
@@ -609,6 +612,7 @@
 
     <!-- Inline debug script -->
     <script src="js/utils.js"></script>
+    <script src="js/toast.js"></script>
     <script src="js/config.js"></script>
     <script src="js/dashboard.js"></script>
     <script src="js/historical-charts.js"></script>

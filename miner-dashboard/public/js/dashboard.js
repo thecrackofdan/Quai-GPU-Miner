@@ -2802,6 +2802,14 @@ class MiningDashboard {
         while (logsContainer.children.length > CONFIG.display.maxLogEntries) {
             logsContainer.removeChild(logsContainer.lastChild);
         }
+        
+        // Show toast notification for important messages (errors, successes, warnings)
+        if (typeof Toast !== 'undefined' && (type === 'error' || type === 'success' || type === 'warning')) {
+            const toastType = type === 'error' ? 'error' : type === 'success' ? 'success' : 'warning';
+            Toast[toastType](message, {
+                duration: type === 'error' ? 7000 : type === 'success' ? 4000 : 5000
+            });
+        }
     }
 
     // Method to connect to real mining software API
