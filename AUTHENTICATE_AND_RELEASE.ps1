@@ -18,7 +18,7 @@ if (-not (Get-Command gh -ErrorAction SilentlyContinue)) {
 
 # Check authentication
 Write-Host "🔐 Checking authentication..." -ForegroundColor Yellow
-$authStatus = gh auth status 2>&1
+gh auth status 2>&1 | Out-Null
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "⚠️  Not authenticated. Starting authentication..." -ForegroundColor Yellow
