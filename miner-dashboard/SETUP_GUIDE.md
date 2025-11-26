@@ -25,7 +25,7 @@ npm install better-sqlite3 --build-from-source=false
 ### Linux/Mac Setup
 ```bash
 # Install dependencies
-sudo apt-get install build-essential python3  # Ubuntu/Debian
+sudo apt-get install build-essential python3  # Ubuntu 20.04, 22.04, 24.04+
 # or
 brew install python3  # macOS
 

@@ -34,7 +34,7 @@ const NODE_ENV = process.env.NODE_ENV || 'production';
 // Log startup info
 if (NODE_ENV === 'development') {
     console.log('========================================');
-    console.log('  QuaiMiner CORE Dashboard Server');
+    console.log('  QuaiMiner CORE OS Dashboard Server');
     console.log('========================================');
 }
 console.log(`Server starting on port ${PORT}`);
@@ -312,23 +312,46 @@ app.get('/api/export/json', optionalAuth, async (req, res) => {
     }
 });
 
-// Miner control endpoints (for QuaiMiner OS integration)
+// Miner control endpoints (for QuaiMiner OS integration - Multi-GPU support)
 let minerAPI = null;
 try {
-    minerAPI = require('../quaiminer-os/miner-api.js');
+    // Try multi-GPU API first
+    minerAPI = require('../quaiminer-os/miner-api-multigpu.js');
+    console.log('✅ Multi-GPU Miner API loaded');
 } catch (error) {
-    console.warn('QuaiMiner OS API not available:', error.message);
-    // Create a mock API for development
-    minerAPI = {
-        getMinerStatus: async () => ({ status: 'unavailable', error: 'QuaiMiner OS not installed' }),
-        startMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
-        stopMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
-        restartMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
-        getConfig: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
-        updateConfig: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
-        getMinerLogs: async () => ({ success: false, error: 'QuaiMiner OS not installed' })
+    try {
+        // Fallback to single-GPU API
+        minerAPI = require('../quaiminer-os/miner-api.js');
+        console.log('✅ Single-GPU Miner API loaded');
+    } catch (error2) {
+        console.warn('QuaiMiner OS API not available:', error2.message);
+        // Create a mock API for development
+        minerAPI = {
+            getGPUs: async () => [],
+            getMinerStatus: async () => ({ status: 'unavailable', error: 'QuaiMiner OS not installed', gpu_count: 0, gpus: [] }),
+            startMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
+            stopMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
+            restartMiner: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
+            getConfig: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
+            updateConfig: async () => ({ success: false, error: 'QuaiMiner OS not installed' }),
+            getMinerLogs: async () => ({ success: false, error: 'QuaiMiner OS not installed' })
     };
 }
+
+// GPU information endpoint (multi-GPU support)
+app.get('/api/gpus', async (req, res) => {
+    try {
+        if (minerAPI.getGPUs) {
+            const gpus = await minerAPI.getGPUs();
+            res.json({ success: true, gpus });
+        } else {
+            res.json({ success: false, error: 'GPU API not available', gpus: [] });
+        }
+    } catch (error) {
+        console.error('Error getting GPUs:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
 
 app.get('/api/miner/status', async (req, res) => {
     try {
@@ -342,7 +365,9 @@ app.get('/api/miner/status', async (req, res) => {
 
 app.post('/api/miner/start', async (req, res) => {
     try {
-        const result = await minerAPI.startMiner();
+        // Support multi-GPU: accept gpu_indices array in request body
+        const gpuIndices = req.body.gpu_indices || null;
+        const result = await minerAPI.startMiner(gpuIndices);
         res.json(result);
     } catch (error) {
         console.error('Error starting miner:', error);
@@ -352,7 +377,9 @@ app.post('/api/miner/start', async (req, res) => {
 
 app.post('/api/miner/stop', async (req, res) => {
     try {
-        const result = await minerAPI.stopMiner();
+        // Support multi-GPU: accept gpu_index in request body (null = stop all)
+        const gpuIndex = req.body.gpu_index !== undefined ? req.body.gpu_index : null;
+        const result = await minerAPI.stopMiner(gpuIndex);
         res.json(result);
     } catch (error) {
         console.error('Error stopping miner:', error);
@@ -394,7 +421,8 @@ app.post('/api/miner/config', async (req, res) => {
 app.get('/api/miner/logs', async (req, res) => {
     try {
         const lines = parseInt(req.query.lines) || 100;
-        const result = await minerAPI.getMinerLogs(lines);
+        const gpuIndex = req.query.gpu_index !== undefined ? parseInt(req.query.gpu_index) : null;
+        const result = await minerAPI.getMinerLogs(gpuIndex, lines);
         res.json(result);
     } catch (error) {
         console.error('Error getting miner logs:', error);
@@ -625,7 +653,7 @@ app.get('*', (req, res) => {
 // Start server
 app.listen(PORT, () => {
     if (NODE_ENV === 'development') {
-        console.log(`🚀 QuaiMiner CORE Dashboard running on http://localhost:${PORT}`);
+        console.log(`🚀 QuaiMiner CORE OS Dashboard running on http://localhost:${PORT}`);
         console.log(`📊 Open your browser and navigate to the URL above`);
         console.log(`🔗 Node RPC: ${NODE_RPC_URL}`);
     } else {

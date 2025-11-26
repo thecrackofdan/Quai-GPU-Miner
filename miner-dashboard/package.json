@@ -1,7 +1,7 @@
 {
-  "name": "quaiminer-core-dashboard",
+  "name": "quaiminer-core-os-dashboard",
   "version": "1.0.0",
-  "description": "QuaiMiner CORE - Production-ready real-time dashboard for solo mining Quai Network with your own node",
+  "description": "QuaiMiner CORE OS - Complete mining operating system with real-time dashboard for solo mining Quai Network",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -15,7 +15,7 @@
     "docker:logs": "docker-compose logs -f"
   },
   "keywords": [
-    "quaiminer-core",
+    "quaiminer-core-os",
     "quaiminer",
     "mining",
     "dashboard",
@@ -59,11 +59,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/thecrackofdan/quaiminer-core.git",
+    "url": "https://github.com/thecrackofdan/quaiminer-core-os.git",
     "directory": "miner-dashboard"
   },
   "bugs": {
-    "url": "https://github.com/thecrackofdan/quaiminer-core/issues"
+    "url": "https://github.com/thecrackofdan/quaiminer-core-os/issues"
   },
-  "homepage": "https://github.com/thecrackofdan/quaiminer-core#readme"
+  "homepage": "https://github.com/thecrackofdan/quaiminer-core-os#readme"
 }

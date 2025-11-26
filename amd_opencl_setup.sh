@@ -1,9 +1,22 @@
 #!/bin/bash
 
-# AMD RX 590 OpenCL Setup Script for Ubuntu 20.04
+# AMD RX 590 OpenCL Setup Script for Ubuntu (20.04, 22.04, 24.04+)
 # This script helps install and configure OpenCL for AMD GPUs
+# Automatically detects Ubuntu version
 
-echo "🔧 AMD RX 590 OpenCL Setup for Ubuntu 20.04"
+# Detect Ubuntu version
+if command -v lsb_release &> /dev/null; then
+    UBUNTU_VERSION=$(lsb_release -rs)
+    UBUNTU_CODENAME=$(lsb_release -cs)
+elif [ -f /etc/os-release ]; then
+    UBUNTU_VERSION=$(grep VERSION_ID /etc/os-release | cut -d'"' -f2)
+    UBUNTU_CODENAME=$(grep VERSION_CODENAME /etc/os-release | cut -d'=' -f2)
+else
+    UBUNTU_VERSION="Unknown"
+    UBUNTU_CODENAME="unknown"
+fi
+
+echo "🔧 AMD RX 590 OpenCL Setup for Ubuntu $UBUNTU_VERSION"
 echo "============================================"
 
 # Check current system info

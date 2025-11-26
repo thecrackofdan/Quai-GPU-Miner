@@ -1,10 +1,29 @@
 #!/bin/bash
 
-# Quick AMD RX 590 OpenCL Setup for Ubuntu 20.04
+# Quick AMD RX 590 OpenCL Setup for Ubuntu (20.04, 22.04, 24.04+)
+# Automatically detects Ubuntu version and installs appropriate drivers
 
 set -e
 
-echo "🚀 Quick AMD RX 590 OpenCL Setup for Ubuntu 20.04"
+# Detect Ubuntu version
+detect_ubuntu_version() {
+    if command -v lsb_release &> /dev/null; then
+        UBUNTU_VERSION=$(lsb_release -rs)
+        UBUNTU_CODENAME=$(lsb_release -cs)
+    elif [ -f /etc/os-release ]; then
+        UBUNTU_VERSION=$(grep VERSION_ID /etc/os-release | cut -d'"' -f2)
+        UBUNTU_CODENAME=$(grep VERSION_CODENAME /etc/os-release | cut -d'=' -f2)
+    else
+        echo "⚠️  Could not detect Ubuntu version, assuming 22.04"
+        UBUNTU_VERSION="22.04"
+        UBUNTU_CODENAME="jammy"
+    fi
+    echo "📋 Detected Ubuntu: $UBUNTU_VERSION ($UBUNTU_CODENAME)"
+}
+
+detect_ubuntu_version
+
+echo "🚀 Quick AMD RX 590 OpenCL Setup for Ubuntu $UBUNTU_VERSION"
 echo "================================================="
 
 # Check if running as root
@@ -51,16 +70,116 @@ else
     fi
 fi
 
-# Step 4: Install AMDGPU Pro drivers
-echo "🎯 Installing AMDGPU Pro drivers..."
+# Step 4: Install AMD drivers
+echo "🎯 Installing AMD drivers..."
 
-# Create Downloads directory if it doesn't exist
-mkdir -p ~/Downloads
-cd ~/Downloads
+# Determine driver installation method based on Ubuntu version
+if [ "$(echo "$UBUNTU_VERSION >= 22.04" | bc -l 2>/dev/null || echo "0")" = "1" ]; then
+    # Ubuntu 22.04+ - Use Mesa drivers (recommended) or AMDGPU Pro
+    echo "💡 Ubuntu 22.04+ detected - Using Mesa drivers (recommended)"
+    echo ""
+    read -p "Install Mesa drivers (easier) or AMDGPU Pro (better performance)? (m/a): " -n 1 -r
+    echo
+    if [[ $REPLY =~ ^[Mm]$ ]] || [ -z "$REPLY" ]; then
+        INSTALL_METHOD="mesa"
+    else
+        INSTALL_METHOD="amdgpu-pro"
+    fi
+else
+    # Ubuntu 20.04 - Use AMDGPU Pro
+    INSTALL_METHOD="amdgpu-pro"
+fi
 
-# Download AMDGPU Pro (Ubuntu 20.04 version)
-DRIVER_FILE="amdgpu-pro-22.40-2211043-ubuntu-20.04.tar.xz"
-DRIVER_DIR="amdgpu-pro-22.40-2211043-ubuntu-20.04"
+if [ "$INSTALL_METHOD" = "mesa" ]; then
+    echo "📦 Installing Mesa OpenCL drivers..."
+    sudo apt install -y mesa-opencl-icd opencl-headers opencl-clhpp-dev
+    echo "✅ Mesa drivers installed"
+else
+    # Install AMDGPU Pro drivers
+    echo "📦 Installing AMDGPU Pro drivers..."
+    
+    # Create Downloads directory if it doesn't exist
+    mkdir -p ~/Downloads
+    cd ~/Downloads
+    
+    # Select appropriate driver version based on Ubuntu version
+    case "$UBUNTU_CODENAME" in
+        focal|20.04)
+            DRIVER_FILE="amdgpu-pro-22.40-2211043-ubuntu-20.04.tar.xz"
+            DRIVER_DIR="amdgpu-pro-22.40-2211043-ubuntu-20.04"
+            DRIVER_URL="https://drivers.amd.com/drivers/linux/$DRIVER_FILE"
+            ;;
+        jammy|22.04)
+            # Try to use amdgpu-install for 22.04
+            echo "📥 Installing via amdgpu-install for Ubuntu 22.04..."
+            wget -qO - https://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
+            echo "deb [arch=amd64] https://repo.radeon.com/amdgpu-install/6.0.2/ubuntu/jammy/ jammy main" | sudo tee /etc/apt/sources.list.d/amdgpu.list
+            sudo apt update
+            sudo apt install -y amdgpu-install
+            sudo amdgpu-install --usecase=opencl --no-dkms -y
+            echo "✅ AMDGPU drivers installed via amdgpu-install"
+            cd ~
+            INSTALL_METHOD="amdgpu-install"
+            ;;
+        noble|24.04)
+            # Use amdgpu-install for 24.04
+            echo "📥 Installing via amdgpu-install for Ubuntu 24.04..."
+            wget -qO - https://repo.radeon.com/rocm/rocm.gpg.key | sudo apt-key add -
+            echo "deb [arch=amd64] https://repo.radeon.com/amdgpu-install/6.1/ubuntu/noble/ noble main" | sudo tee /etc/apt/sources.list.d/amdgpu.list
+            sudo apt update
+            sudo apt install -y amdgpu-install
+            sudo amdgpu-install --usecase=opencl --no-dkms -y
+            echo "✅ AMDGPU drivers installed via amdgpu-install"
+            cd ~
+            INSTALL_METHOD="amdgpu-install"
+            ;;
+        *)
+            echo "⚠️  Unknown Ubuntu version, trying Ubuntu 20.04 driver..."
+            DRIVER_FILE="amdgpu-pro-22.40-2211043-ubuntu-20.04.tar.xz"
+            DRIVER_DIR="amdgpu-pro-22.40-2211043-ubuntu-20.04"
+            DRIVER_URL="https://drivers.amd.com/drivers/linux/$DRIVER_FILE"
+            ;;
+    esac
+    
+    if [ "$INSTALL_METHOD" != "amdgpu-install" ]; then
+        # Download and install legacy AMDGPU Pro
+        if [ ! -f "$DRIVER_FILE" ]; then
+            echo "📥 Downloading AMDGPU Pro drivers (this may take a while)..."
+            if ! wget "$DRIVER_URL"; then
+                echo "❌ Failed to download AMDGPU Pro drivers"
+                echo "💡 Trying Mesa drivers as fallback..."
+                sudo apt install -y mesa-opencl-icd opencl-headers
+                INSTALL_METHOD="mesa-fallback"
+            fi
+        fi
+        
+        if [ "$INSTALL_METHOD" != "mesa-fallback" ]; then
+            # Extract and install
+            if [ ! -d "$DRIVER_DIR" ]; then
+                echo "📦 Extracting driver package..."
+                if ! tar -Jxvf $DRIVER_FILE; then
+                    echo "❌ Failed to extract driver package"
+                    exit 1
+                fi
+            fi
+            
+            cd $DRIVER_DIR
+            
+            if [ ! -f "./amdgpu-pro-install" ]; then
+                echo "❌ Driver installer not found in extracted directory"
+                exit 1
+            fi
+            
+            echo "⚙️  Installing drivers (this may take a while)..."
+            if ! sudo ./amdgpu-pro-install --opencl=rocm,legacy --no-dkms; then
+                echo "⚠️  Driver installation encountered issues"
+                echo "💡 Trying Mesa drivers as fallback..."
+                sudo apt install -y mesa-opencl-icd opencl-headers
+                INSTALL_METHOD="mesa-fallback"
+            fi
+        fi
+    fi
+fi
 
 if [ ! -f "$DRIVER_FILE" ]; then
     echo "📥 Downloading AMDGPU Pro drivers (this may take a while)..."

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="QuaiMiner OS - Automated solo mining management for Quai Network. Like Hive OS, but built specifically for Quai. Download and start mining in minutes.">
-    <title>QuaiMiner OS - Automated Solo Mining for Quai Network</title>
+    <meta name="description" content="QuaiMiner CORE OS - Complete mining operating system for Quai Network. Multi-GPU, multi-rig support with automatic detection and optimization. Download and start mining in minutes.">
+    <title>QuaiMiner CORE OS - Complete Mining OS for Quai Network</title>
     <!-- Quai Network Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -491,6 +491,24 @@
         }
 
         /* Stats Section */
+        .hero-features {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-feature {
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid var(--quai-red);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--quai-white);
+        }
+
         .stats {
             display: flex;
             justify-content: center;
@@ -561,10 +579,10 @@
             <a href="#" class="logo">
                 <div class="logo-icon">Q</div>
                 <img src="assets/quai-logo.svg" alt="Quai Network" class="logo-img" />
-                <span>QuaiMiner OS</span>
+                <span>QuaiMiner CORE OS</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#benefits">Why QuaiMiner OS</a></li>
+                <li><a href="#benefits">Why QuaiMiner CORE OS</a></li>
                 <li><a href="#how-it-works">How It Works</a></li>
                 <li><a href="#download">Download</a></li>
                 <li><a href="https://github.com/thecrackofdan/quaiminer-core" target="_blank">GitHub</a></li>
@@ -576,11 +594,17 @@
         <div class="container">
             <div class="hero-content">
                 <span class="badge">🚀 Open Source • Built for Solo Miners</span>
-                <h1>QuaiMiner OS</h1>
+                <h1>QuaiMiner CORE OS</h1>
                 <p class="tagline">Automated Solo Mining for Quai Network</p>
                 <p class="subtitle">The easiest way to solo mine Quai. Install GPU drivers, point at your node's stratum proxy, and start mining. Everything else—miner installation, configuration, auto-start, and monitoring—is automated.</p>
+                <div class="hero-features">
+                    <div class="hero-feature">💰 100% of Rewards</div>
+                    <div class="hero-feature">⚡ 5-Minute Setup</div>
+                    <div class="hero-feature">🎯 Solo Mining Focus</div>
+                    <div class="hero-feature">🛡️ Full Control</div>
+                </div>
                 <div class="cta-buttons">
-                    <a href="#download" class="cta-primary">Download QuaiMiner OS</a>
+                    <a href="#download" class="cta-primary">Download QuaiMiner CORE OS</a>
                     <a href="https://github.com/thecrackofdan/quaiminer-core" class="cta-secondary" target="_blank">View on GitHub</a>
                 </div>
                 <div class="stats">
@@ -603,7 +627,7 @@
 
     <section class="benefits" id="benefits">
         <div class="container">
-            <h2 class="section-title">Why QuaiMiner OS?</h2>
+            <h2 class="section-title">Why QuaiMiner CORE OS?</h2>
             <p class="section-subtitle">Designed for solo miners running their own Quai node</p>
             <div class="benefits-grid">
                 <div class="benefit-card">
@@ -652,7 +676,7 @@
                 </div>
                 <div class="step">
                     <div class="step-number">2</div>
-                    <h3>Install QuaiMiner OS</h3>
+                    <h3>Install QuaiMiner CORE OS</h3>
                     <p>Run the installer. It automatically installs quai-gpu-miner, sets up the service, and configures everything.</p>
                 </div>
                 <div class="step">
@@ -667,7 +691,7 @@
     <section class="download" id="download">
         <div class="container">
             <div class="download-box">
-                <h2>Download QuaiMiner OS</h2>
+                <h2>Download QuaiMiner CORE OS</h2>
                 <p>Get started with automated solo mining management for Quai Network</p>
                 
                 <div class="download-instructions">
@@ -750,7 +774,7 @@ sudo systemctl start quaiminer</code></pre>
 
     <footer>
         <div class="container">
-            <h3 style="color: var(--quai-red); margin-bottom: 1rem;">QuaiMiner OS</h3>
+            <h3 style="color: var(--quai-red); margin-bottom: 1rem;">QuaiMiner CORE OS</h3>
             <p style="color: var(--quai-gray); margin-bottom: 2rem;">Automated solo mining management for Quai Network</p>
             <div class="footer-links">
                 <a href="https://github.com/thecrackofdan/quaiminer-core" target="_blank">GitHub</a>
@@ -760,7 +784,7 @@ sudo systemctl start quaiminer</code></pre>
                 <a href="https://qu.ai" target="_blank">Quai Network</a>
             </div>
             <p style="margin-top: 2rem; color: var(--quai-gray-dark); font-size: 0.875rem;">
-                © 2024 QuaiMiner OS. Open source software for the Quai Network community.
+                © 2024 QuaiMiner CORE OS. Open source software for the Quai Network community.
             </p>
         </div>
     </footer>
