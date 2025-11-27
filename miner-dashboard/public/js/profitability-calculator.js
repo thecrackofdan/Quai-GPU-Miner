@@ -70,12 +70,20 @@ class ProfitabilityCalculator {
                             <span class="result-value" id="yearlyProfit">$0.00</span>
                         </div>
                         <div class="result-item">
+                            <span class="result-label">Daily QUAI:</span>
+                            <span class="result-value" id="dailyQuai">0.000000</span>
+                        </div>
+                        <div class="result-item">
                             <span class="result-label">ROI (Break-even):</span>
                             <span class="result-value" id="roi">-- days</span>
                         </div>
                         <div class="result-item">
                             <span class="result-label">Efficiency:</span>
                             <span class="result-value" id="efficiency">-- MH/s per W</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Profit Margin:</span>
+                            <span class="result-value" id="profitMargin">--%</span>
                         </div>
                     </div>
                 </div>
@@ -148,7 +156,7 @@ class ProfitabilityCalculator {
         }
     }
     
-    calculate() {
+    async calculate() {
         const hashRate = parseFloat(document.getElementById('calcHashRate')?.value) || 0;
         const power = parseFloat(document.getElementById('calcPower')?.value) || 0;
         const electricity = parseFloat(document.getElementById('calcElectricity')?.value) || this.electricityRate;
@@ -156,16 +164,59 @@ class ProfitabilityCalculator {
         const poolFee = parseFloat(document.getElementById('calcPoolFee')?.value) || 0;
         
         if (hashRate === 0 || power === 0) {
-            alert('Please enter hash rate and power usage');
+            this.showError('Please enter hash rate and power usage');
             return;
         }
         
-        // Simplified calculation (would need actual network difficulty for accurate results)
-        // This is a placeholder - real calculation needs network hash rate and block time
-        const estimatedDailyQuai = (hashRate / 1000) * 24; // Simplified
-        const dailyRevenue = estimatedDailyQuai * quaiPrice * (1 - poolFee / 100);
+        // Get real network data for accurate calculations
+        let networkHashRate = 0;
+        let blockTime = 10; // Quai target block time
+        let blockReward = 1.0; // Base reward
+        
+        try {
+            // Try to get real network stats
+            const response = await fetch('/api/quai/metrics?hashRate=' + hashRate + '&powerUsage=' + power + '&electricityCost=' + electricity);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.success && data.metrics) {
+                    networkHashRate = data.metrics.network?.networkHashRate || 0;
+                    blockTime = data.metrics.network?.averageBlockTime || 10;
+                    // Use most profitable chain reward
+                    if (data.metrics.totalProfitability) {
+                        blockReward = data.metrics.totalProfitability.miningRevenue || 1.0;
+                    }
+                }
+            }
+        } catch (error) {
+            console.debug('Using fallback calculations:', error);
+        }
+        
+        // Accurate profitability calculation
+        // Formula: (hashRate / networkHashRate) * blocksPerDay * blockReward * price
+        const blocksPerDay = (86400 / blockTime); // Seconds per day / block time
+        let dailyQuai = 0;
+        
+        if (networkHashRate > 0) {
+            // Accurate calculation with network hash rate
+            const shareOfNetwork = hashRate / networkHashRate;
+            dailyQuai = shareOfNetwork * blocksPerDay * blockReward;
+        } else {
+            // Fallback: estimate based on hash rate efficiency
+            // Assume 1 MH/s ≈ 0.01 QUAI/day (adjust based on actual network)
+            dailyQuai = (hashRate / 100) * 0.01;
+        }
+        
+        const dailyRevenue = dailyQuai * quaiPrice * (1 - poolFee / 100);
         const dailyCost = (power / 1000) * 24 * electricity;
         const dailyProfit = dailyRevenue - dailyCost;
+        const efficiency = hashRate / power;
+        
+        // Calculate ROI (break-even days)
+        const gpuCost = parseFloat(localStorage.getItem('gpuCost')) || 0;
+        let breakEvenDays = 0;
+        if (gpuCost > 0 && dailyProfit > 0) {
+            breakEvenDays = Math.ceil(gpuCost / dailyProfit);
+        }
         
         // Update UI
         this.updateResults({
@@ -174,19 +225,68 @@ class ProfitabilityCalculator {
             dailyProfit,
             monthlyProfit: dailyProfit * 30,
             yearlyProfit: dailyProfit * 365,
-            efficiency: hashRate / power
+            efficiency,
+            breakEvenDays,
+            dailyQuai
         });
+    }
+    
+    showError(message) {
+        if (typeof showToast === 'function') {
+            showToast(message, 'error');
+        } else {
+            alert(message);
+        }
     }
     
     updateResults(results) {
         const formatCurrency = (value) => `$${value.toFixed(2)}`;
+        const formatQuai = (value) => value.toFixed(6);
         
-        document.getElementById('dailyRevenue').textContent = formatCurrency(results.dailyRevenue);
-        document.getElementById('dailyCost').textContent = formatCurrency(results.dailyCost);
-        document.getElementById('dailyProfit').textContent = formatCurrency(results.dailyProfit);
-        document.getElementById('monthlyProfit').textContent = formatCurrency(results.monthlyProfit);
-        document.getElementById('yearlyProfit').textContent = formatCurrency(results.yearlyProfit);
-        document.getElementById('efficiency').textContent = `${results.efficiency.toFixed(2)} MH/s per W`;
+        const dailyRevenueEl = document.getElementById('dailyRevenue');
+        const dailyCostEl = document.getElementById('dailyCost');
+        const dailyProfitEl = document.getElementById('dailyProfit');
+        const monthlyProfitEl = document.getElementById('monthlyProfit');
+        const yearlyProfitEl = document.getElementById('yearlyProfit');
+        const dailyQuaiEl = document.getElementById('dailyQuai');
+        const roiEl = document.getElementById('roi');
+        const efficiencyEl = document.getElementById('efficiency');
+        const profitMarginEl = document.getElementById('profitMargin');
+        
+        if (dailyRevenueEl) dailyRevenueEl.textContent = formatCurrency(results.dailyRevenue);
+        if (dailyCostEl) dailyCostEl.textContent = formatCurrency(results.dailyCost);
+        if (dailyProfitEl) {
+            dailyProfitEl.textContent = formatCurrency(results.dailyProfit);
+            // Color code profit (green if positive, red if negative)
+            dailyProfitEl.style.color = results.dailyProfit >= 0 ? '#00ff00' : '#ff0000';
+        }
+        if (monthlyProfitEl) {
+            monthlyProfitEl.textContent = formatCurrency(results.monthlyProfit);
+            monthlyProfitEl.style.color = results.monthlyProfit >= 0 ? '#00ff00' : '#ff0000';
+        }
+        if (yearlyProfitEl) {
+            yearlyProfitEl.textContent = formatCurrency(results.yearlyProfit);
+            yearlyProfitEl.style.color = results.yearlyProfit >= 0 ? '#00ff00' : '#ff0000';
+        }
+        if (dailyQuaiEl) dailyQuaiEl.textContent = formatQuai(results.dailyQuai || 0);
+        if (roiEl) {
+            if (results.breakEvenDays > 0) {
+                roiEl.textContent = `${results.breakEvenDays} days`;
+                const breakEvenDate = new Date();
+                breakEvenDate.setDate(breakEvenDate.getDate() + results.breakEvenDays);
+                roiEl.title = `Break-even date: ${breakEvenDate.toLocaleDateString()}`;
+            } else {
+                roiEl.textContent = '-- days';
+            }
+        }
+        if (efficiencyEl) efficiencyEl.textContent = `${results.efficiency.toFixed(2)} MH/s per W`;
+        if (profitMarginEl) {
+            const margin = results.dailyRevenue > 0 
+                ? ((results.dailyProfit / results.dailyRevenue) * 100).toFixed(1)
+                : '0.0';
+            profitMarginEl.textContent = `${margin}%`;
+            profitMarginEl.style.color = parseFloat(margin) >= 0 ? '#00ff00' : '#ff0000';
+        }
     }
     
     saveSettings() {

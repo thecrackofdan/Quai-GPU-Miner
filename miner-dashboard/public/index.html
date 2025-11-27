@@ -298,6 +298,22 @@
               <p class="hero-stat-unit">Watts</p>
             </div>
           </div>
+
+          <div class="hero-stat-card quai-glow-strong" style="border: 2px solid var(--success-color);">
+            <div class="hero-stat-icon">💰</div>
+            <div class="hero-stat-content">
+              <h3>
+                Daily Profit
+                <span
+                  class="info-icon-small"
+                  data-tooltip="Estimated daily profit after electricity costs. Based on current hash rate, power usage, and network difficulty."
+                  >ℹ️</span
+                >
+              </h3>
+              <p class="hero-stat-value" id="dailyProfit" style="color: var(--success-color);">$0.00</p>
+              <p class="hero-stat-unit" id="dailyProfitUnit">USD</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -401,46 +417,6 @@
          </div>
        </section>
 
-      <!-- DePool Manager Widget -->
-      <section class="depool-section" style="margin-bottom: 2rem">
-        <div
-          style="
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-          "
-        >
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 1rem;
-            "
-          >
-            <h3 style="margin: 0; color: var(--quai-primary)">
-              🏊 DePool Manager
-              <span
-                class="info-icon"
-                data-tooltip="Transform your node into a decentralized mining pool. Accept miners, calculate payouts automatically, and earn fees for maximum profitability."
-                >ℹ️</span
-              >
-            </h3>
-            <button
-              class="btn-secondary"
-              id="openDePoolBtn"
-              style="padding: 8px 16px"
-            >
-              Manage DePool
-            </button>
-          </div>
-          <p style="color: var(--text-secondary); margin: 0">
-            Turn your node into a mining pool and earn fees from connected
-            miners
-          </p>
-        </div>
-      </section>
 
       <!-- Staking Widget -->
       <section class="staking-section" style="margin-bottom: 2rem">
@@ -484,67 +460,6 @@
         </div>
       </section>
 
-      <!-- Difficulty Adjustor Widget -->
-      <section class="difficulty-adjustor-section" style="margin-bottom: 2rem">
-        <div
-          style="
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-          "
-        >
-          <div
-            style="
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-              margin-bottom: 1rem;
-            "
-          >
-            <h3 style="margin: 0; color: var(--quai-primary)">
-              ⚡ Real-Time Difficulty Switcher
-              <span
-                class="info-icon"
-                data-tooltip="Automatically directs hash power to the chain with lowest difficulty in real-time. Switches every 10 seconds to optimize block discovery."
-                >ℹ️</span
-              >
-            </h3>
-            <div>
-              <label
-                style="
-                  display: flex;
-                  align-items: center;
-                  gap: 8px;
-                  cursor: pointer;
-                "
-              >
-                <input
-                  type="checkbox"
-                  id="realTimeDifficultyToggle"
-                  style="
-                    width: 20px;
-                    height: 20px;
-                    accent-color: var(--quai-primary);
-                  "
-                />
-                <span>Enable Auto-Switch</span>
-              </label>
-            </div>
-          </div>
-          <div id="realTimeDifficultyWidget">
-            <p style="color: var(--text-secondary)">
-              Enable auto-switch to automatically direct hash to lowest
-              difficulty chain
-            </p>
-          </div>
-          <div id="difficultyAdjustorWidget" style="display: none">
-            <p style="color: var(--text-secondary)">
-              Enable auto-adjustment to see chain difficulty comparison
-            </p>
-          </div>
-        </div>
-      </section>
 
       <!-- GPU Information Section - TOP PRIORITY -->
       <section class="gpu-section-top">
@@ -1747,7 +1662,6 @@
     <script src="js/dashboard.js"></script>
     <script src="js/historical-charts.js"></script>
     <script src="js/profitability-calculator.js"></script>
-    <script src="js/roi-calculator-enhanced.js"></script>
     <script src="js/multi-gpu.js"></script>
     <script src="js/leaderboard.js"></script>
     <script src="js/achievements.js"></script>
@@ -1755,7 +1669,6 @@
     <script src="js/enhanced-onboarding.js"></script>
     <script src="js/ml-features.js"></script>
     <script src="js/pool-manager.js"></script>
-    <script src="js/enhanced-pool-manager.js"></script>
     <script src="js/mining-insights.js"></script>
     <script src="js/gpu-tuner.js"></script>
     <script src="js/pool-integration.js"></script>
@@ -1766,15 +1679,9 @@
     <script src="js/alert-manager.js"></script>
     <script src="js/auto-chain-switcher.js"></script>
     <script src="js/quai-metrics-ui.js"></script>
-    <script src="js/flight-sheets.js"></script>
     <script src="js/alerts-ui.js"></script>
-    <script src="js/flight-sheets-ui.js"></script>
     <script src="js/staking-manager.js"></script>
     <script src="js/staking-ui.js"></script>
-    <script src="js/difficulty-adjustor.js"></script>
-    <script src="js/real-time-difficulty-switcher.js"></script>
-    <script src="js/depool-manager.js"></script>
-    <script src="js/depool-ui.js"></script>
     <script src="js/auto-setup.js"></script>
     <script src="js/smart-defaults.js"></script>
     <script src="js/one-click-mining.js"></script>
