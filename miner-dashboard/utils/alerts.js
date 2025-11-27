@@ -1,5 +1,5 @@
 /**
- * Alert Manager - Comprehensive alert system for QuaiMiner CORE OS
+ * Alert Manager - Comprehensive alert system for Quai GPU Miner
  * Supports: Email, Telegram, Discord, and in-app notifications
  */
 
@@ -337,7 +337,7 @@ class AlertManager {
                     <h2 style="color: #ff6b6b; margin-top: 0;">🚨 ${rule.name}</h2>
                     <pre style="background-color: #f9f9f9; padding: 15px; border-radius: 3px; white-space: pre-wrap;">${message}</pre>
                     <p style="color: #666; font-size: 12px; margin-top: 20px;">
-                        QuaiMiner CORE OS Alert System
+                        Quai GPU Miner Alert System
                     </p>
                 </div>
             </div>
@@ -379,7 +379,7 @@ class AlertManager {
                 color: 0xff6b6b, // Red color
                 timestamp: new Date().toISOString(),
                 footer: {
-                    text: 'QuaiMiner CORE OS'
+                    text: 'Quai GPU Miner'
                 }
             };
 

@@ -1,8 +1,8 @@
-# QuaiMiner OS - Custom Mining OS for DePool Operation
+# Quai GPU Miner - Custom Mining OS
 
-**Custom mining operating system for developers operating a DePool on Quai Network**
+**Custom mining operating system for Quai Network mining**
 
-QuaiMiner OS is a complete mining management system designed for developers who want to operate a decentralized pool (DePool) on Quai Network. Transform your Quai node into a fully-featured mining pool with automated miner management, payout processing, and profitability optimization.
+Quai GPU Miner is a complete mining management system designed for easy Quai Network mining. Get started mining with automatic GPU detection, driver installation, and a beautiful web interface.
 
 ## 🎯 What It Does
 
@@ -26,7 +26,7 @@ QuaiMiner OS is a complete mining management system designed for developers who 
    - **For other AMD GPUs**: Run `../quick_amd_setup.sh` or `./amd-setup-integration.sh`
    - **For NVIDIA**: Install NVIDIA drivers
 
-2. **Install QuaiMiner OS**
+2. **Install Quai GPU Miner**
    ```bash
    cd quaiminer-os
    chmod +x install.sh

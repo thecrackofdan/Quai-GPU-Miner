@@ -95,7 +95,7 @@ class TestnetMode {
         // Modify dashboard to show testnet-specific data
         const title = document.querySelector('.dashboard-header h1');
         if (title) {
-            title.innerHTML = '⚡ QuaiMiner CORE <span style="color: #FFAA00;">(Testnet)</span>';
+            title.innerHTML = '⚡ Quai GPU Miner <span style="color: #FFAA00;">(Testnet)</span>';
         }
     }
     

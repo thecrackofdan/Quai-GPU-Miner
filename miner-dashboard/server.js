@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * QuaiMiner CORE OS - Mining Dashboard Server
+ * Quai GPU Miner - Mining Dashboard Server
  * ============================================================================
  * 
  * ARCHITECTURE OVERVIEW:
@@ -97,7 +97,7 @@ Object.keys(networkInterfaces).forEach((iface) => {
 // Log startup info (using secure logger)
 if (NODE_ENV === 'development') {
     logger.info('========================================');
-    logger.info('  QuaiMiner CORE OS Dashboard Server');
+    logger.info('  Quai GPU Miner Dashboard Server');
     logger.info('========================================');
 }
 
@@ -2830,7 +2830,7 @@ app.get('*', (req, res) => {
 // Start server
 app.listen(PORT, HOST, () => {
     if (NODE_ENV === 'development') {
-        console.log(`🚀 QuaiMiner CORE OS Dashboard running on http://localhost:${PORT}`);
+        console.log(`🚀 Quai GPU Miner Dashboard running on http://localhost:${PORT}`);
         console.log(`📊 Open your browser and navigate to the URL above`);
         console.log(`🔗 Node RPC: ${NODE_RPC_URL}`);
     } else {

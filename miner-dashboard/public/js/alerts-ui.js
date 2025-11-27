@@ -298,7 +298,7 @@ class AlertsUI {
                 body: JSON.stringify({
                     channel: 'telegram', // Test with first enabled channel
                     title: 'Test Alert',
-                    message: 'This is a test alert from QuaiMiner CORE OS. If you receive this, your alert configuration is working correctly!'
+                    message: 'This is a test alert from Quai GPU Miner. If you receive this, your alert configuration is working correctly!'
                 })
             });
 

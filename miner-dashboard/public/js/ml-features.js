@@ -1,4 +1,4 @@
-// Machine Learning Features for QuaiMiner CORE
+// Machine Learning Features for Quai GPU Miner
 class MLFeatures {
     constructor(dashboard) {
         this.dashboard = dashboard;

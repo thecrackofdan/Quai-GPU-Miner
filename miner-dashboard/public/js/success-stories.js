@@ -7,7 +7,7 @@ class SuccessStories {
                 location: 'USA',
                 gpu: 'AMD RX 590',
                 blocks: 47,
-                quote: 'Started with zero mining experience. QuaiMiner CORE made it so easy!',
+                quote: 'Started with zero mining experience. Quai GPU Miner made it so easy!',
                 image: null,
                 verified: true
             },

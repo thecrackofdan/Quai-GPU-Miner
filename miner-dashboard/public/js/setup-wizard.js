@@ -4,11 +4,11 @@ class SetupWizard {
         this.currentStep = 0;
         this.steps = [
             {
-                title: 'Welcome to QuaiMiner CORE!',
+                title: 'Welcome to Quai GPU Miner!',
                 content: `
                     <div class="wizard-content">
                         <h3>🎉 Ready to Start Solo Mining?</h3>
-                        <p>This wizard will guide you through setting up QuaiMiner CORE in just a few steps.</p>
+                        <p>This wizard will guide you through setting up Quai GPU Miner in just a few steps.</p>
                         <div class="wizard-benefits">
                             <div class="benefit-item">✅ 100% of your rewards (no pool fees)</div>
                             <div class="benefit-item">✅ Full control over your mining</div>

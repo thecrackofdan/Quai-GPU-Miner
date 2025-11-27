@@ -1,5 +1,5 @@
 {
-  "name": "QuaiMiner CORE Dashboard",
+  "name": "Quai GPU Miner Dashboard",
   "short_name": "QuaiMiner",
   "description": "Production-ready real-time dashboard for solo mining Quai Network",
   "start_url": "/mobile.html",

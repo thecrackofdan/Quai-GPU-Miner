@@ -81,7 +81,7 @@ class AutoSetup {
         modal.innerHTML = `
             <div class="modal-content" style="max-width: 600px;">
                 <div class="modal-header">
-                    <h2>🚀 Welcome to QuaiMiner CORE OS</h2>
+                    <h2>🚀 Welcome to Quai GPU Miner</h2>
                 </div>
                 <div class="modal-body">
                     <p style="margin-bottom: 1.5rem; color: var(--text-secondary); line-height: 1.6;">

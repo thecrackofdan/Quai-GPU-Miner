@@ -1,4 +1,4 @@
-// Profitability Calculator for QuaiMiner CORE
+// Profitability Calculator for Quai GPU Miner
 class ProfitabilityCalculator {
     constructor() {
         this.electricityRate = 0.10; // $0.10 per kWh default

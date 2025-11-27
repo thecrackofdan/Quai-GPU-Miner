@@ -1,4 +1,4 @@
-// Achievement System for QuaiMiner CORE
+// Achievement System for Quai GPU Miner
 class AchievementSystem {
     constructor() {
         this.achievements = [];

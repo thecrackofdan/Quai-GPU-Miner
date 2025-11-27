@@ -1,4 +1,4 @@
-// Community Leaderboard for QuaiMiner CORE
+// Community Leaderboard for Quai GPU Miner
 class Leaderboard {
     constructor() {
         this.leaderboards = {

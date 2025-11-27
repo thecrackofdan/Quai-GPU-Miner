@@ -1,5 +1,5 @@
 /**
- * Mobile Dashboard - Remote Access for QuaiMiner CORE OS
+ * Mobile Dashboard - Remote Access for Quai GPU Miner
  * Optimized for mobile devices and remote access
  */
 

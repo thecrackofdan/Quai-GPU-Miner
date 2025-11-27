@@ -1,4 +1,4 @@
-// Service Worker for QuaiMiner CORE PWA
+// Service Worker for Quai GPU Miner PWA
 const CACHE_NAME = 'quaiminer-dashboard-v1';
 const urlsToCache = [
     '/',

@@ -1,8 +1,8 @@
-# QuaiMiner CORE - Best Looking Mining Dashboard
+# Quai GPU Miner - Mining Dashboard
 
-**The most beautiful, easiest-to-use mining dashboard for Quai and Qi**
+**The easiest way to mine Quai Network - Automatic GPU detection, driver installation, and setup**
 
-🌐 **QuaiMiner CORE:** [Main Repository](https://github.com/thecrackofdan/quaiminer-core) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
+🌐 **Quai GPU Miner:** [Main Repository](https://github.com/thecrackofdan/quai-gpu-miner) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
 
 ## Why It's the Best
 
@@ -202,7 +202,7 @@ MIT
 
 ## Related Projects
 
-- [QuaiMiner CORE](https://github.com/thecrackofdan/quaiminer-core) - Complete mining toolkit with setup scripts, research, and AMD GPU configuration tools
+- [Quai GPU Miner](https://github.com/thecrackofdan/quai-gpu-miner) - Complete mining toolkit with setup scripts, research, and AMD GPU configuration tools
 
 ## Support
 

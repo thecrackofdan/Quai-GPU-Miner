@@ -196,7 +196,7 @@ class QuaiFeatures {
 
                     <div class="quai-education-section">
                         <h3>🛡️ Privacy & Security</h3>
-                        <p>Quai Network and QuaiMiner CORE OS prioritize:</p>
+                        <p>Quai Network and Quai GPU Miner prioritize:</p>
                         <ul>
                             <li>No data collection</li>
                             <li>No tracking</li>

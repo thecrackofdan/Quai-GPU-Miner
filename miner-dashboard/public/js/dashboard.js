@@ -1,6 +1,6 @@
 /**
  * ============================================================================
- * QuaiMiner CORE OS - Mining Dashboard (Client-Side)
+ * Quai GPU Miner - Mining Dashboard (Client-Side)
  * ============================================================================
  * 
  * SOLO MINER CLIENT INTERFACE
@@ -208,7 +208,7 @@ class MiningDashboard {
             throw error;
         }
         this.updateStatus('active');
-        this.addLog('QuaiMiner CORE Dashboard initialized', 'info');
+        this.addLog('Quai GPU Miner Dashboard initialized', 'info');
         const miningMode = (CONFIG.mining && CONFIG.mining.mode) ? CONFIG.mining.mode : 'solo';
         this.addLog(`Mining mode: ${miningMode}`, 'info');
         if (CONFIG.mining && CONFIG.mining.mergedMining && CONFIG.mining.mergedMining.enabled) {

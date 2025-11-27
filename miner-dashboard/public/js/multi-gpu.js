@@ -1,4 +1,4 @@
-// Multi-GPU Visualization for QuaiMiner CORE
+// Multi-GPU Visualization for Quai GPU Miner
 class MultiGPUVisualization {
     constructor(dashboard) {
         this.dashboard = dashboard;

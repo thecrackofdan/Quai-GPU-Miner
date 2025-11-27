@@ -30,7 +30,7 @@ class EnhancedOnboarding {
             <div class="modal-content" style="max-width: 700px; text-align: center;">
                 <div class="modal-header" style="border-bottom: none; padding-bottom: 0;">
                     <h1 style="font-size: 2.5rem; margin: 0; color: var(--quai-primary);">
-                        ⚡ Welcome to QuaiMiner CORE OS
+                        ⚡ Welcome to Quai GPU Miner
                     </h1>
                     <p style="font-size: 1.2rem; color: var(--text-secondary); margin: 1rem 0 2rem 0;">
                         Start mining Quai Network in 60 seconds
@@ -39,7 +39,7 @@ class EnhancedOnboarding {
                 <div class="modal-body" style="padding: 2rem;">
                     <!-- Value Proposition -->
                     <div style="background: var(--bg-dark); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-                        <h3 style="margin: 0 0 1rem 0; color: var(--quai-primary);">Why QuaiMiner CORE OS?</h3>
+                        <h3 style="margin: 0 0 1rem 0; color: var(--quai-primary);">Why Quai GPU Miner?</h3>
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; text-align: left;">
                             <div style="display: flex; align-items: start; gap: 0.5rem;">
                                 <span style="font-size: 1.5rem;">✅</span>

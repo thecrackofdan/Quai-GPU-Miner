@@ -8,21 +8,21 @@ const installationInstructions = {
         title: 'USB Bootable Image Installation',
         content: `
             <h3>Step 1: Build the ISO Image</h3>
-            <p>Build the QuaiMiner CORE OS ISO image from source:</p>
+            <p>Build the Quai GPU Miner ISO image from source:</p>
             <code>cd os-build<br>sudo ./scripts/build-iso.sh</code>
-            <p class="info-note">The ISO will be created in <code>output/quaiminer-core-os.iso</code></p>
+            <p class="info-note">The ISO will be created in <code>output/quai-gpu-miner.iso</code></p>
             
             <p><strong>Or download from GitHub releases (when available):</strong></p>
-            <code>wget https://github.com/thecrackofdan/quaiminer-core/releases/latest/download/quaiminer-core-os.iso</code>
+            <code>wget https://github.com/thecrackofdan/quai-gpu-miner/releases/latest/download/quai-gpu-miner.iso</code>
             
             <h3>Step 2: Verify the Download</h3>
             <p>Verify the SHA256 checksum:</p>
-            <code>sha256sum quaiminer-core-os.iso</code>
+            <code>sha256sum quai-gpu-miner.iso</code>
             <p>Compare with the checksum provided on the releases page.</p>
             
             <h3>Step 3: Flash to USB Drive</h3>
             <p><strong>Linux/Mac:</strong></p>
-            <code>sudo dd if=quaiminer-core-os.iso of=/dev/sdX bs=4M status=progress</code>
+            <code>sudo dd if=quai-gpu-miner.iso of=/dev/sdX bs=4M status=progress</code>
             <p class="warning">⚠️ Replace /dev/sdX with your USB device (use lsblk to find it)</p>
             
             <p><strong>Linux:</strong></p>
@@ -34,7 +34,7 @@ const installationInstructions = {
                 <li>Boot the system and enter BIOS/UEFI settings (usually F2, F12, or Del)</li>
                 <li>Set USB as the first boot device</li>
                 <li>Save and exit</li>
-                <li>The system will boot into QuaiMiner CORE OS</li>
+                <li>The system will boot into Quai GPU Miner</li>
             </ol>
             
             <h3>Step 4: First Boot Setup</h3>
@@ -69,10 +69,10 @@ const installationInstructions = {
             
             <h3>Step 1: Get the Installer</h3>
             <p><strong>From GitHub:</strong></p>
-            <code>git clone https://github.com/thecrackofdan/quaiminer-core.git<br>cd quaiminer-core/quaiminer-os</code>
+            <code>git clone https://github.com/thecrackofdan/quai-gpu-miner.git<br>cd quai-gpu-miner/quaiminer-os</code>
             
             <p><strong>Or download directly:</strong></p>
-            <code>wget https://raw.githubusercontent.com/thecrackofdan/quaiminer-core/main/quaiminer-os/auto-install.sh</code>
+            <code>wget https://raw.githubusercontent.com/thecrackofdan/quai-gpu-miner/main/quaiminer-os/auto-install.sh</code>
             
             <h3>Step 2: Make Executable</h3>
             <code>chmod +x auto-install.sh</code>
@@ -129,7 +129,7 @@ const installationInstructions = {
             
             <h3>Step 1: Build or Pull the Image</h3>
             <p><strong>Build from source:</strong></p>
-            <code>git clone https://github.com/thecrackofdan/quaiminer-core.git<br>cd quaiminer-core<br>docker build -t quaiminer/core-os .</code>
+            <code>git clone https://github.com/thecrackofdan/quai-gpu-miner.git<br>cd quai-gpu-miner<br>docker build -t quai-gpu-miner/dashboard .</code>
             
             <p><strong>Or pull from registry (when available):</strong></p>
             <code>docker pull quaiminer/core-os:latest</code>

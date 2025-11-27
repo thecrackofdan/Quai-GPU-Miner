@@ -1,4 +1,4 @@
-// Historical Data Charts for QuaiMiner CORE
+// Historical Data Charts for Quai GPU Miner
 class HistoricalCharts {
     constructor(dashboard) {
         this.dashboard = dashboard;

@@ -1,4 +1,4 @@
-// QuaiMiner CORE Dashboard Configuration
+// Quai GPU Miner Dashboard Configuration
 // Declare CONFIG at global scope first
 var CONFIG;
 
