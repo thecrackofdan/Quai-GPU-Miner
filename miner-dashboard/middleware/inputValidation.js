@@ -54,8 +54,15 @@ function validateUrl(url) {
         }
     }
     
-    // Standard URL validation
-    return isValidUrl(url, ['http', 'https']);
+    // Standard URL validation using validator library
+    try {
+        return validator.isURL(url, {
+            protocols: ['http', 'https'],
+            require_protocol: true
+        });
+    } catch {
+        return false;
+    }
 }
 
 /**

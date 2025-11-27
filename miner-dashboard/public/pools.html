@@ -385,11 +385,57 @@
     </div>
 
     <script>
+        // Initialize pool manager if available
+        let poolManager = null;
+        
+        if (typeof EnhancedPoolManager !== 'undefined' && typeof MiningDashboard !== 'undefined') {
+            // Create a minimal dashboard instance for pool manager
+            const mockDashboard = {
+                miningData: { hashRate: 0 },
+                addLog: (msg, type) => console.log(`[${type}]`, msg)
+            };
+            poolManager = new EnhancedPoolManager(mockDashboard);
+        } else if (typeof PoolManager !== 'undefined') {
+            const mockDashboard = {
+                miningData: { hashRate: 0 },
+                addLog: (msg, type) => console.log(`[${type}]`, msg)
+            };
+            poolManager = new PoolManager(mockDashboard);
+        }
+        
         function selectPool(poolId) {
-            // Redirect to dashboard with pool selection
-            window.location.href = `/?pool=${poolId}`;
+            if (poolId === 'solo') {
+                // For solo mining, open miner config modal
+                window.location.href = '/?action=config&mode=solo';
+                return;
+            }
+            
+            // For pool mining, get wallet address and switch
+            const walletAddress = prompt('Enter your Quai wallet address (0x...):');
+            if (!walletAddress || !walletAddress.match(/^0x[a-fA-F0-9]{40}$/)) {
+                alert('Invalid wallet address. Please enter a valid Quai address (0x followed by 40 hex characters).');
+                return;
+            }
+            
+            if (poolManager) {
+                poolManager.switchPool(poolId, walletAddress, 'rig1')
+                    .then(result => {
+                        if (result.success) {
+                            alert(`Successfully connected to ${result.pool.name}! Redirecting to dashboard...`);
+                            window.location.href = '/';
+                        }
+                    })
+                    .catch(error => {
+                        alert('Failed to connect to pool: ' + error.message);
+                    });
+            } else {
+                // Fallback: redirect with pool parameter
+                window.location.href = `/?pool=${poolId}&wallet=${encodeURIComponent(walletAddress)}`;
+            }
         }
     </script>
+    <script src="js/pool-manager.js"></script>
+    <script src="js/enhanced-pool-manager.js"></script>
 </body>
 </html>
 

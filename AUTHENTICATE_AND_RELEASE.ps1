@@ -45,9 +45,21 @@ Write-Host ""
 Write-Host "📦 Creating release..." -ForegroundColor Yellow
 
 # Create release
-gh release create v2.0.0 `
-    --title "QuaiMiner CORE OS v2.0.0 - Complete Mining OS Release" `
-    --notes-file RELEASE_NOTES.md
+gh release create v2.1.1-beta `
+    --title "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution" `
+    --notes "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution
+
+⚠️ BETA RELEASE - Testing Phase
+
+Major Features:
+- Mining Insights & Analytics (profitability, ROI, projections)
+- Enhanced Pool Manager with automatic switching
+- Smart pool recommendations
+- One-click pool connection
+- Optimization suggestions
+
+See CHANGELOG.md for full details." `
+    --prerelease
 
 if ($LASTEXITCODE -eq 0) {
     Write-Host "✅ Release created!" -ForegroundColor Green

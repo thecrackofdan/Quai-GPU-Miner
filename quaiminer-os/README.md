@@ -1,19 +1,22 @@
-# QuaiMiner OS - Automated Solo Mining Management System
+# QuaiMiner OS - Custom Mining OS for DePool Operation
 
-**Like Hive OS, but built specifically for Quai Network solo mining with your own node**
+**Custom mining operating system for developers operating a DePool on Quai Network**
 
-QuaiMiner OS is a complete mining management system designed for solo miners running their own Quai Network node. It automates everything except driver installation. Just install drivers, configure your node's stratum proxy, and start solo mining.
+QuaiMiner OS is a complete mining management system designed for developers who want to operate a decentralized pool (DePool) on Quai Network. Transform your Quai node into a fully-featured mining pool with automated miner management, payout processing, and profitability optimization.
 
 ## 🎯 What It Does
 
+- ✅ **DePool Operation**: Transform your node into a decentralized mining pool
 - ✅ **Automated Miner Installation**: Installs and configures quai-gpu-miner automatically
-- ✅ **Solo Mining Focus**: Designed for miners running their own Quai Network node
-- ✅ **Stratum Proxy Integration**: Connect to your node's stratum proxy for solo mining
+- ✅ **Miner Management**: Automatically register and track connected miners
+- ✅ **Share Tracking**: Track all submitted shares (accepted/rejected) in real-time
+- ✅ **Automated Payouts**: Calculate and process miner payouts automatically (PPS model)
+- ✅ **Fee Management**: Configurable pool fees with profitability optimization
+- ✅ **Stratum Integration**: Full stratum protocol support for miner connections
 - ✅ **Auto-Start Mining**: Automatically starts mining on boot
-- ✅ **Remote Management**: Control your miners from anywhere via web dashboard
-- ✅ **Real-Time Monitoring**: Monitor hashrate, temperature, and coinbase rewards
-- ✅ **Future Depool Support**: Configuration ready for future depool functionality
-- ✅ **Multi-Rig Support**: Manage multiple mining rigs connected to your node
+- ✅ **Remote Management**: Control your DePool from anywhere via web dashboard
+- ✅ **Real-Time Monitoring**: Monitor pool statistics, miner performance, and profitability
+- ✅ **Multi-Rig Support**: Manage multiple mining rigs connected to your DePool
 
 ## 🚀 Quick Start
 
@@ -30,15 +33,20 @@ QuaiMiner OS is a complete mining management system designed for solo miners run
    sudo ./install.sh
    ```
 
-3. **Configure Your Node's Stratum Proxy**
+3. **Enable and Configure DePool**
    - Ensure your Quai node is running and synced
    - Start your node's stratum proxy (usually on localhost:3333)
    - Open dashboard: `http://localhost:3000`
-   - Navigate to "Mining Configuration"
-   - Enter your node's stratum proxy address (e.g., `stratum://localhost:3333`)
-   - Click "Start Mining"
+   - Navigate to "🏊 DePool Manager"
+   - Toggle "Enable DePool" switch
+   - Configure pool settings:
+     - **Pool Fee**: 0.5-2.0% (recommended)
+     - **Minimum Payout**: 0.1 QUAI (recommended)
+     - **Payout Interval**: 24 hours (recommended)
+   - Click "Save Configuration"
+   - Share your stratum endpoint with miners: `stratum://YOUR_NODE_IP:3333`
 
-That's it! The miner will start automatically and run on boot.
+That's it! Your DePool is now operational. Miners can connect and start mining, and payouts will be processed automatically.
 
 ## 📋 Components
 
@@ -106,11 +114,27 @@ See `/etc/quaiminer/rx590-optimization.md` for detailed tuning guide.
 
 ## 🔧 Configuration
 
-### Stratum Proxy Configuration
+### DePool Configuration
 
-**Solo Mining with Your Own Node:**
+**DePool Operation:**
 ```
-# Local node (recommended)
+# Enable DePool mode in dashboard
+1. Open dashboard → "🏊 DePool Manager"
+2. Toggle "Enable DePool"
+3. Configure pool settings:
+   - Pool Fee: 0.5-2.0% (recommended)
+   - Minimum Payout: 0.1 QUAI
+   - Payout Interval: 24 hours
+4. Save configuration
+
+# Share stratum endpoint with miners
+stratum://YOUR_NODE_IP:3333
+stratum://pool.yourdomain.com:3333
+```
+
+**Stratum Proxy Configuration:**
+```
+# Local node (for DePool operation)
 stratum://localhost:3333
 stratum://127.0.0.1:3333
 
@@ -119,13 +143,7 @@ stratum://192.168.1.100:3333
 stratum://your-node-ip:3333
 ```
 
-**Future Depool Support:**
-```
-# Depool configuration (coming soon)
-depool://your-depool-address:port
-```
-
-**Note:** This system is designed for solo mining with your own Quai node. For pool mining, use standard pool services.
+**Note:** This system is designed for DePool operation. Your Quai node's stratum proxy accepts miner connections and the DePool system manages payouts, fees, and statistics.
 
 ### Environment Variables
 
@@ -143,14 +161,17 @@ These are automatically set when RX 590 is detected. See `/etc/quaiminer/environ
 
 ## 📊 Dashboard Features
 
-- **Mining Status**: Real-time hashrate, shares, temperature
+- **DePool Management**: Complete DePool control panel with enable/disable toggle
+- **Pool Statistics**: Real-time pool statistics (miners, hash rate, blocks found, revenue)
+- **Miner Management**: View all connected miners, their hash rates, shares, and pending balances
+- **Payout Processing**: Automated payout calculation and processing
+- **Profitability Analysis**: Track pool operator revenue, costs, and profit margins
+- **Fee Optimization**: AI-powered fee optimization for maximum profitability
+- **Mining Status**: Real-time hashrate, shares, temperature for your own mining rigs
 - **Node Integration**: Connect to your own Quai node's stratum proxy
-- **Solo Mining Focus**: Optimized for solo mining operations
 - **Miner Controls**: Start, stop, restart with one click
 - **Logs Viewer**: View miner output in real-time
-- **Coinbase Tracking**: Monitor your solo mining rewards
-- **Multi-Rig Management**: Manage multiple miners connected to your node
-- **Future Depool Support**: Ready for depool configuration when available
+- **Multi-Rig Management**: Manage multiple miners connected to your DePool
 
 ## 🔄 Auto-Start on Boot
 

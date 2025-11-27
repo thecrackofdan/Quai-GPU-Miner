@@ -6,8 +6,8 @@
 set -e
 
 REPO="thecrackofdan/QuaiMiner-CORE-OS"
-TAG="v2.0.0"
-TITLE="QuaiMiner CORE OS v2.0.0 - Complete Mining OS Release"
+TAG="v2.1.1-beta"
+TITLE="QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution"
 
 # Check for GitHub token
 if [ -z "$GITHUB_TOKEN" ]; then
@@ -27,9 +27,18 @@ fi
 if [ -f "RELEASE_NOTES.md" ]; then
     RELEASE_NOTES=$(cat RELEASE_NOTES.md)
 else
-    RELEASE_NOTES="QuaiMiner CORE OS v2.0.0 - Complete Mining OS Release
+    RELEASE_NOTES="QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution
 
-See RELEASE_NOTES.md for full details."
+⚠️ BETA RELEASE - Testing Phase
+
+Major Features:
+- Mining Insights & Analytics (profitability, ROI, projections)
+- Enhanced Pool Manager with automatic switching
+- Smart pool recommendations
+- One-click pool connection
+- Optimization suggestions
+
+See CHANGELOG.md for full details."
 fi
 
 # Create release using GitHub API
@@ -44,7 +53,7 @@ RESPONSE=$(curl -s -w "\n%{http_code}" -X POST \
     \"name\": \"$TITLE\",
     \"body\": $(echo "$RELEASE_NOTES" | jq -Rs .),
     \"draft\": false,
-    \"prerelease\": false
+    \"prerelease\": true
   }")
 
 HTTP_CODE=$(echo "$RESPONSE" | tail -n1)

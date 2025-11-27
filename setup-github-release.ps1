@@ -12,9 +12,21 @@ if (Get-Command gh -ErrorAction SilentlyContinue) {
     
     # Create release
     Write-Host "📦 Creating release..." -ForegroundColor Yellow
-    gh release create v2.0.0 `
-        --title "QuaiMiner CORE OS v2.0.0 - Complete Mining OS Release" `
-        --notes-file RELEASE_NOTES.md
+    gh release create v2.1.1-beta `
+        --title "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution" `
+        --notes "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution
+
+⚠️ BETA RELEASE - Testing Phase
+
+Major Features:
+- Mining Insights & Analytics (profitability, ROI, projections)
+- Enhanced Pool Manager with automatic switching
+- Smart pool recommendations
+- One-click pool connection
+- Optimization suggestions
+
+See CHANGELOG.md for full details." `
+        --prerelease
     
     # Update description
     Write-Host "📝 Updating repository description..." -ForegroundColor Yellow
@@ -61,12 +73,23 @@ Write-Host "📦 Creating release..." -ForegroundColor Yellow
 
 # Create release
 $releaseBody = Get-Content RELEASE_NOTES.md -Raw | ConvertTo-Json
-$releaseData = @{
-    tag_name = "v2.0.0"
-    name = "QuaiMiner CORE OS v2.0.0 - Complete Mining OS Release"
-    body = (Get-Content RELEASE_NOTES.md -Raw)
+    $releaseData = @{
+    tag_name = "v2.1.1-beta"
+    name = "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution"
+    body = "QuaiMiner CORE OS v2.1.1-beta - Competitive Solo Mining Solution
+
+⚠️ BETA RELEASE - Testing Phase
+
+Major Features:
+- Mining Insights & Analytics (profitability, ROI, projections)
+- Enhanced Pool Manager with automatic switching
+- Smart pool recommendations
+- One-click pool connection
+- Optimization suggestions
+
+See CHANGELOG.md for full details."
     draft = $false
-    prerelease = $false
+    prerelease = $true
 } | ConvertTo-Json
 
 $headers = @{
@@ -88,8 +111,8 @@ try {
 # Update description
 Write-Host "📝 Updating repository description..." -ForegroundColor Yellow
 
-$repoData = @{
-    description = "Complete mining operating system for Quai Network. Multi-GPU, multi-rig support with automatic detection, driver management, and GPU optimization. Supports all ProgPoW-capable GPUs (AMD & NVIDIA)."
+    $repoData = @{
+    description = "The best solo mining OS for Quai Network. Mining Insights, Automatic Pool Switching, Smart Recommendations. Free, open source, competitive with HiveOS/Minerstat."
 } | ConvertTo-Json
 
 try {

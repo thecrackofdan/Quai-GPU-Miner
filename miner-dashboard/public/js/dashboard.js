@@ -1,3 +1,32 @@
+/**
+ * ============================================================================
+ * QuaiMiner CORE OS - Mining Dashboard (Client-Side)
+ * ============================================================================
+ * 
+ * SOLO MINER CLIENT INTERFACE
+ * 
+ * This dashboard is designed for SOLO MINERS who want to:
+ * - Connect their mining software to a pool via stratum protocol
+ * - Monitor their mining performance, GPU stats, and earnings
+ * - Configure wallet addresses (PRIVACY: Wallet addresses are handled securely)
+ * - Optimize GPU settings for ProgPoW mining
+ * - View real-time statistics and historical data
+ * 
+ * SECURITY & PRIVACY:
+ * - Wallet addresses are never logged or exposed unnecessarily
+ * - All API requests use secure headers
+ * - Input validation on all user inputs
+ * - Error messages don't expose sensitive information
+ * 
+ * UX IMPROVEMENTS:
+ * - Loading states for all async operations
+ * - Clear error messages with actionable feedback
+ * - Real-time updates without page refresh
+ * - Responsive design for mobile devices
+ * - Progressive Web App (PWA) support
+ * ============================================================================
+ */
+
 // Mining Dashboard JavaScript
 class MiningDashboard {
     constructor() {
@@ -3815,8 +3844,13 @@ class MiningDashboard {
         }
 
         // Initialize pool manager
-        if (typeof PoolManager !== 'undefined') {
+        // Initialize Enhanced Pool Manager (with automatic switching)
+        if (typeof EnhancedPoolManager !== 'undefined') {
+            this.poolManager = new EnhancedPoolManager(this);
+            window.poolManager = this.poolManager; // Make globally accessible
+        } else if (typeof PoolManager !== 'undefined') {
             this.poolManager = new PoolManager(this);
+            window.poolManager = this.poolManager; // Make globally accessible
         }
 
         // Setup pool selection in miner config modal
@@ -3920,11 +3954,38 @@ class MiningDashboard {
             window.stakingUI = this.stakingUI;
         }
 
-        // Initialize Difficulty Adjustor
+        // Initialize Real-Time Difficulty Switcher
+        if (typeof RealTimeDifficultySwitcher !== 'undefined') {
+            this.realTimeDifficultySwitcher = new RealTimeDifficultySwitcher(this);
+            window.realTimeDifficultySwitcher = this.realTimeDifficultySwitcher;
+        }
+
+        // Method to update mining target (called by real-time switcher)
+        this.updateMiningTarget = (chainKey, chain) => {
+            if (this.miningData && this.miningData.network) {
+                this.miningData.network.currentChain = chain.name;
+                this.updateUI();
+            }
+        };
+
+        // Initialize Difficulty Adjustor (legacy, for compatibility)
         if (typeof DifficultyAdjustor !== 'undefined') {
             this.difficultyAdjustor = new DifficultyAdjustor(this);
             window.difficultyAdjustor = this.difficultyAdjustor;
         }
+
+        // Initialize DePool Manager
+        if (typeof DePoolManager !== 'undefined') {
+            this.depoolManager = new DePoolManager(this);
+            window.depoolManager = this.depoolManager;
+        }
+
+        // Initialize DePool UI
+        if (typeof DePoolUI !== 'undefined') {
+            this.depoolUI = new DePoolUI(this);
+            window.depoolUI = this.depoolUI;
+        }
+
 
         // Initialize Enhanced Onboarding
         if (typeof EnhancedOnboarding !== 'undefined') {
@@ -3942,6 +4003,28 @@ class MiningDashboard {
             this.oneClickMining = new OneClickMining(this);
         }
 
+        // Initialize Mining Insights
+        if (typeof MiningInsights !== 'undefined') {
+            this.miningInsights = new MiningInsights(this);
+            window.miningInsights = this.miningInsights;
+            
+            // Setup refresh button
+            const refreshInsightsBtn = document.getElementById('refreshInsightsBtn');
+            if (refreshInsightsBtn) {
+                refreshInsightsBtn.onclick = () => {
+                    this.miningInsights.analyze();
+                    if (typeof Toast !== 'undefined') {
+                        Toast.success('Insights refreshed');
+                    }
+                };
+            }
+        }
+        
+        // Handle URL parameters for pool selection (after pool manager is initialized)
+        setTimeout(() => {
+            this.handlePoolSelectionFromURL();
+        }, 2000);
+        
         // Initialize Quai Network Features
         if (typeof QuaiFeatures !== 'undefined') {
             this.quaiFeatures = new QuaiFeatures(this);
@@ -3996,7 +4079,20 @@ class MiningDashboard {
             };
         }
 
-        // Setup difficulty adjustor toggle
+        // Setup real-time difficulty switcher toggle
+        const realTimeDifficultyToggle = document.getElementById('realTimeDifficultyToggle');
+        if (realTimeDifficultyToggle && this.realTimeDifficultySwitcher) {
+            realTimeDifficultyToggle.checked = this.realTimeDifficultySwitcher.isEnabled;
+            realTimeDifficultyToggle.onchange = (e) => {
+                if (e.target.checked) {
+                    this.realTimeDifficultySwitcher.start();
+                } else {
+                    this.realTimeDifficultySwitcher.stop();
+                }
+            };
+        }
+
+        // Setup difficulty adjustor toggle (legacy)
         const difficultyAdjustorToggle = document.getElementById('difficultyAdjustorToggle');
         if (difficultyAdjustorToggle && this.difficultyAdjustor) {
             difficultyAdjustorToggle.checked = this.difficultyAdjustor.isEnabled;

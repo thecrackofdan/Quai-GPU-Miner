@@ -1,7 +1,7 @@
 {
   "name": "quaiminer-core-os-dashboard",
   "version": "1.0.0",
-  "description": "QuaiMiner CORE OS - Complete mining operating system with real-time dashboard for solo mining Quai Network",
+  "description": "QuaiMiner CORE OS - Custom mining OS with real-time dashboard for operating a DePool on Quai Network",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -24,7 +24,10 @@
     "cryptocurrency",
     "monitoring",
     "blockchain",
-    "solo-mining",
+    "depool",
+    "decentralized-pool",
+    "mining-pool",
+    "pool-operator",
     "amd-gpu",
     "progpow"
   ],
@@ -39,6 +42,7 @@
     "express-rate-limit": "^7.1.5",
     "helmet": "^7.1.0",
     "express-validator": "^7.0.1",
+    "compression": "^1.7.4",
     "chart.js": "^4.4.0",
     "pdfkit": "^0.14.0",
     "csv-writer": "^1.6.0"

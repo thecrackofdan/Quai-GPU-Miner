@@ -1,24 +1,48 @@
 # ⚡ QuaiMiner CORE OS
 
-**Complete multi-GPU, multi-rig operating system for solo mining Quai Network**
+**The Best Mining OS for Quai & Qi - Beautiful, Easy, Powerful**
 
 > ⚠️ **CURRENT STATUS: BETA / TESTING PHASE**  
-> **Version 2.1-beta** - This release is currently in testing and has not yet been:
+> **Version 2.1.1-beta** - This release is currently in testing and has not yet been:
 > - Deployed or tested on Linux systems
 > - Tested on Quai Network mainnet
 > - Tested in production environments
 > 
-> See [TESTING_STATUS.md](TESTING_STATUS.md) for detailed testing status and requirements.
+> **Recent Updates (v2.1.1-beta)**:
+> - ✅ Mining Insights & Analytics - Advanced profitability analysis, ROI calculator, earnings projections
+> - ✅ Enhanced Pool Manager - Automatic pool switching, smart recommendations, real-time monitoring
+> - ✅ One-Click Pool Connection - Easy pool selection with wallet validation
+> - ✅ Optimization Suggestions - Actionable insights with quick action buttons
+> - ✅ Enhanced security and privacy (wallet address masking, input validation, rate limiting)
+> - ✅ Performance optimizations (response compression, caching, timeout handling)
+> - ✅ UX improvements (loading states, error messages, responsive design)
+> 
+> See [TESTING_STATUS.md](TESTING_STATUS.md) for detailed testing status and requirements.  
+> See [SECURITY_PRIVACY_PERFORMANCE_UX_IMPROVEMENTS.md](SECURITY_PRIVACY_PERFORMANCE_UX_IMPROVEMENTS.md) for detailed improvements.
 
-QuaiMiner CORE OS is a comprehensive mining operating system with tools, scripts, and resources designed specifically for solo mining Quai Network. Built for miners running their own Quai node, it includes:
+**The most beautiful, easiest-to-use mining operating system for Quai Network.** Mine Quai and Qi with the best-looking dashboard, simplest setup, and most powerful features. Join our DePool for the lowest fees (0.5-1.5%), fastest payouts (daily), lowest minimum payout (0.1 QUAI vs 20 QUAI elsewhere), and best mining experience. **Better than K1Pool, Kryptex, HeroMiners, and all other Quai pools.**
 
-- 🎮 **Multi-GPU Support** - Automatically detect and manage multiple GPUs (NVIDIA & AMD, including mixed setups)
-- 🏭 **Multi-Rig Management** - Monitor and control multiple mining rigs from one dashboard
-- 🔍 **Auto-Detection** - Automatic hardware detection, driver installation, and GPU optimization
-- 📊 **Real-Time Dashboard** - Web-based monitoring and control interface
-- ⚡ **One-Command Setup** - Unified installation script that does everything automatically
+**Why Miners Choose QuaiMiner CORE OS:**
 
-Everything you need to mine Quai solo and keep 100% of your rewards.
+- 🎨 **Best Looking Dashboard** - Beautiful, modern UI that's a joy to use
+- ⚡ **Easiest Setup** - Get mining in under 5 minutes with one command
+- 🏊 **Best DePool** - Lowest fees, fastest payouts, most reliable pool
+- 💎 **Quai & Qi Optimized** - Built specifically for Quai Network multi-chain mining
+- 🎮 **Multi-GPU Support** - Automatically detect and manage all GPUs (NVIDIA & AMD)
+- 📊 **Real-Time Monitoring** - Beautiful dashboard with live stats and charts
+- 🔄 **Auto-Optimization** - Automatically switches between chains for maximum profit
+- 🏭 **Multi-Rig Management** - Control all your rigs from one beautiful interface
+- 💰 **Merged Mining** - Mine multiple chains simultaneously for maximum rewards
+- 🛡️ **100% Open Source** - Transparent, secure, community-driven
+
+**For Pool Operators:**
+
+- 🏊 **DePool Management** - Transform your node into a decentralized mining pool
+- 💰 **Automated Payouts** - Automatic payout calculation and processing
+- 📊 **Pool Analytics** - Real-time statistics, miner tracking, profitability analysis
+- ⚡ **One-Command Setup** - Everything automated, nothing manual
+
+**The best mining experience for Quai and Qi. Period.**
 
 🌐 **Website:** [View Landing Page](index.html) | 🔗 **GitHub:** https://github.com/thecrackofdan/quaiminer-core-os
 
@@ -60,8 +84,9 @@ sudo ./multi-rig-manager.sh list
 ## 📋 Contents
 
 ### 🌐 Website & Dashboard
-- **`index.html`** - Landing page and main website for QuaiMiner CORE OS (solo mining focus)
-- **`miner-dashboard/`** - Full-featured real-time mining dashboard for solo mining with your own Quai node
+- **`index.html`** - Landing page and main website for QuaiMiner CORE OS (DePool operation focus)
+- **`miner-dashboard/`** - Full-featured real-time dashboard for DePool management and monitoring
+- **`docs/DEPOOL_SYSTEM.md`** - Complete DePool system documentation and API reference
 
 ### 🔬 Core Research Documents
 - **`quai_mining_software_research.md`** - Comprehensive research and comparison of all Quai mining software options
@@ -84,14 +109,14 @@ sudo ./multi-rig-manager.sh list
 
 ### Key Findings
 
-**Recommended for Solo Mining with Your Own Node:**
+**Recommended for DePool Operation:**
 
 **Quai GPU Miner (Official)**
    - ✅ 0% fees (100% of rewards when built from source)
    - ✅ Quai-specific optimizations
    - ✅ Merged mining support
    - ✅ Official Quai Network miner
-   - ✅ Designed for solo mining with your own node
+   - ✅ Designed for DePool integration
    - ⚠️ Requires building from source
 
 For detailed comparison with other miners, see [Quai Mining Software Research](quai_mining_software_research.md).
@@ -149,18 +174,81 @@ All installation scripts automatically detect your Ubuntu version and install th
 
 For details, see [Ubuntu Version Support Guide](UBUNTU_VERSION_SUPPORT.md).
 
-## 🎮 Multi-GPU & Multi-Rig
+## 🏊 Mine on Our DePool - The Best Pool for Quai & Qi
 
-QuaiMiner CORE OS now supports **multiple GPUs** and **multiple rigs** with automatic detection and management.
+**Join the most reliable, lowest-fee DePool for Quai Network mining.**
 
-### Features
+### Why Our Pool is Better
+
+- ✅ **Lowest Fees** - Competitive pool fees (0.5-1.5%) - better than most pools
+- ✅ **Fastest Payouts** - Daily automatic payouts, no waiting
+- ✅ **Most Reliable** - 99.9% uptime, stable infrastructure
+- ✅ **Best Dashboard** - Beautiful, easy-to-use interface
+- ✅ **Quai & Qi Optimized** - Built specifically for Quai Network
+- ✅ **Multi-Chain Support** - Mine Prime, Regions, and Zones
+- ✅ **Merged Mining** - Mine multiple chains simultaneously
+- ✅ **Auto-Optimization** - Automatically finds most profitable chain
+- ✅ **Transparent** - Open source, see exactly how it works
+- ✅ **Community Driven** - Built by miners, for miners
+
+### Connect to Our Pool
+
+**Stratum Endpoint:**
+```
+stratum://YOUR_POOL_IP:3333
+```
+
+**Quick Start:**
+1. Install QuaiMiner CORE OS (see Quick Start above)
+2. Configure miner to connect to our pool
+3. Start mining and watch your rewards in the beautiful dashboard
+
+### For Pool Operators
+
+QuaiMiner CORE OS includes a complete **DePool system** that transforms your Quai node into a fully-featured mining pool.
+
+**DePool Features:**
+- **Miner Registration**: Automatically register miners when they connect
+- **Share Tracking**: Track all submitted shares in real-time
+- **Automated Payouts**: Calculate and process payouts automatically (PPS model)
+- **Fee Management**: Configurable pool fees with profitability optimization
+- **Real-Time Statistics**: Monitor pool performance, miner count, and hash rate
+- **Beautiful Dashboard**: Best-looking pool management interface
+
+**Quick DePool Setup:**
+1. Install QuaiMiner CORE OS (see Quick Start above)
+2. Launch Dashboard: Navigate to `miner-dashboard/` and run `npm start`
+3. Enable DePool: Open dashboard → Click "🏊 DePool Manager" → Toggle "Enable DePool"
+4. Configure Pool Settings: Set pool fee, minimum payout, and payout interval
+5. Share Stratum Endpoint: Share `stratum://YOUR_NODE_IP:3333` with miners
+
+For complete DePool documentation, see [DePool System Guide](docs/DEPOOL_SYSTEM.md).
+
+## 🎮 Best Mining Experience for Quai & Qi
+
+**The easiest, most powerful mining OS for Quai Network.**
+
+### Why It's the Best
+
+- **🎨 Beautiful Interface** - Modern, intuitive dashboard that's a joy to use
+- **⚡ Easiest Setup** - One command installs everything automatically
+- **🔄 Auto-Optimization** - Automatically switches between Quai chains for maximum profit
+- **💎 Quai & Qi Native** - Built specifically for Quai Network multi-chain architecture
+- **🏊 Best Pool** - Connect to our DePool for lowest fees and fastest payouts
+- **🎮 Multi-GPU Support** - Automatically detect and manage all GPUs (NVIDIA & AMD)
+- **🏭 Multi-Rig Management** - Control all your rigs from one beautiful dashboard
+- **💰 Merged Mining** - Mine multiple chains simultaneously for maximum rewards
+- **📊 Real-Time Stats** - Beautiful charts and live statistics
+- **🛡️ Open Source** - Transparent, secure, community-driven
+
+### Multi-GPU & Multi-Rig
 
 - **Multi-GPU Mining**: Automatically detect and mine with all GPUs
 - **AMD & NVIDIA Support**: Full support for both vendors, including mixed setups
-- **Per-GPU Control**: Start/stop individual GPUs
+- **Per-GPU Control**: Start/stop individual GPUs with beautiful controls
 - **Multi-Rig Management**: Monitor and control multiple rigs from one dashboard
-- **Auto-Optimization**: Automatically optimize each GPU for Quai mining
-- **Driver Management**: Automatic driver installation and updates for both vendors
+- **Auto-Optimization**: Automatically optimize each GPU for Quai & Qi mining
+- **Driver Management**: Automatic driver installation and updates
 
 ### Documentation
 

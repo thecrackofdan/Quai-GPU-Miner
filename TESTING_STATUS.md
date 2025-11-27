@@ -2,7 +2,7 @@
 
 ## ⚠️ Current Status: **BETA / TESTING PHASE**
 
-**Version**: 2.1-beta  
+**Version**: 2.1.1-beta  
 **Status**: Pre-release testing  
 **Last Updated**: December 2024
 
@@ -136,7 +136,7 @@ If you're testing this release, please report:
 ## 📞 Support
 
 For testing support or to report issues:
-- GitHub Issues: https://github.com/thecrackofdan/QuaiMiner-CORE-OS/issues
+- GitHub Issues: https://github.com/thecrackofdan/quaiminer-core-os/issues
 - Testing feedback welcome
 
 ---

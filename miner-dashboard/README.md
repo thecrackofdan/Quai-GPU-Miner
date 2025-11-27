@@ -1,23 +1,40 @@
-# QuaiMiner CORE - Mining Dashboard
+# QuaiMiner CORE - Best Looking Mining Dashboard
 
-**Part of QuaiMiner CORE - Production-ready real-time dashboard for solo mining Quai Network with your own node**
+**The most beautiful, easiest-to-use mining dashboard for Quai and Qi**
 
 🌐 **QuaiMiner CORE:** [Main Repository](https://github.com/thecrackofdan/quaiminer-core) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
 
+## Why It's the Best
+
+**The best-looking, easiest-to-use mining dashboard for Quai Network. Better than HiveOS, better than anything else.**
+
+- **🎨 Beautiful Design**: Modern, intuitive interface that's a joy to use
+- **⚡ Easiest Setup**: Get mining in under 5 minutes
+- **🏊 Best Pool**: Join our DePool for lowest fees and fastest payouts
+- **💎 Quai & Qi Optimized**: Built specifically for Quai Network multi-chain mining
+- **🔄 Auto-Optimization**: Automatically switches between chains for maximum profit
+- **💰 Merged Mining**: Mine multiple chains simultaneously
+
 ## Features
 
-**Designed for Solo Mining with Your Own Quai Node**
+**Everything you need for the best Quai & Qi mining experience**
 
+- **🎨 Beautiful Dashboard**: The most beautiful mining interface you'll ever use
+- **⚡ One-Click Mining**: Start mining with a single click
+- **🏊 DePool Management**: Complete pool control or connect to our best pool
+- **Pool Statistics**: Real-time pool statistics (total miners, hash rate, blocks found, revenue, fees)
+- **Miner Management**: View all connected miners, their hash rates, shares, pending balances
+- **Automated Payouts**: Automatic payout calculation and processing (PPS model)
+- **Fee Management**: Configurable pool fees with profitability optimization
+- **Profitability Analysis**: Track revenue, costs, profit margins, and projections
+- **Share Tracking**: Track all submitted shares (accepted/rejected) in real-time
+- **Block Recording**: Record and display blocks found by pool miners
 - **Real-time Mining Statistics**: Hash rate, shares, temperature monitoring
 - **GPU Performance Tracking**: Individual GPU metrics and health monitoring
-- **Node Integration**: Built to work with your own Quai Network node (RPC connection)
-- **Solo Mining Focus**: Optimized for solo mining operations—no pool support
-- **Network Metrics**: Block height, difficulty, network hash rate from your node
-- **Solo Mining Support**: Full integration with quai-gpu-miner for solo mining
-- **Coinbase Transaction Tracking**: Fetch and display mining rewards from your node
+- **Quai & Qi Native**: Auto-switching between chains, merged mining support
 - **Multi-currency Display**: QUAI, USD, EUR, GBP, BTC, ETH
 - **Pelagus Wallet Integration**: Connect and monitor wallet activity
-- **Responsive Design**: Works on desktop and mobile devices
+- **Responsive Design**: Works beautifully on desktop and mobile devices
 
 ## Quick Start
 
@@ -25,7 +42,8 @@
 
 - Node.js 14+ and npm
 - Linux terminal
-- Quai Network node running (for solo mining)
+- Quai Network node running (for DePool operation)
+- Stratum proxy enabled on your node (usually port 3333)
 
 ### Installation
 
@@ -99,8 +117,23 @@ gpus: [
 node: {
     rpcUrl: 'http://localhost:8545',
     enableMetrics: true
+},
+depool: {
+    enabled: true,
+    fee: 1.0,              // Pool fee percentage (0-5%)
+    minPayout: 0.1,       // Minimum payout in QUAI
+    payoutInterval: 86400000  // Payout interval in milliseconds (24 hours)
 }
 ```
+
+### DePool Setup
+
+1. **Enable DePool**: Open dashboard → Click "🏊 DePool Manager" → Toggle "Enable DePool"
+2. **Configure Settings**: Set pool fee, minimum payout, and payout interval
+3. **Share Stratum Endpoint**: Share `stratum://YOUR_NODE_IP:3333` with miners
+4. **Monitor**: View pool statistics, connected miners, and profitability in real-time
+
+For complete DePool documentation, see [DePool System Guide](../docs/DEPOOL_SYSTEM.md).
 
 ## Server Endpoints
 
