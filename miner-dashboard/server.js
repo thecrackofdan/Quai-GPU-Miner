@@ -201,6 +201,25 @@ app.use(express.static(path.join(__dirname, 'public'), {
     lastModified: true
 }));
 
+// Request ID tracking
+const requestId = require('./utils/request-id');
+app.use(requestId);
+
+// Request size limit (DoS protection)
+const requestSizeLimit = require('./utils/request-size-limit');
+app.use(requestSizeLimit);
+
+// Request timing middleware
+const requestTiming = require('./utils/request-timing');
+app.use(requestTiming);
+
+// CSRF protection (optional, can be enabled via env)
+if (process.env.ENABLE_CSRF === 'true') {
+    const { csrfProtection } = require('./utils/csrf');
+    app.use(csrfProtection);
+    logger.info('CSRF protection enabled');
+}
+
 app.use(securityHeaders); // Security headers
 app.use(privacyHeaders); // Privacy headers
 app.use(apiLimiter); // Apply rate limiting to all routes
@@ -216,6 +235,23 @@ app.use((err, req, res, next) => {
     });
     
     logger.error('Server error', sanitizedError);
+    
+    // Send to Sentry if configured (optional)
+    try {
+        const { captureException } = require('./utils/sentry');
+        captureException(err, {
+            tags: {
+                path: req.path,
+                method: req.method
+            },
+            extra: {
+                ip: req.ip,
+                userAgent: req.get('user-agent')
+            }
+        });
+    } catch (sentryError) {
+        // Sentry not available or not configured - that's OK
+    }
     
     res.status(500).json({ 
         error: 'Internal server error',
@@ -293,22 +329,64 @@ app.get('/api/metrics', (req, res) => {
     const totalMem = memUsage.heapTotal;
     const usedMem = memUsage.heapUsed;
     
+    // Get memory monitoring stats
+    let memoryStats = {};
+    try {
+        const memoryMonitor = require('./utils/memory-monitor');
+        memoryStats = memoryMonitor.getMemoryStats();
+    } catch (err) {
+        // Memory monitor not critical
+    }
+    
+    // Get database health
+    let dbHealth = {};
+    try {
+        const dbHealthCheck = require('./utils/database-health');
+        dbHealth = dbHealthCheck.getHealthStatus();
+    } catch (err) {
+        // DB health check not critical
+    }
+    
     res.json({
         memory: {
             used: Math.round(usedMem / 1024 / 1024), // MB
             total: Math.round(totalMem / 1024 / 1024), // MB
-            percentage: Math.round((usedMem / totalMem) * 100)
+            percentage: Math.round((usedMem / totalMem) * 100),
+            ...memoryStats
         },
         cpu: {
             usage: process.cpuUsage()
         },
         uptime: process.uptime(),
+        database: dbHealth,
         requests: {
             // Could add request counters here
         },
         timestamp: new Date().toISOString()
     });
 });
+
+/**
+ * @swagger
+ * /api/metrics/prometheus:
+ *   get:
+ *     summary: Prometheus metrics endpoint
+ *     tags: [System]
+ *     responses:
+ *       200:
+ *         description: Metrics in Prometheus format
+ *         content:
+ *           text/plain:
+ */
+// Prometheus metrics endpoint
+const prometheusMetrics = require('./utils/prometheus-metrics');
+app.get('/api/metrics/prometheus', (req, res) => {
+    res.set('Content-Type', 'text/plain');
+    res.send(prometheusMetrics.getPrometheusMetrics());
+});
+
+// Add request tracking middleware (after routes are defined)
+app.use(prometheusMetrics.requestTrackingMiddleware);
 
 // Hardware detection endpoints
 app.get('/api/hardware/detect', async (req, res) => {

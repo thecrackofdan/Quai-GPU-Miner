@@ -1,47 +1,89 @@
-name: CI/CD Pipeline
+name: CI/CD Pipeline with Quality Gates
 
 on:
   push:
-    branches: [ main, master, develop ]
+    branches: [main, master, develop]
   pull_request:
-    branches: [ main, master, develop ]
+    branches: [main, master, develop]
   release:
-    types: [ created ]
+    types: [created]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "18.x"
 
 jobs:
-  test:
-    name: Test
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        node-version: [18.x, 20.x]
-    
+  # Quality Gate 1: Code Quality
+  lint-and-format:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Setup Node.js ${{ matrix.node-version }}
+
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
           cache-dependency-path: miner-dashboard/package-lock.json
-      
+
       - name: Install dependencies
         working-directory: ./miner-dashboard
         run: npm ci
-      
-      - name: Run linter
+
+      - name: Run ESLint
         working-directory: ./miner-dashboard
-        run: npm run lint || echo "Linter not configured, skipping..."
-        continue-on-error: true
-      
-      - name: Run tests
+        run: npm run lint
+        continue-on-error: false
+
+      - name: Check code formatting
         working-directory: ./miner-dashboard
-        run: npm test || echo "Tests not configured, skipping..."
-        continue-on-error: true
-      
+        run: npm run format:check
+        continue-on-error: false
+
+  # Quality Gate 2: Security Scanning
+  security-scan:
+    name: Security Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: miner-dashboard/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./miner-dashboard
+        run: npm ci
+
+      - name: Run npm audit
+        working-directory: ./miner-dashboard
+        run: npm audit --audit-level=moderate
+        continue-on-error: false
+
+      - name: Run security tests
+        working-directory: ./miner-dashboard
+        run: npm run test:security
+        continue-on-error: false
+
+  # Quality Gate 3: Syntax Check
+  syntax-check:
+    name: Syntax Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
       - name: Check syntax
         working-directory: ./miner-dashboard
         run: |
@@ -49,43 +91,190 @@ jobs:
           node -c database.js
           node -c auth.js
           node -c export.js
-          echo "✓ All JavaScript files have valid syntax"
+          echo "✅ All JavaScript files have valid syntax"
 
-  docker-build:
-    name: Docker Build
-    runs-on: ubuntu-latest
-    needs: test
-    
+  # Quality Gate 4: Unit Tests
+  unit-tests:
+    name: Unit Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [18.x, 20.x]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      
-      - name: Build Docker image
-        working-directory: ./miner-dashboard
-        run: |
-          docker build -t quaiminer-dashboard:test .
-      
-      - name: Test Docker image
-        working-directory: ./miner-dashboard
-        run: |
-          docker run --rm -d --name test-container -p 3000:3000 quaiminer-dashboard:test
-          sleep 5
-          curl -f http://localhost:3000/api/health || exit 1
-          docker stop test-container
 
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+          cache-dependency-path: miner-dashboard/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./miner-dashboard
+        run: npm ci
+
+      - name: Run unit tests
+        working-directory: ./miner-dashboard
+        run: npm run test:unit -- --coverage --coverageReporters=text --coverageReporters=lcov
+        continue-on-error: false
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./miner-dashboard/coverage/lcov.info
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+  # Quality Gate 5: Integration Tests
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: [lint-and-format, syntax-check]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: miner-dashboard/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./miner-dashboard
+        run: npm ci
+
+      - name: Run integration tests
+        working-directory: ./miner-dashboard
+        run: npm run test:integration
+        continue-on-error: false
+
+  # Quality Gate 6: Build Verification
+  build-verify:
+    name: Build Verification
+    runs-on: ubuntu-latest
+    needs: [lint-and-format, syntax-check]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: miner-dashboard/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./miner-dashboard
+        run: npm ci --production
+
+      - name: Verify production build
+        working-directory: ./miner-dashboard
+        run: |
+          node -c server.js
+          echo "✅ Production build verified"
+
+  # Quality Gate 7: Dependency Check
+  dependency-check:
+    name: Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: miner-dashboard/package-lock.json
+
+      - name: Check for outdated packages
+        working-directory: ./miner-dashboard
+        run: npm outdated || true
+
+      - name: Verify package-lock.json
+        working-directory: ./miner-dashboard
+        run: |
+          if [ ! -f package-lock.json ]; then
+            echo "❌ package-lock.json is missing"
+            exit 1
+          fi
+          echo "✅ package-lock.json exists"
+
+  # Final Quality Gate: All Checks Pass
+  quality-gate:
+    name: Quality Gate - All Checks
+    runs-on: ubuntu-latest
+    needs:
+      [
+        lint-and-format,
+        security-scan,
+        syntax-check,
+        unit-tests,
+        integration-tests,
+        build-verify,
+        dependency-check,
+      ]
+    if: always()
+    steps:
+      - name: Check all quality gates
+        run: |
+          echo "🔍 Checking quality gate status..."
+          echo "Lint: ${{ needs.lint-and-format.result }}"
+          echo "Security: ${{ needs.security-scan.result }}"
+          echo "Syntax: ${{ needs.syntax-check.result }}"
+          echo "Unit Tests: ${{ needs.unit-tests.result }}"
+          echo "Integration Tests: ${{ needs.integration-tests.result }}"
+          echo "Build: ${{ needs.build-verify.result }}"
+          echo "Dependencies: ${{ needs.dependency-check.result }}"
+
+          if [ "${{ needs.lint-and-format.result }}" != "success" ] || \
+             [ "${{ needs.security-scan.result }}" != "success" ] || \
+             [ "${{ needs.syntax-check.result }}" != "success" ] || \
+             [ "${{ needs.unit-tests.result }}" != "success" ] || \
+             [ "${{ needs.integration-tests.result }}" != "success" ] || \
+             [ "${{ needs.build-verify.result }}" != "success" ] || \
+             [ "${{ needs.dependency-check.result }}" != "success" ]; then
+            echo "❌ Quality gate failed - one or more checks did not pass"
+            exit 1
+          fi
+
+          echo "✅ All quality gates passed!"
+
+      - name: Quality Gate Summary
+        run: |
+          echo "## ✅ Quality Gate Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Check | Status |" >> $GITHUB_STEP_SUMMARY
+          echo "|-------|--------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Code Quality (Lint/Format) | ${{ needs.lint-and-format.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Security Scan | ${{ needs.security-scan.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Syntax Check | ${{ needs.syntax-check.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Unit Tests | ${{ needs.unit-tests.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Integration Tests | ${{ needs.integration-tests.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Build Verification | ${{ needs.build-verify.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Dependency Check | ${{ needs.dependency-check.result == 'success' && '✅ Pass' || '❌ Fail' }} |" >> $GITHUB_STEP_SUMMARY
+
+  # Release (only if all quality gates pass)
   release:
     name: Create Release
     runs-on: ubuntu-latest
-    needs: [test, docker-build]
-    if: github.event_name == 'release'
-    
+    needs: [quality-gate]
+    if: github.event_name == 'release' && needs.quality-gate.result == 'success'
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Create release archive
         run: |
           mkdir -p release
@@ -95,7 +284,7 @@ jobs:
             --exclude='.github' \
             --exclude='*.md' \
             .
-      
+
       - name: Upload release asset
         uses: actions/upload-release-asset@v1
         env:

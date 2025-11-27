@@ -1,0 +1,65 @@
+name: Quality Gates
+
+on:
+  pull_request:
+    branches: [ main, master ]
+  push:
+    branches: [ main, master ]
+
+jobs:
+  quality-gate:
+    name: Quality Gate Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          cache: 'npm'
+          cache-dependency-path: miner-dashboard/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: ./miner-dashboard
+        run: npm ci
+      
+      - name: Quality Gate 1: Lint
+        working-directory: ./miner-dashboard
+        run: npm run lint
+        continue-on-error: false
+      
+      - name: Quality Gate 2: Format Check
+        working-directory: ./miner-dashboard
+        run: npm run format:check
+        continue-on-error: false
+      
+      - name: Quality Gate 3: Security Tests
+        working-directory: ./miner-dashboard
+        run: npm run test:security
+        continue-on-error: false
+      
+      - name: Quality Gate 4: Unit Tests
+        working-directory: ./miner-dashboard
+        run: npm run test:unit
+        continue-on-error: false
+      
+      - name: Quality Gate 5: Syntax Check
+        working-directory: ./miner-dashboard
+        run: npm run test:syntax
+        continue-on-error: false
+      
+      - name: Quality Gate 6: Security Audit
+        working-directory: ./miner-dashboard
+        run: npm audit --audit-level=moderate
+        continue-on-error: false
+      
+      - name: Quality Gate Summary
+        if: always()
+        run: |
+          echo "## ✅ Quality Gates Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "All quality gates must pass for merge approval." >> $GITHUB_STEP_SUMMARY
+

@@ -10,6 +10,7 @@
     "test": "npm run test:syntax && npm run test:security",
     "test:syntax": "node -c server.js && echo '✅ Syntax check passed'",
     "test:security": "node tests/security-privacy-test.js && node tests/security-implementation-test.js",
+    "test:audit": "node tests/security-audit.js",
     "test:all": "npm run test:syntax && npm run test:security",
     "test:unit": "jest --coverage",
     "test:watch": "jest --watch",
@@ -20,7 +21,8 @@
     "format:check": "prettier --check \"**/*.{js,json,md}\" --ignore-path .gitignore",
     "validate": "npm run lint && npm run format:check && npm run test",
     "verify": "npm run validate && npm audit --audit-level=moderate && echo '✅ Verification complete'",
-    "precommit": "npm run lint:fix && npm run format"
+    "precommit": "npm run lint:fix && npm run format",
+    "prepare": "husky install || true"
   },
   "keywords": [
     "quai-gpu-miner",
@@ -61,7 +63,10 @@
     "supertest": "^6.3.3",
     "winston": "^3.11.0",
     "swagger-jsdoc": "^6.2.8",
-    "swagger-ui-express": "^5.0.0"
+    "swagger-ui-express": "^5.0.0",
+    "@sentry/node": "^7.91.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0"
   },
   "engines": {
     "node": ">=14.0.0",
