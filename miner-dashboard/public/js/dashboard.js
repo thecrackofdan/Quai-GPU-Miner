@@ -4015,6 +4015,12 @@ class MiningDashboard {
             window.autoChainSwitcher = this.autoChainSwitcher;
         }
 
+        // Initialize Quai Metrics UI
+        if (typeof QuaiMetricsUI !== 'undefined') {
+            this.quaiMetrics = new QuaiMetricsUI(this);
+            window.quaiMetrics = this.quaiMetrics;
+        }
+
         // Initialize Mining Insights
         if (typeof MiningInsights !== 'undefined') {
             this.miningInsights = new MiningInsights(this);

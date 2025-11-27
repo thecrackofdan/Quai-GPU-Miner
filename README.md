@@ -1,8 +1,8 @@
 # ⚡ Quai GPU Miner
 
-**The easiest way to mine Quai Network - Automatic GPU detection, driver installation, and setup**
+**The easiest way to mine Quai Network - Sophisticated interface with automatic GPU detection and setup**
 
-> One command to get started mining Quai Network with your GPU
+> One command to get started. Beautiful dashboard with Quai-specific metrics, SOAP features, and profitability tracking.
 
 ## 🚀 Quick Start
 
@@ -128,14 +128,31 @@ cd /opt/quai-gpu-miner/build
 ./ethcoreminer -G
 ```
 
-## 🌐 Web Interface
+## 🌐 Sophisticated Web Interface
 
-The web interface provides:
-- **GPU Detection** - See all detected GPUs
-- **Driver Status** - Check if drivers are installed
-- **Mining Configuration** - Set wallet, pool, and settings
-- **Real-time Monitoring** - Hash rate, temperature, shares
+The web interface provides everything you need for profitable Quai mining:
+
+### Core Features
+- **Automatic GPU Detection** - Detects and configures NVIDIA & AMD GPUs
+- **One-Click Setup** - Get mining in minutes, not hours
+- **Real-time Monitoring** - Hash rate, temperature, shares, power usage
 - **Easy Controls** - Start/stop mining with one click
+
+### Quai-Specific Features
+- **Chain Profitability Comparison** - See which chain (Prime, Regions, Zones) is most profitable
+- **Auto Chain Switching** - Automatically mines the most profitable chain
+- **SOAP Staking** - Track staking rewards and multipliers
+- **Merge Mining Support** - Mine multiple chains simultaneously
+- **LMT/LMR Tracking** - Monitor Liquid Mining Tokens and Locked Mining Rewards
+- **Zone Sharding** - Automatically select most profitable zones when sharding is active
+- **Comprehensive Profitability** - Daily, weekly, monthly, yearly projections
+- **Efficiency Metrics** - Hash per watt, profit per watt, ROI calculations
+
+### Advanced Features
+- **Alert System** - Email, Telegram, Discord notifications
+- **Difficulty Tracking** - Real-time difficulty monitoring across all chains
+- **Historical Data** - Track performance over time
+- **Mobile Responsive** - Access your miner from anywhere
 
 Access at: `http://localhost:3000`
 

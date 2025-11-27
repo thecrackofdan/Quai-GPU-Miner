@@ -47,6 +47,7 @@ const { blocks, stats, notifications, users, config, alertRules, alertHistory, a
 const { getAlertManager } = require('./utils/alerts');
 const DifficultyTracker = require('./utils/difficulty-tracker');
 const AutoChainSwitcher = require('./utils/auto-chain-switcher');
+const QuaiMetrics = require('./utils/quai-metrics');
 
 // Initialize alert manager
 const alertManager = getAlertManager();
@@ -122,6 +123,9 @@ difficultyTracker.start(300000); // Update every 5 minutes
 
 // Initialize auto chain switcher
 const autoChainSwitcher = new AutoChainSwitcher(NODE_RPC_URL);
+
+// Initialize Quai metrics
+const quaiMetrics = new QuaiMetrics(NODE_RPC_URL);
 
 // Security middleware
 app.use(helmet({

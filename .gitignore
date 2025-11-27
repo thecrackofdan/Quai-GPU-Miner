@@ -25,9 +25,7 @@ desktop.ini
 
 # Editor files
 # Keep workspace settings, but exclude other IDE files
-.vscode/*
-!.vscode/settings.json
-!.vscode/extensions.json
+.vscode/
 .idea/
 *.swp
 *.swo
@@ -35,6 +33,8 @@ desktop.ini
 *.sublime-*
 # Keep workspace file
 !*.code-workspace
+# Cursor IDE files
+.cursor/
 
 # Environment variables
 .env
@@ -55,8 +55,7 @@ build/
 !quick_amd_setup.sh
 !amd_opencl_setup.sh
 !mining_software_comparison.sh
-!create-github-release.sh
-!update-repo-description.sh
+!setup.sh
 # QuaiMiner OS scripts
 !quaiminer-os/*.sh
 
