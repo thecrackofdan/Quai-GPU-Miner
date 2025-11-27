@@ -2,7 +2,7 @@
 
 **The easiest way to mine Quai Network - Automatic GPU detection, driver installation, and setup**
 
-🌐 **Quai GPU Miner:** [Main Repository](https://github.com/thecrackofdan/quai-gpu-miner) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
+🌐 **Quai GPU Miner:** [Main Repository](https://github.com/thecrackofdan/Quai-GPU-Miner) - Complete mining toolkit | 📊 **Dashboard:** [Launch Dashboard](public/index.html)
 
 ## Why It's the Best
 

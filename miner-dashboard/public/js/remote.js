@@ -69,10 +69,10 @@ const installationInstructions = {
             
             <h3>Step 1: Get the Installer</h3>
             <p><strong>From GitHub:</strong></p>
-            <code>git clone https://github.com/thecrackofdan/quai-gpu-miner.git<br>cd quai-gpu-miner/quaiminer-os</code>
+            <code>git clone https://github.com/thecrackofdan/Quai-GPU-Miner.git<br>cd Quai-GPU-Miner/miner-dashboard</code>
             
             <p><strong>Or download directly:</strong></p>
-            <code>wget https://raw.githubusercontent.com/thecrackofdan/quai-gpu-miner/main/quaiminer-os/auto-install.sh</code>
+            <code>wget https://raw.githubusercontent.com/thecrackofdan/Quai-GPU-Miner/main/miner-dashboard/install-production.sh</code>
             
             <h3>Step 2: Make Executable</h3>
             <code>chmod +x auto-install.sh</code>
