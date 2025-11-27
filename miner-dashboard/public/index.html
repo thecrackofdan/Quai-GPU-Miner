@@ -19,6 +19,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/styles-professional.css" />
     <link rel="stylesheet" href="css/merged-mining-wizard.css" />
     <link rel="stylesheet" href="css/wizard-styles.css" />
     <link rel="stylesheet" href="css/toast.css" />
@@ -48,7 +49,7 @@
         font-family: Arial;
       "
     >
-      <h1 style="color: #ff0000; margin-bottom: 20px">⚡ Quai GPU Miner</h1>
+      <h1 style="color: #DC2626; margin-bottom: 20px; font-weight: 600;">Quai GPU Miner</h1>
       <p>Loading dashboard...</p>
       <p
         id="loadingStatus"
@@ -62,7 +63,7 @@
       <header class="dashboard-header">
         <div class="header-content">
           <div>
-            <h1>⚡ Quai GPU Miner</h1>
+            <h1>Quai GPU Miner</h1>
             <div class="network-info">
               <span class="network-badge">ProgPoW</span>
               <span
@@ -91,7 +92,7 @@
                   margin-right: 8px;
                 "
                 title="Remote Access & Download"
-                >🏠 Home</a
+                >Home</a
               >
               <a
                 href="/dashboard"
@@ -130,7 +131,7 @@
                 title="Export mining data"
                 aria-label="Export mining data"
               >
-                <span>📥</span> Export
+                <span>Export</span>
               </button>
               <button
                 class="settings-btn"
@@ -138,7 +139,7 @@
                 title="Settings"
                 aria-label="Open settings"
               >
-                <span>⚙️</span>
+                <span>Settings</span>
               </button>
             </div>
             <div
@@ -157,7 +158,7 @@
                 id="connectWalletBtn"
                 title="Connect your Pelagus wallet"
               >
-                <span class="wallet-icon">🔗</span>
+                <span class="wallet-icon"></span>
                 Connect Pelagus
               </button>
               <button
@@ -171,7 +172,7 @@
                 "
                 title="Retry Pelagus detection"
               >
-                🔄 Retry
+                Retry
               </button>
               <div class="wallet-info" id="walletInfo" style="display: none">
                 <span class="wallet-address" id="walletAddress"></span>
@@ -209,7 +210,7 @@
                 id="fetchAddressBtn"
                 title="Fetch coinbase transactions for this address"
               >
-                📊 Fetch Rewards
+                Fetch Rewards
               </button>
             </div>
           </div>
@@ -219,7 +220,7 @@
       <!-- Personal Mining Stats - TOP PRIORITY -->
       <section class="personal-mining-section">
         <h2 class="section-title-red">
-          ⚡ My Mining Performance
+          My Mining Performance
           <span
             class="info-icon"
             data-tooltip="Your personal mining statistics including hash rate, shares, uptime, and power consumption. These metrics show your mining rig's performance."
@@ -230,14 +231,14 @@
         <!-- Key Mining Stats -->
         <div class="mining-stats-hero">
           <div class="hero-stat-card quai-glow-strong">
-            <div class="hero-stat-icon">🔨</div>
+            <div class="hero-stat-icon"></div>
             <div class="hero-stat-content">
               <h3>
                 Hash Rate
                 <span
                   class="info-icon-small"
                   data-tooltip="The speed at which your mining hardware is performing calculations. Measured in MegaHashes per second (MH/s). Higher is better."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="hero-stat-value" id="hashRate">0.00</p>
@@ -246,14 +247,14 @@
           </div>
 
           <div class="hero-stat-card quai-glow">
-            <div class="hero-stat-icon">📊</div>
+            <div class="hero-stat-icon"></div>
             <div class="hero-stat-content">
               <h3>
                 Accepted Shares
                 <span
                   class="info-icon-small"
                   data-tooltip="The number of valid proof-of-work solutions your miner has submitted to the network. These are accepted by the network and count toward rewards."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="hero-stat-value" id="acceptedShares">0</p>
@@ -262,14 +263,14 @@
           </div>
 
           <div class="hero-stat-card quai-glow">
-            <div class="hero-stat-icon">⏱️</div>
+            <div class="hero-stat-icon"></div>
             <div class="hero-stat-content">
               <h3>
                 Uptime
                 <span
                   class="info-icon-small"
                   data-tooltip="The total time your mining rig has been running continuously. Shows how long you've been mining without interruption."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="hero-stat-value" id="uptime">00:00:00</p>
@@ -278,14 +279,14 @@
           </div>
 
           <div class="hero-stat-card quai-glow">
-            <div class="hero-stat-icon">⚡</div>
+            <div class="hero-stat-icon"></div>
             <div class="hero-stat-content">
               <h3>
                 Power Usage
                 <span
                   class="info-icon-small"
                   data-tooltip="The total electrical power consumption of your mining rig in Watts. Lower power usage with higher hash rate means better efficiency."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="hero-stat-value" id="powerUsage">0</p>
@@ -294,14 +295,14 @@
           </div>
 
           <div class="hero-stat-card quai-glow-strong" id="dailyProfitCard" style="border: 2px solid var(--success-color);">
-            <div class="hero-stat-icon">💰</div>
+            <div class="hero-stat-icon"></div>
             <div class="hero-stat-content">
               <h3>
                 Daily Profit
                 <span
                   class="info-icon-small"
                   data-tooltip="Real-time daily profit calculation based on current hash rate, power usage, electricity costs, and network difficulty. Updates automatically every 5 seconds."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="hero-stat-value" id="dailyProfit" style="color: var(--success-color);">$0.00</p>
@@ -330,7 +331,7 @@
              "
            >
              <h3 style="margin: 0; color: var(--quai-primary)">
-               📊 Mining Insights & Analytics
+               Mining Insights & Analytics
                <span
                  class="info-icon"
                  data-tooltip="Advanced profitability analysis, ROI calculations, earnings projections, and optimization insights to maximize your mining profits."
@@ -343,7 +344,7 @@
                style="padding: 8px 16px"
                title="Refresh insights"
              >
-               🔄 Refresh
+               Refresh
              </button>
            </div>
            <div id="insightsWidget">
@@ -373,7 +374,7 @@
              "
            >
              <h3 style="margin: 0; color: var(--quai-primary)">
-               💰 Auto Profit Optimizer
+               Auto Profit Optimizer
                <span
                  class="info-icon"
                  data-tooltip="Automatically switches between Quai Network chains (Prime, Regions, Zones) based on profitability AND staking rewards. Leverages Quai's unique multi-chain architecture and SOAP staking for maximum rewards."
@@ -431,7 +432,7 @@
             "
           >
             <h3 style="margin: 0; color: var(--quai-primary)">
-              💰 SOAP Staking
+              SOAP Staking
               <span
                 class="info-icon"
                 data-tooltip="Stake your QUAI/QI tokens to earn additional rewards. Staking rewards are automatically included in profit optimizer calculations for optimal chain selection."
@@ -479,7 +480,7 @@
             title="Fine-tune GPU settings"
             style="margin-left: auto"
           >
-            <span>⚙️</span> Fine-Tune GPUs
+            <span>Fine-Tune GPUs</span>
           </button>
         </div>
         <div class="gpu-grid" id="gpuGrid">
@@ -490,7 +491,7 @@
       <!-- Personal Mining Rewards Section -->
       <section class="rewards-section">
         <h2 class="section-title-red">
-          💰 My Mining Rewards
+          My Mining Rewards
           <span
             class="info-icon"
             data-tooltip="Your accumulated mining rewards in QUAI and QI tokens. Shows estimated USD value and block discovery statistics. Currency can be changed in settings."
@@ -499,14 +500,14 @@
         </h2>
         <div class="rewards-grid">
           <div class="reward-card primary">
-            <div class="reward-icon">💰</div>
+            <div class="reward-icon"></div>
             <div class="reward-content">
               <h3>
                 QUAI Earnings
                 <span
                   class="info-icon-small"
                   data-tooltip="Total QUAI tokens earned from mining. QUAI is the native cryptocurrency of the Quai Network. Display currency can be changed in settings."
-                  >ℹ️</span
+                  >i</span
                 >
               </h3>
               <p class="reward-value" id="quaiEarnings">0.000000</p>
@@ -515,7 +516,7 @@
             </div>
           </div>
           <div class="reward-card secondary">
-            <div class="reward-icon">⚡</div>
+            <div class="reward-icon"></div>
             <div class="reward-content">
               <h3>QI Earnings</h3>
               <p class="reward-value" id="qiEarnings">0.000000</p>
@@ -524,7 +525,7 @@
             </div>
           </div>
           <div class="reward-card info">
-            <div class="reward-icon">📊</div>
+            <div class="reward-icon"></div>
             <div class="reward-content">
               <h3>Estimated Time to Block</h3>
               <p class="reward-value" id="timeToBlock">--</p>
@@ -647,7 +648,7 @@
           "
         >
           <div class="stat-card">
-            <div class="stat-icon">📊</div>
+            <div class="stat-icon"></div>
             <div class="stat-content">
               <h3>Total Transactions</h3>
               <p class="stat-value" id="quaiscanTotalTransactions">-</p>
@@ -695,7 +696,7 @@
             >
           </div>
           <div class="network-status-item">
-            <span class="network-status-label">📊 Current Block Height:</span>
+            <span class="network-status-label">Current Block Height:</span>
             <span class="network-status-value" id="blockHeight">-</span>
           </div>
           <div class="network-status-item">
@@ -711,7 +712,7 @@
             <span class="network-status-value" id="peerCount">-</span>
           </div>
           <div class="network-status-item">
-            <span class="network-status-label">⏱️ Average Block Time:</span>
+            <span class="network-status-label">Average Block Time:</span>
             <span class="network-status-value" id="blockTime">-</span>
           </div>
           <div class="network-status-item">

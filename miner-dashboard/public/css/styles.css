@@ -5,44 +5,44 @@
 }
 
 :root {
-    /* Quai Network Brand Colors - PUNCHING Red & Black */
-    --quai-primary: #FF0000;           /* VIBRANT Red - Maximum Impact */
-    --quai-primary-bright: #FF3333;   /* Bright Red for highlights */
-    --quai-secondary: #CC0000;         /* Deep Red */
-    --quai-accent: #FF1A1A;           /* Accent Red */
-    --quai-dark: #0A0A0A;             /* Near Black */
-    --quai-darker: #000000;           /* Pure Black */
+    /* Professional Color Palette - Red Primary, Black Secondary, White Accents */
+    --quai-primary: #DC2626;           /* Professional red */
+    --quai-primary-bright: #EF4444;    /* Light red for accents */
+    --quai-secondary: #991B1B;         /* Dark red */
+    --quai-accent: #FEE2E2;            /* Subtle red tint */
+    
+    /* Black Palette */
+    --quai-dark: #000000;              /* Pure Black */
+    --quai-darker: #0A0A0A;            /* Near Black */
+    --bg-dark: #000000;                /* Pure Black */
+    --bg-card: #0F0F0F;                /* Card background */
+    --bg-card-hover: #1A1A1A;          /* Card hover */
     
     /* Standard Colors */
-    --primary-color: #FF0000;         /* VIBRANT Quai Red */
-    --secondary-color: #CC0000;       /* Deep Red */
-    --accent-color: #FF3333;          /* Bright Red */
-    --success-color: #00FF00;         /* Bright Green for success */
-    --danger-color: #FF0000;          /* VIBRANT Red for danger */
-    --warning-color: #FFAA00;         /* Orange warning */
-    --info-color: #FF3333;            /* Red for info */
+    --primary-color: #DC2626;          /* Professional Red */
+    --secondary-color: #991B1B;        /* Dark Red */
+    --accent-color: #EF4444;           /* Light Red */
+    --success-color: #10B981;          /* Professional Green */
+    --danger-color: #DC2626;           /* Red for danger */
+    --warning-color: #F59E0B;          /* Professional Orange */
+    --info-color: #3B82F6;             /* Professional Blue */
     
-    /* Background Colors - Deep Black with Red Tint */
-    --bg-dark: #000000;               /* Pure Black */
-    --bg-card: #0D0D0D;               /* Very Dark Gray */
-    --bg-card-hover: #1A0000;        /* Dark with red tint */
-    --bg-gradient-start: #000000;
-    --bg-gradient-end: #0A0000;       /* Black with subtle red */
-    
-    /* Text Colors - High Contrast */
-    --text-primary: #FFFFFF;          /* Pure White */
-    --text-secondary: #CCCCCC;       /* Light Gray */
-    --text-muted: #888888;            /* Medium Gray */
-    --text-red: #FF3333;              /* Red text */
+    /* Text Colors */
+    --text-primary: #FFFFFF;           /* Pure White */
+    --text-secondary: #D1D5DB;        /* Light Gray */
+    --text-muted: #9CA3AF;            /* Medium Gray */
+    --text-red: #EF4444;               /* Red text */
     
     /* UI Colors */
-    --border-color: #330000;          /* Dark Red border */
-    --border-red: #FF0000;            /* VIBRANT Red border */
-    --shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
-    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.9);
-    --shadow-red: 0 0 20px rgba(255, 0, 0, 0.6), 0 4px 12px rgba(255, 0, 0, 0.4);
-    --shadow-red-glow: 0 0 30px rgba(255, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.4);
-    --glow-red: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
+    --border-color: #2A2A2A;           /* Subtle border */
+    --border-red: #DC2626;             /* Red border */
+    
+    /* Professional Shadows - Subtle */
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.6);
+    --shadow-red: 0 0 0 1px rgba(220, 38, 38, 0.1), 0 2px 4px rgba(220, 38, 38, 0.1);
+    --shadow-red-glow: 0 0 0 1px rgba(220, 38, 38, 0.2), 0 4px 6px rgba(220, 38, 38, 0.15);
+    --glow-red: 0 0 0 1px rgba(220, 38, 38, 0.1);
 }
 
 /* Mining Insights Styles */
@@ -62,7 +62,7 @@
 
 .insight-card:hover {
     border-color: var(--quai-primary);
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
 }
 
 .insight-card.profitable {
@@ -170,7 +170,7 @@
 
 .btn-small:hover {
     background: var(--quai-primary-bright);
-    box-shadow: var(--glow-red);
+    box-shadow: var(--shadow);
 }
 
 /* Pool-related CSS removed - solo mining only */
@@ -251,7 +251,7 @@ button, .btn {
 
 .info-icon-small:hover {
     opacity: 1;
-    text-shadow: 0 0 6px rgba(255, 0, 0, 0.6);
+    color: var(--quai-primary);
 }
 
 /* Tooltip Container */
@@ -276,7 +276,7 @@ button, .btn {
     white-space: normal;
     width: 280px;
     z-index: 1000;
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     pointer-events: none;
     opacity: 0;
     animation: tooltipFadeIn 0.2s ease-out forwards;
@@ -329,7 +329,7 @@ button, .btn {
 .currency-select:focus {
     outline: none;
     border-color: var(--quai-primary);
-    box-shadow: var(--glow-red);
+    box-shadow: var(--shadow);
 }
 
 .setting-hint {
@@ -343,36 +343,33 @@ button, .btn {
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: #000000;
-    background-image: 
-        radial-gradient(circle at 20% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 0, 0, 0.08) 0%, transparent 50%),
-        linear-gradient(135deg, #000000 0%, #0A0000 100%);
-    background-attachment: fixed;
+    background-image: none; /* Clean solid background */
     color: var(--text-primary);
     min-height: 100vh;
     padding: 20px;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
-/* Quai Red Accent Glow - PUNCHING */
+/* Professional Accent - Subtle */
 .quai-glow {
-    box-shadow: var(--glow-red);
-    border: 1px solid var(--quai-primary);
+    border: 1px solid var(--border-color);
+    transition: border-color var(--transition-base);
+}
+
+.quai-glow:hover {
+    border-color: var(--quai-primary);
 }
 
 .quai-glow-strong {
-    box-shadow: var(--shadow-red-glow);
-    border: 2px solid var(--quai-primary);
-    animation: pulse-red 2s ease-in-out infinite;
+    border: 1px solid var(--quai-primary);
+    background: rgba(220, 38, 38, 0.05);
 }
 
+/* Remove pulse animation - too cartoony */
 @keyframes pulse-red {
-    0%, 100% {
-        box-shadow: 0 0 20px rgba(255, 0, 0, 0.6), 0 0 40px rgba(255, 0, 0, 0.3);
-    }
-    50% {
-        box-shadow: 0 0 30px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 0, 0, 0.5);
-    }
+    /* Removed for professional look */
 }
 
 .dashboard-container {
@@ -383,24 +380,19 @@ body {
 /* Header */
 .dashboard-header {
     background: var(--bg-card);
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 24px 32px;
     margin-bottom: 24px;
-    box-shadow: var(--shadow-red);
-    border: 2px solid var(--quai-primary);
-    position: relative;
-    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: border-color var(--transition-base);
+}
+
+.dashboard-header:hover {
+    border-color: var(--quai-primary);
 }
 
 .dashboard-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, transparent, var(--quai-primary), transparent);
-    opacity: 0.8;
+    display: none; /* Removed gradient line - too flashy */
 }
 
 .header-content {
@@ -465,21 +457,17 @@ body {
     padding: 10px 20px;
     background: var(--quai-primary);
     color: white;
-    border: 2px solid var(--quai-primary);
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 700;
+    border: 1px solid var(--quai-primary);
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s;
-    box-shadow: var(--glow-red);
-    text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s;
 }
 
 .wallet-btn:hover {
-    background: var(--quai-primary-bright);
-    box-shadow: var(--shadow-red-glow);
-    transform: translateY(-2px);
-    border-color: var(--quai-primary-bright);
+    background: var(--quai-secondary);
+    border-color: var(--quai-secondary);
 }
 
 .wallet-btn:active {
@@ -671,7 +659,7 @@ body {
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 24px;
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     border: 2px solid var(--quai-primary);
     margin-top: 0;
 }
@@ -698,7 +686,7 @@ body {
 
 .hero-stat-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     border-color: var(--quai-primary);
 }
 
@@ -745,7 +733,7 @@ body {
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 24px;
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     border: 2px solid var(--quai-primary);
 }
 
@@ -867,7 +855,7 @@ body {
 
 .gpu-card:hover {
     border-color: var(--quai-primary);
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     transform: translateY(-2px);
 }
 
@@ -1080,13 +1068,13 @@ body {
 
 .reward-card:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     border-color: var(--quai-primary);
 }
 
 .reward-card.primary {
     border: 2px solid var(--quai-primary);
-    box-shadow: var(--glow-red);
+    box-shadow: var(--shadow);
 }
 
 .reward-card.secondary {
@@ -1148,7 +1136,7 @@ body {
     border-radius: 16px;
     padding: 32px;
     margin-bottom: 24px;
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
     border: 2px solid var(--quai-primary);
 }
 
@@ -1535,7 +1523,7 @@ body {
 
 .network-badge:hover {
     transform: scale(1.05);
-    box-shadow: var(--glow-red);
+    box-shadow: var(--shadow);
 }
 
 /* Smooth number transitions */
@@ -1785,7 +1773,7 @@ body {
 
 .alert-rule-card:hover {
     border-color: var(--quai-primary);
-    box-shadow: var(--shadow-red);
+    box-shadow: var(--shadow);
 }
 
 .alert-history-item {

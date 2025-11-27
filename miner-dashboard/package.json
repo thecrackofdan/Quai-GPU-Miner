@@ -54,7 +54,9 @@
     "csv-writer": "^1.6.0",
     "nodemailer": "^6.9.7",
     "node-telegram-bot-api": "^0.64.0",
-    "axios": "^1.6.2"
+    "axios": "^1.6.2",
+    "@quais/ethers": "^6.0.0",
+    "ethers": "^6.0.0"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
@@ -72,13 +74,6 @@
     "node": ">=14.0.0",
     "npm": ">=6.0.0"
   },
-  "os": [
-    "linux"
-  ],
-  "cpu": [
-    "x64",
-    "arm64"
-  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/thecrackofdan/Quai-GPU-Miner.git",
